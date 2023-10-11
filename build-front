@@ -1,0 +1,2 @@
+(cd acidmanic-parsetree-annotator && npm run build)
+./copy-front
