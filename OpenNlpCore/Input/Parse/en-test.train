@@ -1,0 +1,11 @@
+(S (NP (DT The) (NN cat))
+   (VP (VBZ is)
+       (ADJP (JJ black)
+             (CC and)
+             (JJ beautiful)))
+   (. .))
+             
+(S (NP (PRP She))
+   (VP (VBZ eats)
+       (NP (DT a) (JJ small) (NN mouse)))
+   (. .))
