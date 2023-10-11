@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{09FE5C50-D
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acidmanic.ParseTreeAnnotator.Web", "Acidmanic.ParseTreeAnnotator.Web\Acidmanic.ParseTreeAnnotator.Web.csproj", "{ED640F75-4E74-4FF0-AB7E-16691C358D12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,9 @@ Global
 		{F91D33A2-1CA9-4B99-97A9-D2856E767871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F91D33A2-1CA9-4B99-97A9-D2856E767871}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F91D33A2-1CA9-4B99-97A9-D2856E767871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED640F75-4E74-4FF0-AB7E-16691C358D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED640F75-4E74-4FF0-AB7E-16691C358D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED640F75-4E74-4FF0-AB7E-16691C358D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED640F75-4E74-4FF0-AB7E-16691C358D12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
