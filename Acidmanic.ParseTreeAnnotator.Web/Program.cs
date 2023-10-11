@@ -1,3 +1,9 @@
+using Acidmanic.ParseTreeAnnotator.Web;
+using Microsoft.Extensions.Logging.LightWeight;
+
+
+var wholeUniverseLogger = new ConsoleLogger().Shorten();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -22,4 +28,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.RunAsync();
+
+var frontEndApplication = new StaticServerApplicationBuilder().ServeForAnguler().UseLogger(wholeUniverseLogger).Build();
+
+frontEndApplication.Run();
