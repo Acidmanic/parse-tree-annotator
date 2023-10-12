@@ -8,5 +8,6 @@ export class TokenGroupModel{
   public children:TokenGroupModel[]=[];
   public root?:TokenGroupModel;
   public parent?:TokenGroupModel;
+  public firstTokenId:number=-1;
 
 }

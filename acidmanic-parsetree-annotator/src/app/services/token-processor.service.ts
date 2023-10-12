@@ -82,6 +82,12 @@ export class TokenProcessorService{
 
     subGroup.parent = group;
     subGroup.root = group.root;
+
+    this.updateTokenIds(group.root!);
+    this.sortDescendants(group.root!);
+
+
+
     return {success:true,value:subGroup};
   }
 
@@ -98,4 +104,47 @@ export class TokenProcessorService{
   }
 
 
+  public updateTokenIds(root:TokenGroupModel):void{
+
+    root.firstTokenId = this.firstTokenId(root);
+
+    for (const child of root.children) {
+
+      this.updateTokenIds(child);
+
+    }
+  }
+
+
+  public sortChildren(node:TokenGroupModel){
+
+    node.children.sort((a, b) => a.firstTokenId-b.firstTokenId);
+
+  }
+
+  public sortDescendants(node:TokenGroupModel){
+
+    this.sortChildren(node);
+
+    for (const child of node.children) {
+
+      this.sortDescendants(child);
+    }
+
+  }
+
+  public firstTokenId(node:TokenGroupModel):number{
+
+    let min =  1000000000;
+
+    for (const token of node.tokens) {
+
+      if(token.index < min){
+        min = token.index;
+      }
+
+    }
+
+    return min;
+  }
 }
