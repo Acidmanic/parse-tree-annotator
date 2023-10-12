@@ -37,7 +37,7 @@ export class TokenProcessorService{
     return id;
   }
 
-  public subGroup(group:TokenGroupModel,indexes:number[],tag:string):boolean{
+  public subGroup(group:TokenGroupModel,indexes:number[],tag:string):ResultModel<TokenGroupModel>{
 
     let lastIndex = indexes[0];
 
@@ -45,7 +45,7 @@ export class TokenProcessorService{
         let index = indexes[i];
 
         if(index!=lastIndex+1){
-          return false;
+          return {success:false};
         }
 
         lastIndex = index;
@@ -57,7 +57,7 @@ export class TokenProcessorService{
 
         for (const token of child.tokens) {
           if(token.index==index){
-            return false;
+            return {success:false};
           }
         }
       }
@@ -80,7 +80,7 @@ export class TokenProcessorService{
 
     group.children.push(subGroup);
 
-    return true;
+    return {success:true,value:subGroup};
   }
 
   private findByIndex(group:TokenGroupModel,index:number):ResultModel<TokenModel> {

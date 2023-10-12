@@ -32,11 +32,11 @@ export class AppComponent implements OnInit{
     this.group.tokens.push({text:'A',index:2});
     this.group.tokens.push({text:'Book',index:3});
 
-    this.tokenSvc.subGroup(this.group,[0],'AR')
-    this.tokenSvc.subGroup(this.group,[1],'VB')
-    this.tokenSvc.subGroup(this.group,[2,3],'SB')
-
-    this.tokenSvc.subGroup(this.group.children[2],[2],'AR');
+    // this.tokenSvc.subGroup(this.group,[0],'AR')
+    // this.tokenSvc.subGroup(this.group,[1],'VB')
+    // this.tokenSvc.subGroup(this.group,[2,3],'SB')
+    //
+    // this.tokenSvc.subGroup(this.group.children[2],[2],'AR');
     //this.tokenSvc.subGroup(this.group.children[2],[3],'SB');
     //
     // this.selection.groupId=0;
@@ -56,4 +56,24 @@ export class AppComponent implements OnInit{
   }
 
 
+  onSubGroupClicked() {
+
+    let selectedGroup = this.selectionSvc.selectedSubGroup(this.group,this.selection);
+
+    if(selectedGroup.success){
+
+      if(this.selection.selectedIds.length>0){
+
+        let sub = this.tokenSvc.subGroup(selectedGroup.value!,this.selection.selectedIds,'SU');
+
+        if(sub.success){
+
+          this.selection.groupId = sub.value!.id;
+        }
+      }
+    }
+
+
+
+  }
 }

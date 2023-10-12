@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
 import {TokenSelectionMetadataModel} from "../models/token-selection-metadata.model";
 import {TokenSelectionModel} from "../models/token-selection.model";
+import {TokenGroupModel} from "../models/token-group.model";
+import {ResultModel} from "../models/result.model";
 
 
 @Injectable({
@@ -60,4 +62,22 @@ export class TokenSelectionProcessorService{
   }
 
 
+  public selectedSubGroup(node: TokenGroupModel, selection: TokenSelectionModel):ResultModel<TokenGroupModel> {
+
+    if(selection.groupId == node.id){
+      return {success:true,value:node};
+    }
+
+    for (const child of node.children) {
+
+      let foundSelected = this.selectedSubGroup(child,selection);
+      if(foundSelected.success){
+
+        return {success:true,value:foundSelected.value};
+      }
+
+    }
+
+    return {success:false};
+  }
 }
