@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {TokenModel} from "../models/token.model";
 import {TokenGroupModel} from "../models/token-group.model";
-import {last} from "rxjs";
+import {generate, last} from "rxjs";
 import {ResultModel} from "../models/result.model";
 
 
@@ -10,6 +10,7 @@ import {ResultModel} from "../models/result.model";
 })
 export class TokenProcessorService{
 
+  private static nextGroupId = 0;
 
   public toTopGroup(tokens:TokenModel[]):TokenGroupModel{
 
@@ -27,6 +28,15 @@ export class TokenProcessorService{
     return group;
   }
 
+
+  private generateGroupId():number{
+
+    let id = TokenProcessorService.nextGroupId;
+
+    TokenProcessorService.nextGroupId++;
+
+    return id;
+  }
 
   public subGroup(group:TokenGroupModel,indexes:number[],tag:string):boolean{
 
@@ -56,6 +66,8 @@ export class TokenProcessorService{
 
     let subGroup = new TokenGroupModel();
 
+    subGroup.id = this.generateGroupId();
+
     subGroup.tag=tag;
 
     for (const index of indexes) {
@@ -66,7 +78,6 @@ export class TokenProcessorService{
         subGroup.tokens.push(token.value!);
       }
     }
-
 
     group.children.push(subGroup);
 
