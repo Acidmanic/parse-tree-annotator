@@ -1,12 +1,15 @@
+<div class="container rounded-2 mt-1 p-1" style="border: 1px black solid">
 
 
-<div>{{group.tag}}</div>
-<div>
-  <span   *ngFor="let token of group.tokens">{{token.text}}</span>
+  <div class="row">
+    <span class="small-circle-badge text-light bg-info">{{group.tag}}</span>
+  </div>
+  <div class="row">
+    <span style="width: unset" *ngFor="let token of group.tokens">{{token.text}}</span>
+  </div>
+  <div class="row">
+    <token-group style="width: unset" *ngFor="let child of group.children" [group]="child"></token-group>
+  </div>
+
+
 </div>
-<div>
-  <token-group *ngFor="let child of group.children" [group]="child"></token-group>
-</div>
-
-
-
