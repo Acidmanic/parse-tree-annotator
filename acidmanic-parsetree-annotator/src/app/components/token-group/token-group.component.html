@@ -1,0 +1,12 @@
+
+
+<div>{{group.tag}}</div>
+<div>
+  <span   *ngFor="let token of group.tokens">{{token.text}}</span>
+</div>
+<div>
+  <token-group *ngFor="let child of group.children" [group]="child"></token-group>
+</div>
+
+
+
