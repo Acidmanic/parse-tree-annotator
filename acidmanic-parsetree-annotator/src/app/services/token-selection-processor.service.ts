@@ -60,18 +60,17 @@ export class TokenSelectionProcessorService {
 
     meta.leaves = this.getLeaves(root);
 
-
     for (const leaf of meta.leaves) {
 
       if(leaf.tokens.length==1){
 
         meta.singularLeaves.set(leaf.tokens[0].index,leaf);
 
-        meta.singularLeafedTokensSelected |= meta.selectedSet.has(leaf.tokens[0].index);
+        meta.singularLeafedTokensSelected ||= meta.selectedSet.has(leaf.tokens[0].index);
 
       }else{
 
-        meta.noneSingularLeafedTokensSelected |= meta.selectedSet.has(leaf.tokens[0].index);
+        meta.noneSingularLeafedTokensSelected ||= meta.selectedSet.has(leaf.tokens[0].index);
       }
     }
 
@@ -101,8 +100,10 @@ export class TokenSelectionProcessorService {
         this.addLeaves(child, leaves);
       }
     } else {
+
       leaves.push(node);
     }
+
   }
 
 

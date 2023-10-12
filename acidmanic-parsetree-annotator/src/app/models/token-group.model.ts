@@ -6,7 +6,7 @@ export class TokenGroupModel{
   public tokens:TokenModel[]=[];
   public tag:string='';
   public children:TokenGroupModel[]=[];
-  public root:TokenGroupModel=new TokenGroupModel();
+  public root?:TokenGroupModel;
   public parent?:TokenGroupModel;
 
 }

@@ -61,20 +61,25 @@ export class AppComponent implements OnInit{
 
     let selectedGroup = this.selectionSvc.selectedSubGroup(this.group,this.selection);
 
-    if(selectedGroup.success){
+    let meta = this.selectionSvc.getMetaData(this.group,this.selection);
 
-      if(this.selection.selectedIds.length>0){
+    if(meta.noneSingularLeafedTokensSelected && !meta.singularLeafedTokensSelected){
 
-        let sub = this.tokenSvc.subGroup(selectedGroup.value!,this.selection.selectedIds,'SU');
+      if(selectedGroup.success){
 
-        if(sub.success){
+        if(this.selection.selectedIds.length>0){
 
-          this.selection.groupId = sub.value!.id;
+          let sub = this.tokenSvc.subGroup(selectedGroup.value!,this.selection.selectedIds,'SU');
+
+          if(sub.success){
+
+            this.selection.groupId = sub.value!.id;
+          }
         }
       }
+
+
     }
-
-
 
   }
 }
