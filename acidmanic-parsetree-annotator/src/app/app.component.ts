@@ -67,7 +67,7 @@ export class AppComponent implements OnInit{
 
     if(meta.noneSingularLeafedTokensSelected && !meta.singularLeafedTokensSelected){
 
-      if(selectedGroup.success){
+      if(selectedGroup.success && !meta.wholeGroupIsSelected){
 
         if(this.selection.selectedIds.length>0){
 
@@ -83,5 +83,34 @@ export class AppComponent implements OnInit{
 
     }
 
+  }
+
+  public onDeleteClicked() {
+
+    let selectedGroup = this.selectionSvc.selectedSubGroup(this.group,this.selection);
+
+    if(selectedGroup.success){
+
+      let meta = this.selectionSvc.getMetaData(this.group,this.selection);
+
+      console.log('meta:',meta);
+
+      if(meta.wholeGroupIsSelected){
+
+        let parent = (selectedGroup.value?.parent);
+
+        if(parent){
+
+          let deleted = this.tokenSvc.deleteSubGroup(parent,selectedGroup.value!);
+
+          if(deleted){
+
+            this.selection.groupId = -1;
+          }
+
+        }
+      }
+
+    }
   }
 }

@@ -18,6 +18,8 @@ export class TokenSelectionMetadataModel {
   public noneSingularLeafedTokensSelected:boolean=false;
 
 
+  public wholeGroupIsSelected:boolean=false;
+
   public treeIsComplete:boolean=false;
 
 

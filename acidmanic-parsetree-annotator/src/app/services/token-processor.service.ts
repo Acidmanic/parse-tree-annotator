@@ -147,4 +147,19 @@ export class TokenProcessorService{
 
     return min;
   }
+
+  public deleteSubGroup(parent: TokenGroupModel, selectedGroup: TokenGroupModel):boolean {
+
+    let index = parent.children.indexOf(selectedGroup);
+
+    if(index!=-1){
+
+      parent.children.splice(index,1);
+
+      return true;
+
+    }
+
+    return false;
+  }
 }

@@ -80,6 +80,12 @@ export class TokenSelectionProcessorService {
 
     meta.treeIsComplete = root.tokens.length == meta.singularLeaves.size;
 
+    let selectedGroup = this.selectedSubGroup(root,selection);
+
+    if(selectedGroup.success){
+
+      meta.wholeGroupIsSelected = selectedGroup.value!.tokens.length == selection.selectedIds.length;
+    }
 
     return meta;
   }
