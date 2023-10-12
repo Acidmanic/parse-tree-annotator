@@ -80,6 +80,8 @@ export class TokenProcessorService{
 
     group.children.push(subGroup);
 
+    subGroup.parent = group;
+    subGroup.root = group.root;
     return {success:true,value:subGroup};
   }
 

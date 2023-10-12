@@ -27,6 +27,7 @@ export class AppComponent implements OnInit{
     this.group = new TokenGroupModel();
     this.group.id = this.tokenSvc.generateGroupId();
     this.group.tag='TOP'
+    this.group.root=this.group;
     this.group.tokens.push({text:'This',index:0});
     this.group.tokens.push({text:'Is',index:1});
     this.group.tokens.push({text:'A',index:2});

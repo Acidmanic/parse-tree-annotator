@@ -3,27 +3,28 @@ import {TokenSelectionMetadataModel} from "../models/token-selection-metadata.mo
 import {TokenSelectionModel} from "../models/token-selection.model";
 import {TokenGroupModel} from "../models/token-group.model";
 import {ResultModel} from "../models/result.model";
+import {group} from "@angular/animations";
 
 
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root'
 })
-export class TokenSelectionProcessorService{
+export class TokenSelectionProcessorService {
 
 
-  public getMetaData(selection:TokenSelectionModel):TokenSelectionMetadataModel{
+  public getMetaData(root: TokenGroupModel, selection: TokenSelectionModel): TokenSelectionMetadataModel {
 
     let meta = new TokenSelectionMetadataModel();
 
-    let min =100000;
+    let min = 100000;
     let max = -100000;
 
     for (const selectedId of selection.selectedIds) {
 
-      if(min > selectedId){
+      if (min > selectedId) {
         min = selectedId;
       }
-      if(max< selectedId){
+      if (max < selectedId) {
         max = selectedId;
       }
 
@@ -33,51 +34,94 @@ export class TokenSelectionProcessorService{
       meta.selectedSet.add(selectedId);
     }
 
-    if(selection.selectedIds.length){
+    if (selection.selectedIds.length) {
 
       meta.selectablesSet.add(max);
 
-      if(max!=min){
+      if (max != min) {
         meta.selectablesSet.add(min);
       }
     }
 
-    if(selection.selectedIds.length){
+    if (selection.selectedIds.length) {
 
-      let prev = meta.minSelectedIndex -1;
-      let next = meta.maxSelectedIndex +1;
+      let prev = meta.minSelectedIndex - 1;
+      let next = meta.maxSelectedIndex + 1;
 
-      if(prev >= 0 ){
+      if (prev >= 0) {
         meta.selectablesSet.add(prev);
       }
 
-      if(prev!=next ){
+      if (prev != next) {
         meta.selectablesSet.add(next);
       }
 
     }
 
-    return meta;
+    meta.leaves = this.getLeaves(root);
 
+
+    for (const leaf of meta.leaves) {
+
+      if(leaf.tokens.length==1){
+
+        meta.singularLeaves.set(leaf.tokens[0].index,leaf);
+
+        meta.singularLeafedTokensSelected |= meta.selectedSet.has(leaf.tokens[0].index);
+
+      }else{
+
+        meta.noneSingularLeafedTokensSelected |= meta.selectedSet.has(leaf.tokens[0].index);
+      }
+    }
+
+
+    meta.treeIsComplete = root.tokens.length == meta.singularLeaves.size;
+
+
+    return meta;
   }
 
 
-  public selectedSubGroup(node: TokenGroupModel, selection: TokenSelectionModel):ResultModel<TokenGroupModel> {
+  public getLeaves(root: TokenGroupModel): TokenGroupModel[] {
 
-    if(selection.groupId == node.id){
-      return {success:true,value:node};
+    let leaves: TokenGroupModel[] = [];
+
+    this.addLeaves(root, leaves);
+
+    return leaves;
+  }
+
+  private addLeaves(node: TokenGroupModel, leaves: TokenGroupModel[]): void {
+
+    if (node.children.length > 0) {
+
+      for (const child of node.children) {
+
+        this.addLeaves(child, leaves);
+      }
+    } else {
+      leaves.push(node);
+    }
+  }
+
+
+  public selectedSubGroup(node: TokenGroupModel, selection: TokenSelectionModel): ResultModel<TokenGroupModel> {
+
+    if (selection.groupId == node.id) {
+      return {success: true, value: node};
     }
 
     for (const child of node.children) {
 
-      let foundSelected = this.selectedSubGroup(child,selection);
-      if(foundSelected.success){
+      let foundSelected = this.selectedSubGroup(child, selection);
+      if (foundSelected.success) {
 
-        return {success:true,value:foundSelected.value};
+        return {success: true, value: foundSelected.value};
       }
 
     }
 
-    return {success:false};
+    return {success: false};
   }
 }

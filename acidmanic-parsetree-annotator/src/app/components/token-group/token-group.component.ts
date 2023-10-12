@@ -66,13 +66,13 @@ export class TokenGroupComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-    this.selection = this.selectionSvc.getMetaData(this.selectionInput);
+    this.selection = this.selectionSvc.getMetaData(this.group.root,this.selectionInput);
 
   }
 
   ngOnChanges(changes: SimpleChanges) {
 
-    this.selection = this.selectionSvc.getMetaData(this.selectionInput);
+    this.selection = this.selectionSvc.getMetaData(this.group.root,this.selectionInput);
   }
 
 
@@ -102,6 +102,6 @@ export class TokenGroupComponent implements OnInit, OnChanges {
     if(this.selectionInput.selectedIds.length==0){
       this.selectionInput.groupId = -1;
     }
-    this.selection = this.selectionSvc.getMetaData(this.selectionInput);
+    this.selection = this.selectionSvc.getMetaData(this.group.root,this.selectionInput);
   }
 }
