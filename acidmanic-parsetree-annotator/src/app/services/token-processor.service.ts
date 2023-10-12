@@ -28,7 +28,7 @@ export class TokenProcessorService{
   }
 
 
-  private generateGroupId():number{
+  public generateGroupId():number{
 
     let id = TokenProcessorService.nextGroupId;
 
@@ -95,5 +95,5 @@ export class TokenProcessorService{
     return {success:false};
   }
 
-  
+
 }

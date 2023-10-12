@@ -29,8 +29,15 @@ export class TokenSelectionProcessorService{
       meta.minSelectedIndex = min;
 
       meta.selectedSet.add(selectedId);
+    }
 
-      meta.selectablesSet.add(selectedId);
+    if(selection.selectedIds.length){
+
+      meta.selectablesSet.add(max);
+
+      if(max!=min){
+        meta.selectablesSet.add(min);
+      }
     }
 
     if(selection.selectedIds.length){

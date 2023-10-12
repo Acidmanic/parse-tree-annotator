@@ -98,6 +98,10 @@ export class TokenGroupComponent implements OnInit, OnChanges {
     }else{
       this.selectionInput.selectedIds.push (token.index);
     }
+
+    if(this.selectionInput.selectedIds.length==0){
+      this.selectionInput.groupId = -1;
+    }
     this.selection = this.selectionSvc.getMetaData(this.selectionInput);
   }
 }
