@@ -18,3 +18,19 @@
   font-weight: bold;
 
 }
+
+
+.token{
+
+  cursor: pointer;
+}
+
+.token-selected{
+  background-color: rgba(10, 69, 192, 0.47);
+}
+
+
+.token-disabled{
+  background-color: rgba(87, 82, 82, 0.55);
+  cursor: unset;
+}

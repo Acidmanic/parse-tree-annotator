@@ -5,10 +5,17 @@
     <span class="small-circle-badge text-light bg-info">{{group.tag}}</span>
   </div>
   <div class="row">
-    <span style="width: unset" *ngFor="let token of group.tokens">{{token.text}}</span>
+    <span style="width: unset" *ngFor="let token of group.tokens"
+          (click)="this.selectToken(token)"
+          [class]="classSelectionClass(token)">
+      {{token.text}}
+    </span>
   </div>
   <div class="row">
-    <token-group style="width: unset" *ngFor="let child of group.children" [group]="child"></token-group>
+
+    <token-group style="width: unset"
+                 *ngFor="let child of group.children" [group]="child" [selection]="selectionInput">
+    </token-group>
   </div>
 
 

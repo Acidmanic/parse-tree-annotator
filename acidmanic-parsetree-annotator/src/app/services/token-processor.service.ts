@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {TokenModel} from "../models/token.model";
 import {TokenGroupModel} from "../models/token-group.model";
-import {generate, last} from "rxjs";
 import {ResultModel} from "../models/result.model";
 
 
@@ -95,4 +94,6 @@ export class TokenProcessorService{
     }
     return {success:false};
   }
+
+  
 }
