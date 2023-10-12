@@ -65,15 +65,18 @@ export class TokenSelectionProcessorService {
       if(leaf.tokens.length==1){
 
         meta.singularLeaves.set(leaf.tokens[0].index,leaf);
-
-        meta.singularLeafedTokensSelected ||= meta.selectedSet.has(leaf.tokens[0].index);
-
-      }else{
-
-        meta.noneSingularLeafedTokensSelected ||= meta.selectedSet.has(leaf.tokens[0].index);
       }
     }
 
+    for (const selectedId of selection.selectedIds) {
+
+      if(meta.singularLeaves.has(selectedId)){
+
+        meta.singularLeafedTokensSelected = true;
+      }else{
+        meta.noneSingularLeafedTokensSelected = true;
+      }
+    }
 
     meta.treeIsComplete = root.tokens.length == meta.singularLeaves.size;
 

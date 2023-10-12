@@ -63,6 +63,8 @@ export class AppComponent implements OnInit{
 
     let meta = this.selectionSvc.getMetaData(this.group,this.selection);
 
+    console.log('current meta:',meta);
+
     if(meta.noneSingularLeafedTokensSelected && !meta.singularLeafedTokensSelected){
 
       if(selectedGroup.success){
