@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {TokenGroupModel} from "./models/token-group.model";
 import {TokenProcessorService} from "./services/token-processor.service";
 import {TokenSelectionModel} from "./models/token-selection.model";
@@ -9,16 +9,14 @@ import {TokenSelectionProcessorService} from "./services/token-selection-process
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
 
+  public group: TokenGroupModel = new TokenGroupModel();
+  public selection: TokenSelectionModel = new TokenSelectionModel();
 
 
-  public group:TokenGroupModel=new TokenGroupModel();
-
-  public selection:TokenSelectionModel = new TokenSelectionModel();
-
-  constructor(private tokenSvc:TokenProcessorService,private selectionSvc:TokenSelectionProcessorService) {
+  constructor(private tokenSvc: TokenProcessorService, private selectionSvc: TokenSelectionProcessorService) {
   }
 
 
@@ -26,12 +24,12 @@ export class AppComponent implements OnInit{
 
     this.group = new TokenGroupModel();
     this.group.id = this.tokenSvc.generateGroupId();
-    this.group.tag='TOP'
-    this.group.root=this.group;
-    this.group.tokens.push({text:'This',index:0});
-    this.group.tokens.push({text:'Is',index:1});
-    this.group.tokens.push({text:'A',index:2});
-    this.group.tokens.push({text:'Book',index:3});
+    this.group.tag = 'TOP'
+    this.group.root = this.group;
+    this.group.tokens.push({text: 'This', index: 0});
+    this.group.tokens.push({text: 'Is', index: 1});
+    this.group.tokens.push({text: 'A', index: 2});
+    this.group.tokens.push({text: 'Book', index: 3});
 
     // this.tokenSvc.subGroup(this.group,[0],'AR')
     // this.tokenSvc.subGroup(this.group,[1],'VB')
@@ -59,23 +57,25 @@ export class AppComponent implements OnInit{
 
   onSubGroupClicked() {
 
-    let selectedGroup = this.selectionSvc.selectedSubGroup(this.group,this.selection);
+    let selectedGroup = this.selectionSvc.selectedSubGroup(this.group, this.selection);
 
-    let meta = this.selectionSvc.getMetaData(this.group,this.selection);
+    let meta = this.selectionSvc.getMetaData(this.group, this.selection);
 
-    console.log('current meta:',meta);
+    console.log('current meta:', meta);
 
-    if(meta.noneSingularLeafedTokensSelected && !meta.singularLeafedTokensSelected){
+    if (meta.noneSingularLeafedTokensSelected && !meta.singularLeafedTokensSelected) {
 
-      if(selectedGroup.success && !meta.wholeGroupIsSelected){
+      if (selectedGroup.success && !meta.wholeGroupIsSelected) {
 
-        if(this.selection.selectedIds.length>0){
+        if (this.selection.selectedIds.length > 0) {
 
-          let sub = this.tokenSvc.subGroup(selectedGroup.value!,this.selection.selectedIds,'SU');
+          let sub = this.tokenSvc.subGroup(selectedGroup.value!, this.selection.selectedIds, 'SU');
 
-          if(sub.success){
+          if (sub.success) {
 
             this.selection.groupId = sub.value!.id;
+
+
           }
         }
       }
@@ -87,25 +87,26 @@ export class AppComponent implements OnInit{
 
   public onDeleteClicked() {
 
-    let selectedGroup = this.selectionSvc.selectedSubGroup(this.group,this.selection);
+    let selectedGroup = this.selectionSvc.selectedSubGroup(this.group, this.selection);
 
-    if(selectedGroup.success){
+    if (selectedGroup.success) {
 
-      let meta = this.selectionSvc.getMetaData(this.group,this.selection);
+      let meta = this.selectionSvc.getMetaData(this.group, this.selection);
 
-      console.log('meta:',meta);
+      console.log('meta:', meta);
 
-      if(meta.wholeGroupIsSelected){
+      if (meta.wholeGroupIsSelected) {
 
         let parent = (selectedGroup.value?.parent);
 
-        if(parent){
+        if (parent) {
 
-          let deleted = this.tokenSvc.deleteSubGroup(parent,selectedGroup.value!);
+          let deleted = this.tokenSvc.deleteSubGroup(parent, selectedGroup.value!);
 
-          if(deleted){
+          if (deleted) {
 
             this.selection.groupId = -1;
+
           }
 
         }

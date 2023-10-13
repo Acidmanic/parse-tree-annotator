@@ -13,9 +13,21 @@
   </div>
   <div class="row">
 
-    <token-group style="width: unset"
-                 *ngFor="let child of group.children" [group]="child" [selection]="selectionInput">
-    </token-group>
+
+    <div style="width: unset" *ngFor="let placeHolder of processPlaceholders()" >
+
+      <token-group style="width: unset"
+                   *ngIf="placeHolder.groupContained"
+                   [group]="placeHolder.group!" [selection]="selectionInput">
+      </token-group>
+
+      <span *ngIf="!placeHolder.groupContained" class="token-placeholder">
+        {{placeHolder.text}}
+      </span>
+
+    </div>
+
+
   </div>
 
 
