@@ -1,0 +1,184 @@
+{
+  "tags": [
+    {
+      "index": 1,
+      "tag": "CC",
+      "description": "Coordinating conjunction"
+    },
+    {
+      "index": 2,
+      "tag": "CD",
+      "description": "Cardinal number"
+    },
+    {
+      "index": 3,
+      "tag": "DT",
+      "description": "Determiner"
+    },
+    {
+      "index": 4,
+      "tag": "EX",
+      "description": "Existential there"
+    },
+    {
+      "index": 5,
+      "tag": "FW",
+      "description": "Foreign word"
+    },
+    {
+      "index": 6,
+      "tag": "IN",
+      "description": "Preposition or subordinating conjunction"
+    },
+    {
+      "index": 7,
+      "tag": "JJ",
+      "description": "Adjective"
+    },
+    {
+      "index": 8,
+      "tag": "JJR",
+      "description": "Adjective, comparative"
+    },
+    {
+      "index": 9,
+      "tag": "JJS",
+      "description": "Adjective, superlative"
+    },
+    {
+      "index": 10,
+      "tag": "LS",
+      "description": "List item marker"
+    },
+    {
+      "index": 11,
+      "tag": "MD",
+      "description": "Modal"
+    },
+    {
+      "index": 12,
+      "tag": "NN",
+      "description": "Noun, singular or mass"
+    },
+    {
+      "index": 13,
+      "tag": "NNS",
+      "description": "Noun, plural"
+    },
+    {
+      "index": 14,
+      "tag": "NNP",
+      "description": "Proper noun, singular"
+    },
+    {
+      "index": 15,
+      "tag": "NNPS",
+      "description": "Proper noun, plural"
+    },
+    {
+      "index": 16,
+      "tag": "PDT",
+      "description": "Predeterminer"
+    },
+    {
+      "index": 17,
+      "tag": "POS",
+      "description": "Possessive ending"
+    },
+    {
+      "index": 18,
+      "tag": "PRP",
+      "description": "Personal pronoun"
+    },
+    {
+      "index": 19,
+      "tag": "PRP$",
+      "description": "Possessive pronoun"
+    },
+    {
+      "index": 20,
+      "tag": "RB",
+      "description": "Adverb"
+    },
+    {
+      "index": 21,
+      "tag": "RBR",
+      "description": "Adverb, comparative"
+    },
+    {
+      "index": 22,
+      "tag": "RBS",
+      "description": "Adverb, superlative"
+    },
+    {
+      "index": 23,
+      "tag": "RP",
+      "description": "Particle"
+    },
+    {
+      "index": 24,
+      "tag": "SYM",
+      "description": "Symbol"
+    },
+    {
+      "index": 25,
+      "tag": "TO",
+      "description": "to"
+    },
+    {
+      "index": 26,
+      "tag": "UH",
+      "description": "Interjection"
+    },
+    {
+      "index": 27,
+      "tag": "VB",
+      "description": "Verb, base form"
+    },
+    {
+      "index": 28,
+      "tag": "VBD",
+      "description": "Verb, past tense"
+    },
+    {
+      "index": 29,
+      "tag": "VBG",
+      "description": "Verb, gerund or present participle"
+    },
+    {
+      "index": 30,
+      "tag": "VBN",
+      "description": "Verb, past participle"
+    },
+    {
+      "index": 31,
+      "tag": "VBP",
+      "description": "Verb, non-3rd person singular present"
+    },
+    {
+      "index": 32,
+      "tag": "VBZ",
+      "description": "Verb, 3rd person singular present"
+    },
+    {
+      "index": 33,
+      "tag": "WDT",
+      "description": "Wh-determiner"
+    },
+    {
+      "index": 34,
+      "tag": "WP",
+      "description": "Wh-pronoun"
+    },
+    {
+      "index": 35,
+      "tag": "WP$",
+      "description": "Possessive wh-pronoun"
+    },
+    {
+      "index": 36,
+      "tag": "WRB",
+      "description": "Wh-adverb"
+    }
+  ]
+}

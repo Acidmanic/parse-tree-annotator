@@ -3,6 +3,9 @@ import {TokenGroupModel} from "./models/token-group.model";
 import {TokenProcessorService} from "./services/token-processor.service";
 import {TokenSelectionModel} from "./models/token-selection.model";
 import {TokenSelectionProcessorService} from "./services/token-selection-processor.service";
+import {ParseTreeExtractorService} from "./services/parse-tree-extractor.service";
+import {PennApiService} from "./services/api-services/penn.api.service";
+import {PosTagBankModel} from "./models/pos-tag-bank.model";
 
 @Component({
   selector: 'app-root',
@@ -14,13 +17,18 @@ export class AppComponent implements OnInit {
 
   public group: TokenGroupModel = new TokenGroupModel();
   public selection: TokenSelectionModel = new TokenSelectionModel();
+  public parseTree:string='';
+  public postagBank:PosTagBankModel= new PosTagBankModel();
 
-
-  constructor(private tokenSvc: TokenProcessorService, private selectionSvc: TokenSelectionProcessorService) {
+  constructor(private tokenSvc: TokenProcessorService,
+              private selectionSvc: TokenSelectionProcessorService,
+              private parseTreeSvc:ParseTreeExtractorService,
+              private pennSvc:PennApiService) {
   }
 
 
   ngOnInit() {
+
 
     this.group = new TokenGroupModel();
     this.group.id = this.tokenSvc.generateGroupId();
@@ -30,6 +38,17 @@ export class AppComponent implements OnInit {
     this.group.tokens.push({text: 'Is', index: 1});
     this.group.tokens.push({text: 'A', index: 2});
     this.group.tokens.push({text: 'Book', index: 3});
+
+
+    this.updateParseTree();
+
+
+    this.pennSvc.getPennTreeBank().subscribe({
+      next: penn => this.postagBank = penn,
+      error: err=>{},
+      complete: () => {}
+    });
+
 
     // this.tokenSvc.subGroup(this.group,[0],'AR')
     // this.tokenSvc.subGroup(this.group,[1],'VB')
@@ -75,7 +94,7 @@ export class AppComponent implements OnInit {
 
             this.selection.groupId = sub.value!.id;
 
-
+            this.updateParseTree();
           }
         }
       }
@@ -107,11 +126,20 @@ export class AppComponent implements OnInit {
 
             this.selection.groupId = -1;
 
+            this.updateParseTree();
+
           }
 
         }
       }
 
     }
+  }
+
+  private updateParseTree() {
+
+    this.parseTree = this.parseTreeSvc.toParseTree(this.group);
+
+    console.log('parse-tree',this.parseTree);
   }
 }

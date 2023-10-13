@@ -5,7 +5,7 @@
 
   <div class="row">
 
-    <div class="col-3">
+    <div class="col-2">
 
 
 
@@ -13,12 +13,17 @@
       <button class="btn btn-danger" (click)="onDeleteClicked()">Delete</button>
 
     </div>
-    <div class="col-7">
+    <div class="col-6">
       <token-group [selection]="selection" [group]="group" ></token-group>
     </div>
 
-    <div class="col-2">
-
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header"> Resulting Parse Tree</div>
+        <div class="card-body parse-tree-view" >
+          {{parseTree}}
+        </div>
+      </div>
     </div>
   </div>
 
