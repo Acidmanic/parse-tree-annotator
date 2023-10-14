@@ -54,11 +54,17 @@
 @import 'bootstrap/scss/bootstrap';
 
 
-.card-postag .btn{
+.card-postag .badge{
   font-size: 0.7em;
   font-weight: bold;
 }
 
-.card-postag details{
-  font-size: 0.8em;
+.card-postag .details{
+  font-size: 0.74em;
 }
+
+.card-postag{
+  cursor: pointer;
+}
+
+

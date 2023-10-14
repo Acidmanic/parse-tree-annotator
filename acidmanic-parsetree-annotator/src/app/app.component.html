@@ -50,19 +50,20 @@
 
         <div class="row">
 
-          <div class="col-2 " *ngFor="let tag of postagBank.tags">
+          <div class="col-6 col-sm-12 h5"
+               *ngFor="let tag of postagBank.tags"
+               (click)="onSetPostagClicked(tag)">
             <ngb-alert
-              class="ml-1 mt-1 card-postag"
+              class="m-0 ml-1 mt-1 p-1 card-postag"
               type="primary" [dismissible]="false">
 
-              <button (click)="onSetPostagClicked(tag)"
-                      class="btn btn-success">
+              <span class="badge bg-primary p-1 m-0">
                 {{tag.tag}}
-              </button>
-              <details>
-                <summary>+</summary>
+              </span>
+
+              <span class="details">
                 {{tag.description}}
-              </details>
+              </span>
 
             </ngb-alert>
           </div>
