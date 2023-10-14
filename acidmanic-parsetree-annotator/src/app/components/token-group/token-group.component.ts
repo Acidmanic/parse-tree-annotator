@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {TokenGroupModel} from "../../models/token-group.model";
 import {TokenSelectionModel} from "../../models/token-selection.model";
 import {TokenModel} from "../../models/token.model";
@@ -18,6 +18,8 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input('group') group: TokenGroupModel = new TokenGroupModel();
   @Input('selection') selectionInput: TokenSelectionModel = new TokenSelectionModel();
+
+  @Output('on-tag-clicked') onTagClicked:EventEmitter<TokenGroupModel>=new EventEmitter<TokenGroupModel>();
 
   public selection: TokenSelectionMetadataModel = new TokenSelectionMetadataModel();
 

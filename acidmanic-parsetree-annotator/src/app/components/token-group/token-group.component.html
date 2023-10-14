@@ -2,7 +2,10 @@
 
 
   <div class="row">
-    <span class="small-circle-badge text-light bg-info">{{group.tag}}</span>
+    <span class="small-circle-badge text-light bg-info"
+    (click)="onTagClicked.emit(group)">
+      {{group.tag}}
+    </span>
   </div>
   <div class="row">
     <span style="width: unset" *ngFor="let token of group.tokens"
@@ -18,7 +21,8 @@
 
       <token-group style="width: unset"
                    *ngIf="placeHolder.groupContained"
-                   [group]="placeHolder.group!" [selection]="selectionInput">
+                   [group]="placeHolder.group!" [selection]="selectionInput"
+                    (on-tag-clicked)="onTagClicked.emit($event)">
       </token-group>
 
       <span *ngIf="!placeHolder.groupContained" class="token-placeholder">

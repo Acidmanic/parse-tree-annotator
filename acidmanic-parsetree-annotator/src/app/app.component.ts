@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {TokenGroupModel} from "./models/token-group.model";
 import {TokenProcessorService} from "./services/token-processor.service";
 import {TokenSelectionModel} from "./models/token-selection.model";
@@ -6,6 +6,8 @@ import {TokenSelectionProcessorService} from "./services/token-selection-process
 import {ParseTreeExtractorService} from "./services/parse-tree-extractor.service";
 import {TreeBankApiService} from "./services/api-services/tree-bank-api.service";
 import {PosTagBankModel} from "./models/pos-tag-bank.model";
+
+
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,10 @@ export class AppComponent implements OnInit {
   public selection: TokenSelectionModel = new TokenSelectionModel();
   public parseTree:string='';
   public postagBank:PosTagBankModel= new PosTagBankModel();
+
+
+  @ViewChild('postagModal') treebankModal?:ElementRef;
+
 
   constructor(private tokenSvc: TokenProcessorService,
               private selectionSvc: TokenSelectionProcessorService,
@@ -49,28 +55,6 @@ export class AppComponent implements OnInit {
       complete: () => {}
     });
 
-
-    // this.tokenSvc.subGroup(this.group,[0],'AR')
-    // this.tokenSvc.subGroup(this.group,[1],'VB')
-    // this.tokenSvc.subGroup(this.group,[2,3],'SB')
-    //
-    // this.tokenSvc.subGroup(this.group.children[2],[2],'AR');
-    //this.tokenSvc.subGroup(this.group.children[2],[3],'SB');
-    //
-    // this.selection.groupId=0;
-    // this.selection.selectedIds=[2];
-    //
-    // console.log('the group',this.group);
-    // console.log('the selection',this.selection);
-    //
-    //
-    //
-    // let  meta = this.selectionSvc.getMetaData(this.selection);
-    //
-    // console.log('the meta',meta);
-    //
-    // console.log('the selection shit 0',meta.selectedSet.has(0));
-    // console.log('the selection shit 2',meta.selectedSet.has(2));
   }
 
 
@@ -141,5 +125,15 @@ export class AppComponent implements OnInit {
     this.parseTree = this.parseTreeSvc.toParseTree(this.group);
 
     console.log('parse-tree',this.parseTree);
+  }
+
+  public onTagClicked(group: TokenGroupModel) {
+
+
+    console.log('pos tag clicked for group: ' + group.id);
+
+
+
+
   }
 }

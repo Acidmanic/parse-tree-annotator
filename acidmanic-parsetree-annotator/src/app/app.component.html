@@ -11,10 +11,11 @@
 
       <button class="btn btn-primary" (click)="onSubGroupClicked()">SubGroup</button>
       <button class="btn btn-danger" (click)="onDeleteClicked()">Delete</button>
+      <button class="btn btn-danger" data-toggle="modal" data-target="#postagModal">Pop</button>
 
     </div>
     <div class="col-6">
-      <token-group [selection]="selection" [group]="group" ></token-group>
+      <token-group [selection]="selection" [group]="group" (on-tag-clicked)="onTagClicked($event)"></token-group>
     </div>
 
     <div class="col-4">
@@ -28,32 +29,33 @@
 
   </div>
 
+</div>
 
-  <div class="row">
 
-    <div class="card">
-      <div class="card-header">
-        Penn Tree Bank Pos-tags
-      </div>
-      <div class="card-body">
-        <div class="container">
-          <div class="row" *ngFor="let tag of postagBank.tags">
-            <div class="col-1">
-              <b>{{tag.index}}</b>
-            </div>
-            <div class="col-3">
-              {{tag.tag}}
-            </div>
-            <div class="col-8">
-              {{tag.description}}
-            </div>
+
+<ng-template id="postagModal" #postagModal>
+
+  <div class="card">
+    <div class="card-header">
+      Tree Bank Pos-tags
+    </div>
+    <div class="card-body">
+      <div class="container">
+        <div class="row" *ngFor="let tag of postagBank.tags">
+          <div class="col-1">
+            <b>{{tag.index}}</b>
+          </div>
+          <div class="col-3">
+            {{tag.tag}}
+          </div>
+          <div class="col-8">
+            {{tag.description}}
           </div>
         </div>
       </div>
     </div>
-
   </div>
 
-</div>
+</ng-template>
 
 
