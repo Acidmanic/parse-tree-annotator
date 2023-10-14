@@ -6,6 +6,7 @@ import {TokenSelectionProcessorService} from "./services/token-selection-process
 import {ParseTreeExtractorService} from "./services/parse-tree-extractor.service";
 import {TreeBankApiService} from "./services/api-services/tree-bank-api.service";
 import {PosTagBankModel} from "./models/pos-tag-bank.model";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 
@@ -29,7 +30,8 @@ export class AppComponent implements OnInit {
   constructor(private tokenSvc: TokenProcessorService,
               private selectionSvc: TokenSelectionProcessorService,
               private parseTreeSvc:ParseTreeExtractorService,
-              private pennSvc:TreeBankApiService) {
+              private pennSvc:TreeBankApiService,
+              private modalService:NgbModal) {
   }
 
 
@@ -133,6 +135,7 @@ export class AppComponent implements OnInit {
     console.log('pos tag clicked for group: ' + group.id);
 
 
+    this.modalService.open(this.treebankModal);
 
 
   }
