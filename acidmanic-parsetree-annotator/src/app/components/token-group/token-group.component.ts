@@ -32,7 +32,7 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
 
   private isSelected(token: TokenModel): boolean {
 
-    if (this.group.id == this.selectionInput.groupId) {
+    if (this.group.id == this.selectionInput.selectionGroupId) {
 
       return this.selection.selectedSet.has(token.index);
     }
@@ -43,7 +43,7 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
   private isSelectable(token: TokenModel): boolean {
 
 
-    if (this.group.id == this.selectionInput.groupId) {
+    if (this.group.id == this.selectionInput.selectionGroupId) {
 
       return this.selection.selectablesSet.has(token.index);
     }
@@ -51,7 +51,7 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
     return true;
   }
 
-  public classSelectionClass(token: TokenModel): string {
+  public tokenSelectionClass(token: TokenModel): string {
 
     let cssClass = 'token';
 
@@ -73,6 +73,21 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
     return cssClass;
   }
 
+
+  public groupSelectionClass(){
+
+    let cssClass = 'group';
+
+    if(this.selectionInput.highlightedGroups.has(this.group.id))
+    {
+      let hl = this.selectionInput.highlightedGroups.get(this.group.id);
+
+      cssClass += ' group-highlighted';
+      cssClass += ' bg-' + hl +'-subtle';
+    }
+
+    return cssClass;
+  }
 
   ngOnInit() {
 
@@ -144,11 +159,11 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    if (this.selectionInput.groupId != this.group.id) {
+    if (this.selectionInput.selectionGroupId != this.group.id) {
 
       this.selectionInput.selectedIds = [];
 
-      this.selectionInput.groupId = this.group.id;
+      this.selectionInput.selectionGroupId = this.group.id;
     }
 
     let existingIndex = this.selectionInput.selectedIds.indexOf(token.index);
@@ -164,7 +179,7 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
 
     if (this.selectionInput.selectedIds.length == 0) {
 
-      this.selectionInput.groupId = -1;
+      this.selectionInput.selectionGroupId = -1;
     }
 
     this.selection = this.selectionSvc.getMetaData(this.group.root!, this.selectionInput);

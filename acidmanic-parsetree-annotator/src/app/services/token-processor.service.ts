@@ -2,33 +2,34 @@ import {Injectable} from "@angular/core";
 import {TokenModel} from "../models/token.model";
 import {TokenGroupModel} from "../models/token-group.model";
 import {ResultModel} from "../models/result.model";
+import {TokenGroupComponent} from "../components/token-group/token-group.component";
 
 
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root'
 })
-export class TokenProcessorService{
+export class TokenProcessorService {
 
   private static nextGroupId = 0;
 
-  public toTopGroup(tokens:TokenModel[]):TokenGroupModel{
+  public toTopGroup(tokens: TokenModel[]): TokenGroupModel {
 
-    return this.toSubGroup(tokens,'TOP');
+    return this.toSubGroup(tokens, 'TOP');
   }
 
-  public toSubGroup(tokens:TokenModel[],tag:string):TokenGroupModel{
+  public toSubGroup(tokens: TokenModel[], tag: string): TokenGroupModel {
 
     let group = new TokenGroupModel();
 
-    group.tag=tag;
-    group.tokens=tokens;
-    group.children=[];
+    group.tag = tag;
+    group.tokens = tokens;
+    group.children = [];
 
     return group;
   }
 
 
-  public generateGroupId():number{
+  public generateGroupId(): number {
 
     let id = TokenProcessorService.nextGroupId;
 
@@ -37,18 +38,18 @@ export class TokenProcessorService{
     return id;
   }
 
-  public subGroup(group:TokenGroupModel,indexes:number[],tag:string):ResultModel<TokenGroupModel>{
+  public subGroup(group: TokenGroupModel, indexes: number[], tag: string): ResultModel<TokenGroupModel> {
 
     let lastIndex = indexes[0];
 
     for (let i = 1; i < indexes.length; i++) {
-        let index = indexes[i];
+      let index = indexes[i];
 
-        if(index!=lastIndex+1){
-          return {success:false};
-        }
+      if (index != lastIndex + 1) {
+        return {success: false};
+      }
 
-        lastIndex = index;
+      lastIndex = index;
     }
 
     for (const index of indexes) {
@@ -56,8 +57,8 @@ export class TokenProcessorService{
       for (const child of group.children) {
 
         for (const token of child.tokens) {
-          if(token.index==index){
-            return {success:false};
+          if (token.index == index) {
+            return {success: false};
           }
         }
       }
@@ -67,13 +68,13 @@ export class TokenProcessorService{
 
     subGroup.id = this.generateGroupId();
 
-    subGroup.tag=tag;
+    subGroup.tag = tag;
 
     for (const index of indexes) {
 
-      let token = this.findByIndex(group,index);
+      let token = this.findByIndex(group, index);
 
-      if(token.success){
+      if (token.success) {
         subGroup.tokens.push(token.value!);
       }
     }
@@ -87,24 +88,23 @@ export class TokenProcessorService{
     this.sortDescendants(group.root!);
 
 
-
-    return {success:true,value:subGroup};
+    return {success: true, value: subGroup};
   }
 
-  private findByIndex(group:TokenGroupModel,index:number):ResultModel<TokenModel> {
+  private findByIndex(group: TokenGroupModel, index: number): ResultModel<TokenModel> {
 
     for (const token of group.tokens) {
 
       if (token.index == index) {
 
-        return {success:true,value:token};
+        return {success: true, value: token};
       }
     }
-    return {success:false};
+    return {success: false};
   }
 
 
-  public updateTokenIds(root:TokenGroupModel):void{
+  public updateTokenIds(root: TokenGroupModel): void {
 
     root.firstTokenId = this.firstTokenId(root);
 
@@ -116,13 +116,13 @@ export class TokenProcessorService{
   }
 
 
-  public sortChildren(node:TokenGroupModel){
+  public sortChildren(node: TokenGroupModel) {
 
-    node.children.sort((a, b) => a.firstTokenId-b.firstTokenId);
+    node.children.sort((a, b) => a.firstTokenId - b.firstTokenId);
 
   }
 
-  public sortDescendants(node:TokenGroupModel){
+  public sortDescendants(node: TokenGroupModel) {
 
     this.sortChildren(node);
 
@@ -133,13 +133,13 @@ export class TokenProcessorService{
 
   }
 
-  public firstTokenId(node:TokenGroupModel):number{
+  public firstTokenId(node: TokenGroupModel): number {
 
-    let min =  1000000000;
+    let min = 1000000000;
 
     for (const token of node.tokens) {
 
-      if(token.index < min){
+      if (token.index < min) {
         min = token.index;
       }
 
@@ -148,13 +148,13 @@ export class TokenProcessorService{
     return min;
   }
 
-  public deleteSubGroup(parent: TokenGroupModel, selectedGroup: TokenGroupModel):boolean {
+  public deleteSubGroup(parent: TokenGroupModel, selectedGroup: TokenGroupModel): boolean {
 
     let index = parent.children.indexOf(selectedGroup);
 
-    if(index!=-1){
+    if (index != -1) {
 
-      parent.children.splice(index,1);
+      parent.children.splice(index, 1);
 
       return true;
 
@@ -162,4 +162,110 @@ export class TokenProcessorService{
 
     return false;
   }
+
+
+  public cloneToken(token: TokenModel): TokenModel {
+
+    let clone = new TokenModel();
+
+    clone.index = token.index;
+    clone.text = token.text;
+
+    return clone;
+  }
+
+  public cloneTokenCached(token: TokenModel,map:Map<number,TokenModel>): TokenModel {
+
+    if(map.has(token.index)){
+
+      return map.get(token.index)!;
+    }
+
+    let clone =this.cloneToken(token);
+
+    map.set(token.index,clone);
+
+    return clone;
+  }
+
+  public cloneGroup(group: TokenGroupModel): TokenGroupModel {
+
+    let groupsMap: Map<number, TokenGroupModel> = new Map<number, TokenGroupModel>();
+
+    let tokensMap: Map<number, TokenModel> = new Map<number, TokenModel>();
+
+    let root = group;
+
+    if(group.root){
+
+      root = group.root;
+    }
+
+    let fullClone = this.fullClone(root, groupsMap,tokensMap);
+
+    console.log(fullClone,groupsMap.get(group.id));
+
+    return groupsMap.get(group.id)!;
+  }
+
+  public eraseAscendants(group:TokenGroupModel,keepLayers:number){
+
+    this.eraseAscendantsRecursive(group,keepLayers,0);
+  }
+
+  private eraseAscendantsRecursive(group:TokenGroupModel,keepLayers:number,currentLayer:number){
+
+    if(currentLayer<keepLayers){
+
+      for (const child of group.children) {
+
+        this.eraseAscendantsRecursive(child,keepLayers,currentLayer+1);
+      }
+    }else{
+      group.children = [];
+    }
+  }
+
+  private fullClone(node: TokenGroupModel, groupsMap: Map<number, TokenGroupModel>,tokensMap:Map<number, TokenModel>): TokenGroupModel {
+
+    if (groupsMap.has(node.id)) {
+
+      return groupsMap.get(node.id)!;
+    }
+
+    let clone = new TokenGroupModel();
+
+    groupsMap.set(node.id,clone);
+
+    clone.id = node.id;
+    clone.tag = node.tag;
+    clone.firstTokenId = node.firstTokenId;
+
+    for (const token of node.tokens) {
+
+      clone.tokens.push(this.cloneTokenCached(token,tokensMap));
+    }
+
+    if (node.parent) {
+        clone.parent = groupsMap.get(node.parent.id);
+    }
+
+    if(node.root){
+      clone.root = groupsMap.get(node.root.id);
+    }
+
+    for (const child of node.children) {
+
+      let childClone = this.fullClone(child,groupsMap,tokensMap);
+
+      childClone.parent = clone;
+
+      childClone.root = clone.root;
+
+      clone.children.push(childClone);
+    }
+
+    return clone;
+  }
+
 }

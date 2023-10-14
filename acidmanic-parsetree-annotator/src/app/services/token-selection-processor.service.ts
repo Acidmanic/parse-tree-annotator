@@ -3,7 +3,7 @@ import {TokenSelectionMetadataModel} from "../models/token-selection-metadata.mo
 import {TokenSelectionModel} from "../models/token-selection.model";
 import {TokenGroupModel} from "../models/token-group.model";
 import {ResultModel} from "../models/result.model";
-import {group} from "@angular/animations";
+
 
 
 @Injectable({
@@ -118,7 +118,7 @@ export class TokenSelectionProcessorService {
 
   public selectedSubGroup(node: TokenGroupModel, selection: TokenSelectionModel): ResultModel<TokenGroupModel> {
 
-    if (selection.groupId == node.id) {
+    if (selection.selectionGroupId == node.id) {
       return {success: true, value: node};
     }
 
@@ -134,4 +134,5 @@ export class TokenSelectionProcessorService {
 
     return {success: false};
   }
+
 }

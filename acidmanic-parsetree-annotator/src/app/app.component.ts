@@ -27,8 +27,9 @@ export class AppComponent implements OnInit {
 
   @ViewChild('postagModal') treebankModal?:ElementRef;
 
-  private clickedTagGroup?:TokenGroupModel;
-
+  public clickedTagGroup:TokenGroupModel | undefined;
+  public modalPreviewGroup?:TokenGroupModel;
+  public clickedTagSelection:TokenSelectionModel=new TokenSelectionModel();
 
   constructor(private tokenSvc: TokenProcessorService,
               private selectionSvc: TokenSelectionProcessorService,
@@ -81,7 +82,7 @@ export class AppComponent implements OnInit {
 
           if (sub.success) {
 
-            this.selection.groupId = sub.value!.id;
+            this.selection.selectionGroupId = sub.value!.id;
 
             this.updateParseTree();
           }
@@ -113,7 +114,7 @@ export class AppComponent implements OnInit {
 
           if (deleted) {
 
-            this.selection.groupId = -1;
+            this.selection.selectionGroupId = -1;
 
             this.updateParseTree();
 
@@ -137,8 +138,17 @@ export class AppComponent implements OnInit {
 
     console.log('pos tag clicked for group: ' + group.id);
 
-
     this.clickedTagGroup = group;
+
+    let parentClone =  this.tokenSvc.cloneGroup(group.parent!);
+
+    this.tokenSvc.eraseAscendants(parentClone,1);
+
+    this.modalPreviewGroup = parentClone;
+
+    this.clickedTagSelection = new TokenSelectionModel();
+
+    this.clickedTagSelection.highlightedGroups.set(this.clickedTagGroup.id,"success");
 
     this.modalService.open(this.treebankModal,{ size: 'xl'});
   }

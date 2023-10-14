@@ -1,4 +1,4 @@
-<div class="container rounded-2 mt-1 p-1" style="border: 1px black solid">
+<div class="container rounded-2 mt-1 p-1 {{groupSelectionClass()}}" style="border: 1px black solid">
 
 
   <div class="row">
@@ -10,7 +10,7 @@
   <div class="row">
     <span style="width: unset" *ngFor="let token of group.tokens"
           (click)="this.selectToken(token)"
-          [class]="classSelectionClass(token)">
+          [class]="tokenSelectionClass(token)">
       {{token.text}}
     </span>
   </div>
