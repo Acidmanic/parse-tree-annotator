@@ -25,6 +25,33 @@
         </div>
       </div>
     </div>
+
+  </div>
+
+
+  <div class="row">
+
+    <div class="card">
+      <div class="card-header">
+        Penn Tree Bank Pos-tags
+      </div>
+      <div class="card-body">
+        <div class="container">
+          <div class="row" *ngFor="let tag of postagBank.tags">
+            <div class="col-1">
+              <b>{{tag.index}}</b>
+            </div>
+            <div class="col-3">
+              {{tag.tag}}
+            </div>
+            <div class="col-8">
+              {{tag.description}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>
