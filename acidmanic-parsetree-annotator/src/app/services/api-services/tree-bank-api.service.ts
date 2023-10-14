@@ -8,19 +8,19 @@ import {BaseUrlService} from "../base-url.service";
 @Injectable({
   providedIn:'root'
 })
-export class PennApiService{
+export class TreeBankApiService {
 
 
-  public static bankUrl:string='penn/pos-tags';
+  public static bankUrl:string='tree-bank/pos-tags/';
 
 
   constructor(private http:HttpClient) {
   }
 
 
-  public getPennTreeBank():Observable<PosTagBankModel>{
+  public getPennTreeBank(modelName:string):Observable<PosTagBankModel>{
 
-    let url = BaseUrlService.baseUrl + '/' + PennApiService.bankUrl;
+    let url = BaseUrlService.baseUrl + '/' + TreeBankApiService.bankUrl + modelName;
 
     return this.http.get<PosTagBankModel>(url);
   }

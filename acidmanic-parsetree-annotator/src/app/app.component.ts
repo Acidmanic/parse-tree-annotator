@@ -4,7 +4,7 @@ import {TokenProcessorService} from "./services/token-processor.service";
 import {TokenSelectionModel} from "./models/token-selection.model";
 import {TokenSelectionProcessorService} from "./services/token-selection-processor.service";
 import {ParseTreeExtractorService} from "./services/parse-tree-extractor.service";
-import {PennApiService} from "./services/api-services/penn.api.service";
+import {TreeBankApiService} from "./services/api-services/tree-bank-api.service";
 import {PosTagBankModel} from "./models/pos-tag-bank.model";
 
 @Component({
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   constructor(private tokenSvc: TokenProcessorService,
               private selectionSvc: TokenSelectionProcessorService,
               private parseTreeSvc:ParseTreeExtractorService,
-              private pennSvc:PennApiService) {
+              private pennSvc:TreeBankApiService) {
   }
 
 
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     this.updateParseTree();
 
 
-    this.pennSvc.getPennTreeBank().subscribe({
+    this.pennSvc.getPennTreeBank('farsi').subscribe({
       next: penn => this.postagBank = penn,
       error: err=>{},
       complete: () => {}

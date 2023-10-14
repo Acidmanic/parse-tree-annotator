@@ -7,16 +7,16 @@ namespace Acidmanic.ParseTreeAnnotator.Web.Controllers;
 
 
 [ApiController]
-[Route("penn")]
+[Route("tree-bank")]
 public class PennTreeBankController:ControllerBase
 {
 
 
     [HttpGet]
-    [Route("pos-tags")]
-    public IActionResult GetAllPostags()
+    [Route("pos-tags/{modelName}")]
+    public IActionResult GetAllPostags(string modelName)
     {
-        var json = System.IO.File.ReadAllText(Path.Combine("Resources", "Models", "penntree-tags.json"));
+        var json = System.IO.File.ReadAllText(Path.Combine("Resources", "Models", $"{modelName}-tags.json"));
 
         var bank = JsonConvert.DeserializeObject<PosTagBank>(json);
         
