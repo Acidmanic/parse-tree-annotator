@@ -1,5 +1,4 @@
 using Acidmanic.ParseTreeAnnotator.Web.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -8,7 +7,7 @@ namespace Acidmanic.ParseTreeAnnotator.Web.Controllers;
 
 [ApiController]
 [Route("tree-bank")]
-public class PennTreeBankController:ControllerBase
+public class TreeBankController:ControllerBase
 {
 
 
