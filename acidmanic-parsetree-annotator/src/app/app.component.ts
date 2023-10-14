@@ -7,6 +7,8 @@ import {ParseTreeExtractorService} from "./services/parse-tree-extractor.service
 import {TreeBankApiService} from "./services/api-services/tree-bank-api.service";
 import {PosTagBankModel} from "./models/pos-tag-bank.model";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {TokenModel} from "./models/token.model";
+import {PosTagModel} from "./models/pos-tag.model";
 
 
 
@@ -25,6 +27,8 @@ export class AppComponent implements OnInit {
 
 
   @ViewChild('postagModal') treebankModal?:ElementRef;
+
+  private clickedTagGroup?:TokenGroupModel;
 
 
   constructor(private tokenSvc: TokenProcessorService,
@@ -135,8 +139,23 @@ export class AppComponent implements OnInit {
     console.log('pos tag clicked for group: ' + group.id);
 
 
-    this.modalService.open(this.treebankModal);
+    this.clickedTagGroup = group;
 
+    this.modalService.open(this.treebankModal,{ size: 'xl'});
+  }
+
+
+  public onSetPostagClicked(tag:PosTagModel){
+
+
+    if(this.clickedTagGroup){
+
+      this.clickedTagGroup.tag = tag.tag;
+
+      this.clickedTagGroup = undefined;
+
+      this.modalService.dismissAll();
+    }
 
   }
 }

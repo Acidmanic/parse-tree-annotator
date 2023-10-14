@@ -1,6 +1,3 @@
-
-
-
 <div class="container">
 
   <div class="row">
@@ -8,10 +5,8 @@
     <div class="col-2">
 
 
-
       <button class="btn btn-primary" (click)="onSubGroupClicked()">SubGroup</button>
       <button class="btn btn-danger" (click)="onDeleteClicked()">Delete</button>
-      <button class="btn btn-danger" data-toggle="modal" data-target="#postagModal">Pop</button>
 
     </div>
     <div class="col-6">
@@ -21,7 +16,7 @@
     <div class="col-4">
       <div class="card">
         <div class="card-header"> Resulting Parse Tree</div>
-        <div class="card-body parse-tree-view" >
+        <div class="card-body parse-tree-view">
           {{parseTree}}
         </div>
       </div>
@@ -32,7 +27,6 @@
 </div>
 
 
-
 <ng-template id="postagModal" #postagModal>
 
   <div class="card">
@@ -41,17 +35,31 @@
     </div>
     <div class="card-body">
       <div class="container">
-        <div class="row" *ngFor="let tag of postagBank.tags">
-          <div class="col-1">
-            <b>{{tag.index}}</b>
+
+        <div class="row">
+
+          <div class="col-2 " *ngFor="let tag of postagBank.tags">
+            <ngb-alert
+                       class="ml-1 mt-1 card-postag"
+                       type="primary" [dismissible]="false">
+
+              <button (click)="onSetPostagClicked(tag)"
+                class="btn btn-success">
+                {{tag.tag}}
+              </button>
+              <details>
+                <summary>+</summary>
+                {{tag.description}}
+              </details>
+
+            </ngb-alert>
           </div>
-          <div class="col-3">
-            {{tag.tag}}
-          </div>
-          <div class="col-8">
-            {{tag.description}}
-          </div>
+
+
+
+
         </div>
+
       </div>
     </div>
   </div>
