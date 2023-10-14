@@ -10,7 +10,11 @@
 
     </div>
     <div class="col-6">
-      <token-group [selection]="selection" [group]="group" (on-tag-clicked)="onTagClicked($event)"></token-group>
+      <token-group [selection]="selection"
+                   [group]="group"
+                   [disable-tag-click]="true"
+                   (on-tag-clicked)="onTagClicked($event)">
+      </token-group>
     </div>
 
     <div class="col-4">

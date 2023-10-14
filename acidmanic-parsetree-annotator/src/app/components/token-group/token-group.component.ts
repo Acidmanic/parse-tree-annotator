@@ -21,6 +21,9 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output('on-tag-clicked') onTagClicked:EventEmitter<TokenGroupModel>=new EventEmitter<TokenGroupModel>();
 
+  @Input('disable-tag-click') disableTagClick:boolean=false;
+
+
   public selection: TokenSelectionMetadataModel = new TokenSelectionMetadataModel();
 
   constructor(private selectionSvc: TokenSelectionProcessorService) {
@@ -165,5 +168,14 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.selection = this.selectionSvc.getMetaData(this.group.root!, this.selectionInput);
+  }
+
+  public onTagSpanClicked():void {
+
+    if(!this.disableTagClick){
+
+      this.onTagClicked.emit(this.group);
+    }
+
   }
 }

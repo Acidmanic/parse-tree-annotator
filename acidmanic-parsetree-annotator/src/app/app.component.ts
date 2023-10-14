@@ -7,7 +7,6 @@ import {ParseTreeExtractorService} from "./services/parse-tree-extractor.service
 import {TreeBankApiService} from "./services/api-services/tree-bank-api.service";
 import {PosTagBankModel} from "./models/pos-tag-bank.model";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {TokenModel} from "./models/token.model";
 import {PosTagModel} from "./models/pos-tag.model";
 
 
