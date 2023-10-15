@@ -40,7 +40,7 @@
     <div class="card-body">
       <div class="container">
 
-        <div class="row">
+        <div class="row mb-3">
           <token-group
             [selection]="clickedTagSelection"
             [group]="modalPreviewGroup!"
@@ -48,9 +48,9 @@
           </token-group>
         </div>
 
-        <div class="row">
+        <div class="row g-1">
 
-          <div class="col-6 col-sm-12 h5"
+          <div class="col-xxl-1 col-xl-2 col-lg-4  col-md-6 col-sm-12"
                *ngFor="let tag of postagBank.tags"
                (click)="onSetPostagClicked(tag)">
             <ngb-alert

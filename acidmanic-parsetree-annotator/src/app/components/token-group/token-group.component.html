@@ -1,11 +1,9 @@
 <div class="container rounded-2 mt-1 p-1 {{groupSelectionClass()}}" style="border: 1px black solid">
 
 
-  <div class="row">
-    <span class="small-circle-badge text-light bg-info"
-    (click)="onTagSpanClicked()">
-      {{group.tag}}
-    </span>
+  <div class="small-circle-badge text-light bg-info"
+       (click)="onTagSpanClicked()">
+    {{group.tag}}
   </div>
   <div class="row">
     <span style="width: unset" *ngFor="let token of group.tokens"
