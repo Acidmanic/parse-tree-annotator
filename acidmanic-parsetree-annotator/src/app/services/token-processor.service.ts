@@ -209,6 +209,26 @@ export class TokenProcessorService {
     return groupsMap.get(group.id)!;
   }
 
+  public shallowClone(group: TokenGroupModel): TokenGroupModel {
+
+    let clone = new TokenGroupModel();
+
+    clone.tag = group.tag;
+
+    clone.firstTokenId = group.firstTokenId;
+
+    clone.root = clone;
+
+    clone.id = group.id;
+
+    for (const token of group.tokens) {
+
+      clone.tokens.push(token);
+    }
+
+    return clone;
+  }
+
   public eraseAscendants(group: TokenGroupModel, keepLayers: number) {
 
     this.eraseAscendantsRecursive(group, keepLayers, 0);

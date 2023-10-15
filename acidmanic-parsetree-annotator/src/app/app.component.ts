@@ -140,11 +140,7 @@ export class AppComponent implements OnInit {
 
     this.clickedTagGroup = group;
 
-    let parentClone =  this.tokenSvc.cloneGroup(group.parent!);
-
-    this.tokenSvc.eraseAscendants(parentClone,1);
-
-    this.modalPreviewGroup = parentClone;
+    this.modalPreviewGroup = this.tokenSvc.shallowClone(group);
 
     this.clickedTagSelection = new TokenSelectionModel();
 

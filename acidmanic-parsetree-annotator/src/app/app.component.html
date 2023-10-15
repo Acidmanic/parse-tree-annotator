@@ -40,12 +40,28 @@
     <div class="card-body">
       <div class="container">
 
-        <div class="row mb-3">
-          <token-group
-            [selection]="clickedTagSelection"
-            [group]="modalPreviewGroup!"
-            [disable-tag-click]="true">
-          </token-group>
+        <div class="row">
+
+          <div class="col-12">
+
+            <div class="d-flex align-content-center">
+              <phrase-highlighter
+                highlight-color="warning"
+                [root]="group"
+                [selected-tokens]="clickedTagGroup?.tokens!"
+              >
+              </phrase-highlighter>
+            </div>
+              <token-group
+                style="display: inline-block;"
+                [selection]="clickedTagSelection"
+                [group]="modalPreviewGroup!"
+                [disable-tag-click]="true">
+              </token-group>
+
+          </div>
+
+
         </div>
 
         <div class="row g-1">
@@ -61,13 +77,9 @@
                     (click)="onSetPostagClicked(tag)">
                 {{tag.tag}}
               </span>
-
-<!--              <span class="details">-->
-<!--                {{tag.description}}-->
-<!--              </span>-->
               <popper-limited-text
                 [text]="tag.description"
-                [text-max-chars]="50"
+                [text-max-chars]="35"
                 (text-click)="onSetPostagClicked(tag)"
                 class="details"
               ></popper-limited-text>
