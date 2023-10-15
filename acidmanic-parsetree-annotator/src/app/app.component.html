@@ -11,9 +11,9 @@
     </div>
     <div class="col-6">
       <token-tree [selection]="selection"
-                   [group]="group"
-                   [disable-tag-click]="true"
-                   (on-tag-clicked)="onTagClicked($event)">
+                  [group]="group"
+                  [disable-tag-click]="true"
+                  (on-tag-clicked)="onTagClicked($event)">
       </token-tree>
     </div>
 
@@ -44,7 +44,7 @@
 
           <div class="col-12">
 
-            <div class="d-flex align-content-center">
+            <div class="d-flex justify-content-center">
               <phrase-highlighter
                 highlight-color="warning"
                 [root]="group"
@@ -52,13 +52,14 @@
               >
               </phrase-highlighter>
             </div>
+            <div class="d-flex justify-content-center">
               <token-group
                 style="display: inline-block;"
                 [selection]="clickedTagSelection"
                 [group]="modalPreviewGroup!"
                 [disable-tag-click]="true">
               </token-group>
-
+            </div>
           </div>
 
 
