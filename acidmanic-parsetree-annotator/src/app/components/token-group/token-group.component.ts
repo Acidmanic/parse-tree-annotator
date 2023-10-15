@@ -161,23 +161,23 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
 
     if (this.selectionInput.selectionGroupId != this.group.id) {
 
-      this.selectionInput.selectedIds = [];
+      this.selectionInput.selectedTokenIndexes = [];
 
       this.selectionInput.selectionGroupId = this.group.id;
     }
 
-    let existingIndex = this.selectionInput.selectedIds.indexOf(token.index);
+    let existingIndex = this.selectionInput.selectedTokenIndexes.indexOf(token.index);
 
     if (existingIndex > -1) {
 
-      this.selectionInput.selectedIds.splice(existingIndex, 1);
+      this.selectionInput.selectedTokenIndexes.splice(existingIndex, 1);
 
     } else {
 
-      this.selectionInput.selectedIds.push(token.index);
+      this.selectionInput.selectedTokenIndexes.push(token.index);
     }
 
-    if (this.selectionInput.selectedIds.length == 0) {
+    if (this.selectionInput.selectedTokenIndexes.length == 0) {
 
       this.selectionInput.selectionGroupId = -1;
     }

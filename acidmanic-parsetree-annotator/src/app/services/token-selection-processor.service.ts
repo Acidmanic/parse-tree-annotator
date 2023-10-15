@@ -19,7 +19,7 @@ export class TokenSelectionProcessorService {
     let min = 100000;
     let max = -100000;
 
-    for (const selectedId of selection.selectedIds) {
+    for (const selectedId of selection.selectedTokenIndexes) {
 
       if (min > selectedId) {
         min = selectedId;
@@ -34,7 +34,7 @@ export class TokenSelectionProcessorService {
       meta.selectedSet.add(selectedId);
     }
 
-    if (selection.selectedIds.length) {
+    if (selection.selectedTokenIndexes.length) {
 
       meta.selectablesSet.add(max);
 
@@ -43,7 +43,7 @@ export class TokenSelectionProcessorService {
       }
     }
 
-    if (selection.selectedIds.length) {
+    if (selection.selectedTokenIndexes.length) {
 
       let prev = meta.minSelectedIndex - 1;
       let next = meta.maxSelectedIndex + 1;
@@ -68,7 +68,7 @@ export class TokenSelectionProcessorService {
       }
     }
 
-    for (const selectedId of selection.selectedIds) {
+    for (const selectedId of selection.selectedTokenIndexes) {
 
       if(meta.singularLeaves.has(selectedId)){
 
@@ -84,7 +84,7 @@ export class TokenSelectionProcessorService {
 
     if(selectedGroup.success){
 
-      meta.wholeGroupIsSelected = selectedGroup.value!.tokens.length == selection.selectedIds.length;
+      meta.wholeGroupIsSelected = selectedGroup.value!.tokens.length == selection.selectedTokenIndexes.length;
     }
 
     return meta;

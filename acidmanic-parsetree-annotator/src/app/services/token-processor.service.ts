@@ -3,6 +3,7 @@ import {TokenModel} from "../models/token.model";
 import {TokenGroupModel} from "../models/token-group.model";
 import {ResultModel} from "../models/result.model";
 import {TokenGroupComponent} from "../components/token-group/token-group.component";
+import {TokenGroupMapModel} from "../models/token-group-map.model";
 
 
 @Injectable({
@@ -91,7 +92,7 @@ export class TokenProcessorService {
     return {success: true, value: subGroup};
   }
 
-  private findByIndex(group: TokenGroupModel, index: number): ResultModel<TokenModel> {
+  public findByIndex(group: TokenGroupModel, index: number): ResultModel<TokenModel> {
 
     for (const token of group.tokens) {
 
@@ -174,16 +175,16 @@ export class TokenProcessorService {
     return clone;
   }
 
-  public cloneTokenCached(token: TokenModel,map:Map<number,TokenModel>): TokenModel {
+  public cloneTokenCached(token: TokenModel, map: Map<number, TokenModel>): TokenModel {
 
-    if(map.has(token.index)){
+    if (map.has(token.index)) {
 
       return map.get(token.index)!;
     }
 
-    let clone =this.cloneToken(token);
+    let clone = this.cloneToken(token);
 
-    map.set(token.index,clone);
+    map.set(token.index, clone);
 
     return clone;
   }
@@ -196,37 +197,37 @@ export class TokenProcessorService {
 
     let root = group;
 
-    if(group.root){
+    if (group.root) {
 
       root = group.root;
     }
 
-    let fullClone = this.fullClone(root, groupsMap,tokensMap);
+    let fullClone = this.fullClone(root, groupsMap, tokensMap);
 
-    console.log(fullClone,groupsMap.get(group.id));
+    console.log(fullClone, groupsMap.get(group.id));
 
     return groupsMap.get(group.id)!;
   }
 
-  public eraseAscendants(group:TokenGroupModel,keepLayers:number){
+  public eraseAscendants(group: TokenGroupModel, keepLayers: number) {
 
-    this.eraseAscendantsRecursive(group,keepLayers,0);
+    this.eraseAscendantsRecursive(group, keepLayers, 0);
   }
 
-  private eraseAscendantsRecursive(group:TokenGroupModel,keepLayers:number,currentLayer:number){
+  private eraseAscendantsRecursive(group: TokenGroupModel, keepLayers: number, currentLayer: number) {
 
-    if(currentLayer<keepLayers){
+    if (currentLayer < keepLayers) {
 
       for (const child of group.children) {
 
-        this.eraseAscendantsRecursive(child,keepLayers,currentLayer+1);
+        this.eraseAscendantsRecursive(child, keepLayers, currentLayer + 1);
       }
-    }else{
+    } else {
       group.children = [];
     }
   }
 
-  private fullClone(node: TokenGroupModel, groupsMap: Map<number, TokenGroupModel>,tokensMap:Map<number, TokenModel>): TokenGroupModel {
+  private fullClone(node: TokenGroupModel, groupsMap: Map<number, TokenGroupModel>, tokensMap: Map<number, TokenModel>): TokenGroupModel {
 
     if (groupsMap.has(node.id)) {
 
@@ -235,7 +236,7 @@ export class TokenProcessorService {
 
     let clone = new TokenGroupModel();
 
-    groupsMap.set(node.id,clone);
+    groupsMap.set(node.id, clone);
 
     clone.id = node.id;
     clone.tag = node.tag;
@@ -243,20 +244,20 @@ export class TokenProcessorService {
 
     for (const token of node.tokens) {
 
-      clone.tokens.push(this.cloneTokenCached(token,tokensMap));
+      clone.tokens.push(this.cloneTokenCached(token, tokensMap));
     }
 
     if (node.parent) {
-        clone.parent = groupsMap.get(node.parent.id);
+      clone.parent = groupsMap.get(node.parent.id);
     }
 
-    if(node.root){
+    if (node.root) {
       clone.root = groupsMap.get(node.root.id);
     }
 
     for (const child of node.children) {
 
-      let childClone = this.fullClone(child,groupsMap,tokensMap);
+      let childClone = this.fullClone(child, groupsMap, tokensMap);
 
       childClone.parent = clone;
 
@@ -267,5 +268,52 @@ export class TokenProcessorService {
 
     return clone;
   }
+
+  public mapTokenGroup(root: TokenGroupModel): TokenGroupMapModel {
+
+    let map = new TokenGroupMapModel();
+
+    this.browseInsertIntoMap(root, map);
+
+    return map;
+  }
+
+  private browseInsertIntoMap(node: TokenGroupModel, map: TokenGroupMapModel) {
+
+    if (!map.groupsById.has(node.id)) {
+
+      map.groupsById.set(node.id, node);
+    }
+
+    for (const token of node.tokens) {
+
+      if (!map.tokensByIndex.has(token.index)) {
+
+        map.tokensByIndex.set(token.index, token);
+      }
+    }
+
+    for (const child of node.children) {
+
+      this.browseInsertIntoMap(child, map);
+    }
+  }
+
+
+  public isTokenPassedToAnyChildren(group: TokenGroupModel, tokenIndex: number): boolean {
+
+    for (const child of group.children) {
+
+      let foundAlreadyUsedToken = this.findByIndex(child, tokenIndex);
+
+      if (foundAlreadyUsedToken.success) {
+
+        return true;
+      }
+    }
+
+    return false;
+  }
+
 
 }

@@ -76,9 +76,9 @@ export class AppComponent implements OnInit {
 
       if (selectedGroup.success && !meta.wholeGroupIsSelected) {
 
-        if (this.selection.selectedIds.length > 0) {
+        if (this.selection.selectedTokenIndexes.length > 0) {
 
-          let sub = this.tokenSvc.subGroup(selectedGroup.value!, this.selection.selectedIds, 'SU');
+          let sub = this.tokenSvc.subGroup(selectedGroup.value!, this.selection.selectedTokenIndexes, 'SU');
 
           if (sub.success) {
 
