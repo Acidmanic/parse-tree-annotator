@@ -1,4 +1,10 @@
 {
+  "language": {
+    "name": "English",
+    "shortName": "En",
+    "direction": "ltr"
+  },
+  
   "tags": [
     {
       "index": 1,
