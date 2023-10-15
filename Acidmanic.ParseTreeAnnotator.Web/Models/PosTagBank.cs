@@ -4,4 +4,7 @@ public class PosTagBank
 {
     public List<PosTag> Tags { get; set; }
     
+    
+   public Language Language { get; set; }
+    
 }

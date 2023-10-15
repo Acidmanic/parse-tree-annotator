@@ -1,24 +1,58 @@
 using Acidmanic.ParseTreeAnnotator.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 
 namespace Acidmanic.ParseTreeAnnotator.Web.Controllers;
 
-
 [ApiController]
 [Route("tree-bank")]
-public class TreeBankController:ControllerBase
+public class TreeBankController : ControllerBase
 {
-
+    private static readonly string PostagModelFileNamePostFix = "-tags.json";
 
     [HttpGet]
     [Route("pos-tags/{modelName}")]
-    public IActionResult GetAllPostags(string modelName)
+    public IActionResult GetPostagModelByName(string modelName)
     {
-        var json = System.IO.File.ReadAllText(Path.Combine("Resources", "Models", $"{modelName}-tags.json"));
+        var fileName = Path.Combine("Resources", "Models", $"{modelName}{PostagModelFileNamePostFix}");
+
+        if (!System.IO.File.Exists(fileName))
+        {
+            return NotFound();
+        }
+
+        var json = System.IO.File.ReadAllText(fileName);
 
         var bank = JsonConvert.DeserializeObject<PosTagBank>(json);
-        
+
         return Ok(bank);
+    }
+
+    [HttpGet]
+    [Route("pos-tags")]
+    public IActionResult GetAllPostagModelNames()
+    {
+        var directoryPath = Path.Combine("Resources", "Models");
+
+        var directory = new DirectoryInfo(directoryPath);
+
+        var files = directory.GetFiles();
+
+        var modelsAvailable = new List<string>();
+
+        foreach (var file in files)
+        {
+            var fileName = file.Name;
+
+            if (fileName.ToLower().EndsWith(PostagModelFileNamePostFix.ToLower()))
+            {
+                var modelName = fileName.Substring(0, fileName.Length - PostagModelFileNamePostFix.Length);
+
+                modelsAvailable.Add(modelName);
+            }
+        }
+
+        return Ok(new { Items = modelsAvailable });
     }
 }

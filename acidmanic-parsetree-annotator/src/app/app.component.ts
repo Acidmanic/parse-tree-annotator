@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
 
 
     this.pennSvc.getPennTreeBank('farsi').subscribe({
-      next: penn => this.postagBank = penn,
+      next: bank => this.postagBank = bank,
       error: err=>{},
       complete: () => {}
     });

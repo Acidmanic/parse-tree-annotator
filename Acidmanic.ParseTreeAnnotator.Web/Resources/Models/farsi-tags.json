@@ -1,4 +1,11 @@
 {
+  
+  "language": {
+    "name": "فارسی",
+    "shortName": "فا",
+    "direction": "rtl"
+  },
+  
   "tags": [
     {
       "index": 1,
