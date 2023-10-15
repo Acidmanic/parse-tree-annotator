@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
     this.updateParseTree();
 
 
-    this.pennSvc.getPennTreeBank('farsi').subscribe({
+    this.pennSvc.getTreeBankByModelName('farsi').subscribe({
       next: bank => this.postagBank = bank,
       error: err=>{},
       complete: () => {}

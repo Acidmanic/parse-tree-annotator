@@ -52,6 +52,7 @@
 
           <div class="col-xxl-1 col-xl-2 col-lg-4  col-md-6 col-sm-12"
                *ngFor="let tag of postagBank.tags"
+               [dir]="postagBank.language.direction"
                (click)="onSetPostagClicked(tag)">
             <ngb-alert
               class="m-0 ml-1 mt-1 p-1 card-postag"
