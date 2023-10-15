@@ -1,0 +1,35 @@
+<div class="container rounded-2 mt-1 p-1 {{groupSelectionClass()}}" style="border: 1px black solid">
+
+
+  <div class="small-circle-badge text-light bg-info"
+       (click)="onTagSpanClicked()">
+    {{group.tag}}
+  </div>
+  <div class="row">
+    <span style="width: unset" *ngFor="let token of group.tokens"
+          (click)="this.selectToken(token)"
+          [class]="tokenSelectionClass(token)">
+      {{token.text}}
+    </span>
+  </div>
+  <div class="row">
+
+
+    <div style="width: unset" *ngFor="let placeHolder of processPlaceholders()">
+
+      <token-tree style="width: unset"
+                   *ngIf="placeHolder.groupContained"
+                   [group]="placeHolder.group!" [selection]="selectionInput"
+                   (on-tag-clicked)="onTagClicked.emit($event)">
+      </token-tree>
+
+      <span *ngIf="!placeHolder.groupContained" class="token-placeholder">
+        {{placeHolder.text}}
+      </span>
+
+    </div>
+
+
+  </div>
+
+</div>

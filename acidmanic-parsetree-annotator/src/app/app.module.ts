@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpanOrDetailsComponent } from './components/span-or-details/span-or-details.component';
 import { PopperLimitedTextComponent } from './components/popper-limited-text/popper-limited-text.component';
 import { PhraseHighlighterComponent } from './components/phrase-highlighter/phrase-highlighter.component';
+import { TokenTreeComponent } from './components/token-tree/token-tree.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PhraseHighlighterComponent } from './components/phrase-highlighter/phra
     TokenGroupComponent,
     SpanOrDetailsComponent,
     PopperLimitedTextComponent,
-    PhraseHighlighterComponent
+    PhraseHighlighterComponent,
+    TokenTreeComponent
   ],
   imports: [
     BrowserModule,
