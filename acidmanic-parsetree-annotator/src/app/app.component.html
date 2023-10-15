@@ -65,12 +65,12 @@
 <!--              <span class="details">-->
 <!--                {{tag.description}}-->
 <!--              </span>-->
-              <span-or-details
+              <popper-limited-text
                 [text]="tag.description"
                 [text-max-chars]="50"
-                (span-click)="onSetPostagClicked(tag)"
+                (text-click)="onSetPostagClicked(tag)"
                 class="details"
-              ></span-or-details>
+              ></popper-limited-text>
 
             </ngb-alert>
           </div>

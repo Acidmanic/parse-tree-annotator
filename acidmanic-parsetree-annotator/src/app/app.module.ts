@@ -7,12 +7,14 @@ import { TokenGroupComponent } from './components/token-group/token-group.compon
 import {HttpClientModule} from "@angular/common/http";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpanOrDetailsComponent } from './components/span-or-details/span-or-details.component';
+import { PopperLimitedTextComponent } from './components/popper-limited-text/popper-limited-text.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TokenGroupComponent,
-    SpanOrDetailsComponent
+    SpanOrDetailsComponent,
+    PopperLimitedTextComponent
   ],
   imports: [
     BrowserModule,

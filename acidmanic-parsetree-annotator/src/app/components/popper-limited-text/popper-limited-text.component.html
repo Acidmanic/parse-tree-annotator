@@ -1,0 +1,12 @@
+<span (click)="textClickEmitter.emit($event)"
+      class="cursor-pointer">
+  {{viewingText}}
+</span>
+<button
+  *ngIf="isShortened"
+  type="button"
+  [ngbPopover]="text"
+  popoverTitle="🔎"
+  class="rounded-pill  btn btn-outline-secondary me-2 pill-text-more"
+>•••
+</button>
