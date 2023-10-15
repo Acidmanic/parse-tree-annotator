@@ -5,8 +5,10 @@ import {LanguageModel} from "./language.model";
 export class PosTagBankModel{
 
 
-  tags:PosTagModel[]=[];
+  public tags:PosTagModel[]=[];
 
-  language:LanguageModel=new LanguageModel();
+  public language:LanguageModel=new LanguageModel();
+
+  public bankName:string='';
 
 }
