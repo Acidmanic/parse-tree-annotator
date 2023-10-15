@@ -1,0 +1,16 @@
+
+
+
+<span *ngIf="!useDetails" (click)="spanClickEmitter.emit($event)">
+
+{{this.text}}
+
+</span>
+
+<details *ngIf="useDetails">
+
+  <summary>{{summaryText}}</summary>
+
+  {{this.text}}
+
+</details>

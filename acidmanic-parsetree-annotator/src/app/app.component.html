@@ -52,19 +52,25 @@
 
           <div class="col-xxl-1 col-xl-2 col-lg-4  col-md-6 col-sm-12"
                *ngFor="let tag of postagBank.tags"
-               [dir]="postagBank.language.direction"
-               (click)="onSetPostagClicked(tag)">
+               [dir]="postagBank.language.direction">
             <ngb-alert
               class="m-0 ml-1 mt-1 p-1 card-postag"
               type="primary" [dismissible]="false">
 
-              <span class="badge bg-primary p-1 m-0">
+              <span class="badge bg-primary p-1 m-0 cursor-pointer"
+                    (click)="onSetPostagClicked(tag)">
                 {{tag.tag}}
               </span>
 
-              <span class="details">
-                {{tag.description}}
-              </span>
+<!--              <span class="details">-->
+<!--                {{tag.description}}-->
+<!--              </span>-->
+              <span-or-details
+                [text]="tag.description"
+                [text-max-chars]="50"
+                (span-click)="onSetPostagClicked(tag)"
+                class="details"
+              ></span-or-details>
 
             </ngb-alert>
           </div>
