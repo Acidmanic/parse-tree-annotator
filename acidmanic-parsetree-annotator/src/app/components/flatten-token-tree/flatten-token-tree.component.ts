@@ -36,7 +36,7 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
   private lastSignature: string = '';
 
-  private lines: any[] = [];
+  private linesByEndIndex: Map<number,any> = new Map<number, any>();
   private elementsByGroupIds: Map<number, ElementRef> = new Map<number, ElementRef>();
   private startPointsByEndPoints: Map<number, number> = new Map<number, number>();
 
@@ -64,6 +64,8 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
   onChildCircleReady(gl: GroupElement) {
 
     if (this.elementsByGroupIds.has(gl.group.id)) {
+
+      console.log('received the element twice, but why?',gl);
 
       this.elementsByGroupIds.delete(gl.group.id);
 
@@ -93,6 +95,8 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
     console.log('refresh called');
 
     this.removePreviousLines();
+
+    this.elementsByGroupIds.clear();
 
     this.startPointsByEndPoints.clear();
 
@@ -179,11 +183,14 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
   private removePreviousLines() {
 
-    for (const line of this.lines) {
+    for (const line of this.linesByEndIndex.values()) {
+
+      console.log('removing existing line:', line);
+
       line.remove();
     }
 
-    this.lines = [];
+    this.linesByEndIndex.clear();
   }
 
   private calculateLinesTerminals(levels: FlatTreeLevelModel[]) {
@@ -224,7 +231,7 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
       line.path = 'straight';
 
-      this.lines.push(line);
+      this.linesByEndIndex.set(endId, line);
     }
   }
 
@@ -269,6 +276,33 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
       this.renderLine(startId, endId);
 
     }
+
+  }
+
+  onNodeDestroy(circleNode: ElementRef, placeHolder: TokenGroupPlaceholderModel) {
+
+
+    console.log('node destroyed',placeHolder,circleNode);
+
+    if(placeHolder.groupContained && placeHolder.group){
+
+
+      let id = placeHolder.group.id;
+
+      console.log('found destroyed group:', id,this.linesByEndIndex);
+
+      if(this.linesByEndIndex.has(id)){
+
+        console.log('removing line for ',placeHolder);
+
+        this.linesByEndIndex.get(id)!.remove();
+
+        this.linesByEndIndex.delete(id);
+      }
+
+    }
+
+
 
   }
 }

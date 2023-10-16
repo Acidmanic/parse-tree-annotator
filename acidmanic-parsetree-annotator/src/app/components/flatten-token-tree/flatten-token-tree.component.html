@@ -12,6 +12,7 @@
       (on-tag-clicked)="onTagClicked.emit($event)"
       [disable-tag-click]="disableTagClick"
       [selection]="selectionInput"
+      (on-node-destroy)="onNodeDestroy($event,placeHolder)"
       [place-holder]="placeHolder">
     </token-group-place-holder>
   </div>

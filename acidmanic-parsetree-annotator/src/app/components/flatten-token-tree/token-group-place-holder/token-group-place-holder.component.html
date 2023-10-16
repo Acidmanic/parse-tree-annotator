@@ -8,6 +8,7 @@
                   [group]="placeHolder.group!"
                   [selection]="selectionInput"
                   (on-circle-ready)="this.onCircleReady.emit($event)"
+                  (on-node-destroy)="this.onNodeDestroy.emit($event)"
                   (on-tag-clicked)="onTagClicked.emit($event)">
 </token-group-node>
 

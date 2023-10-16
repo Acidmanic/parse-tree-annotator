@@ -4,7 +4,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
+  OnChanges, OnDestroy,
   Output,
   SimpleChanges,
   ViewChild
@@ -22,7 +22,7 @@ import {TokenSelectionMetadataModel} from "../../../models/token-selection-metad
   templateUrl: './token-group-node.component.html',
   styleUrls: ['./token-group-node.component.scss']
 })
-export class TokenGroupNodeComponent implements OnChanges,AfterViewInit{
+export class TokenGroupNodeComponent implements OnChanges,AfterViewInit,OnDestroy{
 
 
   @Input('group') group: TokenGroupModel = new TokenGroupModel();
@@ -34,6 +34,9 @@ export class TokenGroupNodeComponent implements OnChanges,AfterViewInit{
 
 
   @ViewChild('nodeCircle') nodeCircle:ElementRef = new ElementRef<any>(undefined);
+
+  @Output('on-node-destroy') onNodeDestroy:EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+
 
   public selection: TokenSelectionMetadataModel = new TokenSelectionMetadataModel();
 
@@ -156,6 +159,11 @@ export class TokenGroupNodeComponent implements OnChanges,AfterViewInit{
     }
 
     this.selection = this.selectionSvc.getMetaData(this.group.root!, this.selectionInput);
+  }
+
+  ngOnDestroy() {
+
+    this.onNodeDestroy.emit(this.nodeCircle);
   }
 
 }

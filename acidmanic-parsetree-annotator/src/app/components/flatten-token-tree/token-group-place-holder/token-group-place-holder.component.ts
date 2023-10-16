@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
 import {TokenGroupPlaceholderModel} from "../../../models/token-group-placeholder.model";
 import {TokenGroupModel} from "../../../models/token-group.model";
 import {TokenSelectionModel} from "../../../models/token-selection.model";
@@ -18,4 +18,5 @@ export class TokenGroupPlaceHolderComponent {
 
   @Output('on-circle-ready') onCircleReady:EventEmitter<GroupElement>= new EventEmitter<GroupElement>();
 
+  @Output('on-node-destroy') onNodeDestroy:EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 }
