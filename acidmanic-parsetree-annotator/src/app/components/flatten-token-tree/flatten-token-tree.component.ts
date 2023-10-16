@@ -6,6 +6,9 @@ import {FlatTreeLevelModel} from "../../models/flat-tree-level.model";
 import {TokenProcessorService} from "../../services/token-processor.service";
 import {GroupElement} from "../../models/group.element";
 
+
+declare var LeaderLine: any;
+
 @Component({
   selector: 'flatten-token-tree',
   templateUrl: './flatten-token-tree.component.html',
@@ -62,10 +65,13 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit {
 
     console.log('refresh called');
 
+    this.removePreviousLines();
+
     this.updateLevels();
 
+    console.log('children element status', this.elementsByGroupIds);
 
-    console.log('children element status',this.elementsByGroupIds);
+    this.renderNewLines();
   }
 
 
@@ -111,7 +117,7 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit {
 
     let level = flatLevels[currentLevel];
 
-    let firstToken = this.groupProcessor.findByIndex(group.root!,group.firstTokenId).value!;
+    let firstToken = this.groupProcessor.findByIndex(group.root!, group.firstTokenId).value!;
 
     level.placeHolders[group.firstTokenId].group = group;
     level.placeHolders[group.firstTokenId].groupContained = true;
@@ -137,5 +143,56 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit {
     }
 
     return currentSignature;
+  }
+
+  private removePreviousLines() {
+
+    for (const line of this.lines) {
+      line.remove();
+    }
+
+    this.lines = [];
+  }
+
+  private renderNewLines() {
+
+
+    for (const level of this.levels) {
+
+      for (const placeHolder of level.placeHolders) {
+
+        if(placeHolder.groupContained){
+
+          let startGroup = placeHolder.group!;
+
+          let start = this.elementsByGroupIds.get(startGroup.id)?.nativeElement;
+
+          for (const child of startGroup.children) {
+
+            let end = this.elementsByGroupIds.get(child.id)?.nativeElement;
+
+            console.log('drawing line from ' + placeHolder.group!.id + ' to ' + child.id, 'start:', start, 'end: ', end);
+
+            if (start && end) {
+
+              //const line = new LeaderLine(start, end);
+              const line = new LeaderLine(
+                LeaderLine.pointAnchor(start, {x: '50%', y: '100%'}),
+                LeaderLine.pointAnchor(end, {x: '50%', y: '0%'}));
+
+              line.path = 'straight';
+
+              this.lines.push(line);
+            }
+
+          }
+
+
+        }
+      }
+    }
+
+
+
   }
 }
