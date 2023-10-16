@@ -15,7 +15,6 @@ import {TokenGroupPlaceholderModel} from "../../models/token-group-placeholder.m
 import {FlatTreeLevelModel} from "../../models/flat-tree-level.model";
 import {TokenProcessorService} from "../../services/token-processor.service";
 import {GroupElement} from "../../models/group.element";
-import {end} from "@popperjs/core";
 
 
 declare var LeaderLine: any;
@@ -49,17 +48,10 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
   ngOnChanges(changes: SimpleChanges) {
 
-    console.log('change called for', changes);
-
-    //this.refresh();
-
   }
 
   ngOnInit() {
 
-    console.log('init called');
-
-    //this.refresh();
   }
 
 
@@ -67,23 +59,11 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
     if (this.elementsByGroupIds.has(gl.group.id)) {
 
-      console.log('received the element twice, but why?',gl);
-
       this.elementsByGroupIds.delete(gl.group.id);
 
     }
 
     this.elementsByGroupIds.set(gl.group.id, gl.element);
-
-    // let endId =gl.group.id;
-    //
-    // if(this.startPointsByEndPoints.has(endId)){
-    //
-    //   let startId = this.startPointsByEndPoints.get(endId)!;
-    //
-    //   this.renderLine(startId,endId);
-    //
-    // }
 
     if (this.allNodesInitialized()) {
 
@@ -94,8 +74,6 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
   private refresh(): void {
 
-    console.log('refresh called');
-
     this.removePreviousLines();
 
     this.elementsByGroupIds.clear();
@@ -104,15 +82,11 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
     this.updateLevels();
 
-    console.log('children element status', this.elementsByGroupIds);
-
 
   }
 
 
   private updateLevels(): void {
-
-    //let tokenAndGroupByIdMap = this.groupProcessor.mapTokenGroup(this.group);
 
     let flatLevels: FlatTreeLevelModel[] = [];
 
@@ -123,7 +97,6 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
     this.levels = flatLevels;
 
-    console.log('levels updated', this.levels);
   }
 
   private createEmptyLevel(root: TokenGroupModel, atLevel: number): FlatTreeLevelModel {
@@ -187,8 +160,6 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
     for (const line of this.linesByEndIndex.values()) {
 
-      console.log('removing existing line:', line);
-
       line.remove();
     }
 
@@ -222,11 +193,8 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
     let end = this.elementsByGroupIds.get(endId)?.nativeElement;
 
-    console.log('drawing line from ' + startId + ' to ' + endId, 'start:', start, 'end: ', end);
-
     if (start && end) {
 
-      //const line = new LeaderLine(start, end);
       const line = new LeaderLine(
         LeaderLine.pointAnchor(start, {x: '50%', y: '100%'}),
         LeaderLine.pointAnchor(end, {x: '50%', y: '0%'}));
@@ -239,9 +207,6 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
 
   ngAfterContentInit() {
-
-    console.log('ngAfterContentInit', this.elementsByGroupIds);
-
 
   }
 
@@ -268,8 +233,6 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
   private renderAllLines() {
 
-    console.log('all nodes initialized', this.elementsByGroupIds, this.startPointsByEndPoints);
-
     for (const endId of this.startPointsByEndPoints.keys()) {
 
 
@@ -283,19 +246,12 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
   onNodeDestroy(circleNode: ElementRef, placeHolder: TokenGroupPlaceholderModel) {
 
-
-    console.log('node destroyed',placeHolder,circleNode);
-
     if(placeHolder.groupContained && placeHolder.group){
 
 
       let id = placeHolder.group.id;
 
-      console.log('found destroyed group:', id,this.linesByEndIndex);
-
       if(this.linesByEndIndex.has(id)){
-
-        console.log('removing line for ',placeHolder);
 
         this.linesByEndIndex.get(id)!.remove();
 
