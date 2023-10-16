@@ -11,7 +11,7 @@
   </div>
 
   <div class="row d-flex justify-content-center">
-    <span style="width: unset" *ngFor="let token of group.tokens"
+    <span style="width: unset;z-index: {{tokenZIndex?tokenZIndex:'unset'}}" *ngFor="let token of group.tokens"
           (click)="this.selectToken(token)"
           [class]="tokenSelectionClass(token)">
       {{token.text}}

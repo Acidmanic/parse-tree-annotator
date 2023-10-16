@@ -11,9 +11,10 @@
     </div>
     <div class="col-6">
       <flatten-token-tree [selection]="selection"
-                  [group]="group"
-                  [disable-tag-click]="true"
-                  (on-tag-clicked)="onTagClicked($event)">
+                          [group]="group"
+                          [disable-tag-click]="true"
+                          [token-z-index]="100"
+                          (on-tag-clicked)="onTagClicked($event)">
       </flatten-token-tree>
     </div>
 

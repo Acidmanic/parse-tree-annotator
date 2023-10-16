@@ -9,6 +9,7 @@
                   [selection]="selectionInput"
                   (on-circle-ready)="this.onCircleReady.emit($event)"
                   (on-node-destroy)="this.onNodeDestroy.emit($event)"
+                  [token-z-index]="tokenZIndex"
                   (on-tag-clicked)="onTagClicked.emit($event)">
 </token-group-node>
 

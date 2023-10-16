@@ -31,6 +31,8 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
   @Input('selection') selectionInput: TokenSelectionModel = new TokenSelectionModel();
   @Output('on-tag-clicked') onTagClicked: EventEmitter<TokenGroupModel> = new EventEmitter<TokenGroupModel>();
   @Input('disable-tag-click') disableTagClick: boolean = false;
+  @Input('token-z-index') tokenZIndex?:number;
+
 
   public levels: FlatTreeLevelModel[] = [];
 

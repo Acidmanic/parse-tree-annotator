@@ -29,13 +29,10 @@ export class TokenGroupNodeComponent implements OnChanges,AfterViewInit,OnDestro
   @Input('selection') selectionInput: TokenSelectionModel = new TokenSelectionModel();
   @Output('on-tag-clicked') onTagClicked: EventEmitter<TokenGroupModel> = new EventEmitter<TokenGroupModel>();
   @Input('disable-tag-click') disableTagClick: boolean = false;
-
   @Output('on-circle-ready') onCircleReady:EventEmitter<GroupElement>= new EventEmitter<GroupElement>();
-
-
   @ViewChild('nodeCircle') nodeCircle:ElementRef = new ElementRef<any>(undefined);
-
   @Output('on-node-destroy') onNodeDestroy:EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  @Input('token-z-index') tokenZIndex?:number;
 
 
   public selection: TokenSelectionMetadataModel = new TokenSelectionMetadataModel();
