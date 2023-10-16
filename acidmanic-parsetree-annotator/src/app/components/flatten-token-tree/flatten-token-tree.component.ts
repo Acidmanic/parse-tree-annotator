@@ -34,27 +34,28 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
   @Input('selection') selectionInput: TokenSelectionModel = new TokenSelectionModel();
   @Output('on-tag-clicked') onTagClicked: EventEmitter<TokenGroupModel> = new EventEmitter<TokenGroupModel>();
   @Input('disable-tag-click') disableTagClick: boolean = false;
-  @Input('token-z-index') tokenZIndex?:number;
+  @Input('token-z-index') tokenZIndex?: number;
 
 
-  @Output('on-delete-group') onDeleteGroup:EventEmitter<TokenGroupModel> = new EventEmitter<TokenGroupModel>();
-  @Output('on-delete-tokens') onDeleteTokens:EventEmitter<PariModel<TokenGroupModel, TokenModel>[]> = new EventEmitter<PariModel<TokenGroupModel, TokenModel>[]>();
-  @Output('on-sub-group') onSubGroup:EventEmitter<PariModel<TokenGroupModel, number[]>> = new EventEmitter<PariModel<TokenGroupModel, number[]>>();
+  @Output('on-delete-group') onDeleteGroup: EventEmitter<TokenGroupModel> = new EventEmitter<TokenGroupModel>();
+  @Output('on-delete-tokens') onDeleteTokens: EventEmitter<PariModel<TokenGroupModel, TokenModel>[]> = new EventEmitter<PariModel<TokenGroupModel, TokenModel>[]>();
+  @Output('on-sub-group') onSubGroup: EventEmitter<PariModel<TokenGroupModel, number[]>> = new EventEmitter<PariModel<TokenGroupModel, number[]>>();
 
   public levels: FlatTreeLevelModel[] = [];
 
   private lastGroupSignature: string = '';
   private lastSelectionSignature: string = '';
 
-  private linesByEndIndex: Map<number,any> = new Map<number, any>();
+  private linesByEndIndex: Map<number, any> = new Map<number, any>();
   private elementsByGroupIds: Map<number, ElementRef> = new Map<number, ElementRef>();
   private startPointsByEndPoints: Map<number, number> = new Map<number, number>();
 
 
-  public selectionStateCache:TokenSelectionCacheModel=new TokenSelectionCacheModel();
+  public selectionStateCache: TokenSelectionCacheModel = new TokenSelectionCacheModel();
+  public selectionStateCacheBroadcast: EventEmitter<TokenSelectionCacheModel> = new EventEmitter<TokenSelectionCacheModel>();
 
   constructor(public groupProcessor: TokenProcessorService,
-              private selectionProcessor:TokenSelectionProcessorService) {
+              private selectionProcessor: TokenSelectionProcessorService) {
   }
 
 
@@ -80,6 +81,8 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
     if (this.allNodesInitialized()) {
 
       this.renderAllLines();
+
+      this.reCalculateSelection();
     }
   }
 
@@ -272,12 +275,12 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
   onNodeDestroy(circleNode: ElementRef, placeHolder: TokenGroupPlaceholderModel) {
 
-    if(placeHolder.groupContained && placeHolder.group){
+    if (placeHolder.groupContained && placeHolder.group) {
 
 
       let id = placeHolder.group.id;
 
-      if(this.linesByEndIndex.has(id)){
+      if (this.linesByEndIndex.has(id)) {
 
         this.linesByEndIndex.get(id)!.remove();
 
@@ -286,13 +289,14 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
     }
 
-
-
   }
 
-  private reCalculateSelection() {
+  public reCalculateSelection() {
 
-    this.selectionStateCache = this.selectionProcessor.processSelectionState(this.group,this.selectionInput);
+    this.selectionStateCache = this.selectionProcessor.processSelectionState(this.group, this.selectionInput);
 
+    this.selectionStateCacheBroadcast.emit(this.selectionStateCache);
+
+    console.log('selection recalculated: ', this.selectionStateCache);
   }
 }

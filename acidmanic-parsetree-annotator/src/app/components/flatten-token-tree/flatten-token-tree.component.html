@@ -7,6 +7,9 @@
 </div>
 
 
+<button class="btn btn-warning" (click)="reCalculateSelection()"> Broadcast </button>
+
+
 <div class="container mt-1">
   <div class="row mb-3" *ngFor="let level of levels">
     <token-group-place-holder
@@ -17,6 +20,7 @@
       [selection]="selectionInput"
       (on-node-destroy)="onNodeDestroy($event,placeHolder)"
       [token-z-index]="tokenZIndex"
+      [selection-updates]="selectionStateCacheBroadcast"
       [place-holder]="placeHolder">
     </token-group-place-holder>
   </div>

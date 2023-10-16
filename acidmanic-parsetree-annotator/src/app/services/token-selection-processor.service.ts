@@ -272,4 +272,24 @@ export class TokenSelectionProcessorService {
     hash += ")}";
     return hash;
   }
+
+
+  public clone(selection:TokenSelectionModel):TokenSelectionModel{
+
+    let dst = new TokenSelectionModel();
+
+    this.cloneInto(selection,dst);
+
+    return dst;
+  }
+
+  public cloneInto(src:TokenSelectionModel,dst:TokenSelectionModel):void{
+
+    dst.selectedTokenIndexes = src.selectedTokenIndexes;
+
+    dst.selectionGroupId = src.selectionGroupId;
+
+    dst.highlightedGroups = src.highlightedGroups;
+
+  }
 }

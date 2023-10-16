@@ -41,15 +41,13 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
   public selectionCache: TokenSelectionCacheModel = new TokenSelectionCacheModel();
   private selectionUpdatesSubscription?: Subscription;
 
-  constructor() {
+  constructor(private selectionProcessor: TokenSelectionProcessorService) {
   }
 
   ngOnInit() {
 
     this.selectionUpdatesSubscription = this.selectionUpdates.subscribe(cache => {
       this.selectionCache = cache;
-
-      console.log('selection cache updated: ', cache);
     });
   }
 
@@ -68,28 +66,6 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
   }
-
-  //
-  // private isSelected(token: TokenModel): boolean {
-  //
-  //   if (this.group.id == this.selectionInput.selectionGroupId) {
-  //
-  //     return this.selection.selectedSet.has(token.index);
-  //   }
-  //
-  //   return false;
-  // }
-
-  // private isSelectable(token: TokenModel): boolean {
-  //
-  //
-  //   if (this.group.id == this.selectionInput.selectionGroupId) {
-  //
-  //     return this.selection.selectablesSet.has(token.index);
-  //   }
-  //
-  //   return true;
-  // }
 
   public tokenSelectionClass(token: TokenModel): string {
 
@@ -138,29 +114,34 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
       return;
     }
 
-    if (this.selectionInput.selectionGroupId != this.group.id) {
+    let selection = this.selectionProcessor.clone(this.selectionInput);
 
-      this.selectionInput.selectedTokenIndexes = [];
+    if (selection.selectionGroupId != this.group.id) {
 
-      this.selectionInput.selectionGroupId = this.group.id;
+      selection.selectedTokenIndexes = [];
+
+      selection.selectionGroupId = this.group.id;
+    }else {
+
+      let existingIndex = selection.selectedTokenIndexes.indexOf(token.index);
+
+      if (existingIndex > -1) {
+
+        selection.selectedTokenIndexes.splice(existingIndex, 1);
+
+      } else {
+
+        selection.selectedTokenIndexes.push(token.index);
+      }
+
+      if (selection.selectedTokenIndexes.length == 0) {
+
+        selection.selectionGroupId = -1;
+      }
+
+      selection.selectedTokenIndexes.sort((a, b) => a - b);
     }
-
-    let existingIndex = this.selectionInput.selectedTokenIndexes.indexOf(token.index);
-
-    if (existingIndex > -1) {
-
-      this.selectionInput.selectedTokenIndexes.splice(existingIndex, 1);
-
-    } else {
-
-      this.selectionInput.selectedTokenIndexes.push(token.index);
-    }
-
-    if (this.selectionInput.selectedTokenIndexes.length == 0) {
-
-      this.selectionInput.selectionGroupId = -1;
-    }
-
+    this.selectionProcessor.cloneInto(selection, this.selectionInput);
   }
 
   ngOnDestroy() {
