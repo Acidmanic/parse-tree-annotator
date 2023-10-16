@@ -53,7 +53,7 @@ export class DoubleKeyMapModel<TKey1, TKey2, TValue> {
     return key1;
   }
 
-  public key2s(): TKey1[] {
+  public key2s(): TKey2[] {
 
     let key2: TKey2[] = [];
 
@@ -68,7 +68,7 @@ export class DoubleKeyMapModel<TKey1, TKey2, TValue> {
     return key2;
   }
 
-  public get(k1: TKey1, k2: TKey2): TValue | null {
+  public get(k1: TKey1, k2: TKey2): TValue | undefined {
 
     if (this.innerMap.has(k1)) {
 
@@ -80,7 +80,7 @@ export class DoubleKeyMapModel<TKey1, TKey2, TValue> {
       }
     }
 
-    return null;
+    return;
   }
 
 }

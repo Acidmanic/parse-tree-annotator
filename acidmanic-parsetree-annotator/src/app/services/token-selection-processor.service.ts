@@ -179,7 +179,7 @@ export class TokenSelectionProcessorService {
 
       for (const token of node.tokens) {
 
-        if (!state.selectedSet.has(token.index)) {
+        if (!state.selectedSet.has(node.id,token.index)) {
           nodeState.isSelected = false;
           break;
         }
@@ -211,7 +211,16 @@ export class TokenSelectionProcessorService {
 
         if (tokenState.isSelectable) {
 
-          state.selectableSet.add(token.index);
+          state.selectableSet.add(node.id, token.index);
+        }
+
+        if(tokenState.isSelected){
+
+          state.selectedSet.add(node.id,token.index);
+        }
+
+        if(tokenState.isClickable){
+          state.clickableSet.add(node.id,token.index)
         }
 
         state.tokenSelectionStateByTokenIndex.set(node.id, token.index, tokenState);

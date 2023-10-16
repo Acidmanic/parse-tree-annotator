@@ -24,7 +24,7 @@ export class GroupEditingStrategyService {
 
     if (tokenIndex == selection.selectedTokenIndexes[0] - 1) return true;
 
-    if (tokenIndex == selection.selectedTokenIndexes[selection.selectedTokenIndexes - 1] + 1) return true;
+    if (tokenIndex == selection.selectedTokenIndexes[selection.selectedTokenIndexes.length - 1] + 1) return true;
 
 
     return false;
@@ -80,7 +80,7 @@ export class GroupEditingStrategyService {
 
     if (map.groupsById.has(selection.selectionGroupId)) {
 
-      let selectedGroup = map.groupsById.get(selection.selectionGroupId);
+      let selectedGroup = map.groupsById.get(selection.selectionGroupId)!;
 
       return (selection.selectedTokenIndexes.length == selectedGroup.tokens.length);
     }
@@ -95,7 +95,7 @@ export class GroupEditingStrategyService {
 
     if (map.groupsById.has(selection.selectionGroupId)) {
 
-      let selectedGroup = map.groupsById.get(selection.selectionGroupId);
+      let selectedGroup = map.groupsById.get(selection.selectionGroupId)!;
 
       for (const tokenIndex of selection.selectedTokenIndexes) {
 

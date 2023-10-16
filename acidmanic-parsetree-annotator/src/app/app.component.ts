@@ -67,6 +67,14 @@ export class AppComponent implements OnInit {
   }
 
 
+  public checkSelectionCache(){
+
+    let cache = this.selectionSvc.processSelectionState(this.group,this.selection);
+
+    console.log('selection cache:',cache);
+
+  }
+
   onSubGroupClicked() {
 
     let selectedGroup = this.selectionSvc.selectedSubGroup(this.group, this.selection);

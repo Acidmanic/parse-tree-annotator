@@ -8,6 +8,8 @@
       <button class="btn btn-primary" (click)="onSubGroupClicked()">SubGroup</button>
       <button class="btn btn-danger" (click)="onDeleteClicked()">Delete</button>
 
+      <button class="btn btn-info" (click)="checkSelectionCache()">CHECK</button>
+
     </div>
     <div class="col-6">
       <flatten-token-tree [selection]="selection"
