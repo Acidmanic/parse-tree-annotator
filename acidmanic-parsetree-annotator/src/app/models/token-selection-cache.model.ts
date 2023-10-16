@@ -21,5 +21,6 @@ export class TokenSelectionCacheModel{
   public leaves:Map<number,TokenGroupModel> = new Map<number, TokenGroupModel>();
   public singularLeaves:Map<number,TokenGroupModel> = new Map<number, TokenGroupModel>();
 
+  public selectedGroup?:TokenGroupModel;
 
 }

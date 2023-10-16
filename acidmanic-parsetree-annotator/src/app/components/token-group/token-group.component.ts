@@ -2,11 +2,10 @@ import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Si
 import {TokenGroupModel} from "../../models/token-group.model";
 import {TokenSelectionModel} from "../../models/token-selection.model";
 import {TokenModel} from "../../models/token.model";
-import {Token} from "@angular/compiler";
 import {TokenSelectionProcessorService} from "../../services/token-selection-processor.service";
 import {TokenSelectionMetadataModel} from "../../models/token-selection-metadata.model";
 import {TokenGroupPlaceholderModel} from "../../models/token-group-placeholder.model";
-import {Subscription} from "rxjs";
+
 
 @Component({
   selector: 'token-group',

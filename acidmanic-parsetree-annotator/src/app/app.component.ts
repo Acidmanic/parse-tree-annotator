@@ -8,6 +8,8 @@ import {TreeBankApiService} from "./services/api-services/tree-bank-api.service"
 import {PosTagBankModel} from "./models/pos-tag-bank.model";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PosTagModel} from "./models/pos-tag.model";
+import {PariModel} from "./models/pari.model";
+import {TokenModel} from "./models/token.model";
 
 
 @Component({
@@ -67,69 +69,55 @@ export class AppComponent implements OnInit {
   }
 
 
-  public checkSelectionCache(){
+  public checkSelectionCache() {
 
-    let cache = this.selectionSvc.processSelectionState(this.group,this.selection);
+    let cache = this.selectionSvc.processSelectionState(this.group, this.selection);
 
-    console.log('selection cache:',cache);
+    console.log('selection cache:', cache);
 
   }
 
-  onSubGroupClicked() {
+  onCreateSubGroup(subGroupOrder:PariModel<TokenGroupModel, number[]>) {
 
     let selectedGroup = this.selectionSvc.selectedSubGroup(this.group, this.selection);
 
-    let meta = this.selectionSvc.getMetaData(this.group, this.selection);
+    let sub = this.tokenSvc.subGroup(subGroupOrder.first, subGroupOrder.second, '?');
 
-    if (meta.noneSingularLeafedTokensSelected && !meta.singularLeafedTokensSelected) {
+    if (sub.success) {
 
-      if (selectedGroup.success && !meta.wholeGroupIsSelected) {
+      this.selection.selectionGroupId = sub.value!.id;
 
-        if (this.selection.selectedTokenIndexes.length > 0) {
-
-          let sub = this.tokenSvc.subGroup(selectedGroup.value!, this.selection.selectedTokenIndexes, 'SU');
-
-          if (sub.success) {
-
-            this.selection.selectionGroupId = sub.value!.id;
-
-            this.updateParseTree();
-          }
-        }
-      }
-
-
+      this.updateParseTree();
     }
 
   }
 
-  public onDeleteClicked() {
+  public onDeleteTokens(tokens:PariModel<TokenGroupModel, TokenModel>[]){
 
-    let selectedGroup = this.selectionSvc.selectedSubGroup(this.group, this.selection);
+    let deleted = this.tokenSvc.deleteTokens(tokens);
 
-    if (selectedGroup.success) {
+    if (deleted) {
 
-      let meta = this.selectionSvc.getMetaData(this.group, this.selection);
+      this.selection.selectionGroupId = -1;
 
-      if (meta.wholeGroupIsSelected) {
+      this.updateParseTree();
+    }
+  }
 
-        let parent = (selectedGroup.value?.parent);
+  public onDeleteGroup(group: TokenGroupModel) {
 
-        if (parent) {
+    let parent = group.parent;
 
-          let deleted = this.tokenSvc.deleteSubGroup(parent, selectedGroup.value!);
+    if (parent) {
 
-          if (deleted) {
+      let deleted = this.tokenSvc.deleteSubGroup(parent, group);
 
-            this.selection.selectionGroupId = -1;
+      if (deleted) {
 
-            this.updateParseTree();
+        this.selection.selectionGroupId = -1;
 
-          }
-
-        }
+        this.updateParseTree();
       }
-
     }
   }
 

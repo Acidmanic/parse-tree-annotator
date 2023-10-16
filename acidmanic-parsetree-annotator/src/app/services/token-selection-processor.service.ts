@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {TokenSelectionMetadataModel} from "../models/token-selection-metadata.model";
 import {TokenSelectionModel} from "../models/token-selection.model";
 import {TokenGroupModel} from "../models/token-group.model";
 import {ResultModel} from "../models/result.model";
@@ -8,6 +7,7 @@ import {GroupSelectionStateModel} from "../models/group-selection-state.model";
 import {TokenSelectionStateModel} from "../models/token-selection-state.model";
 import {TokenModel} from "../models/token.model";
 import {GroupEditingStrategyService} from "./group-editing-strategy.service";
+import {TokenSelectionMetadataModel} from "../models/token-selection-metadata.model";
 
 
 @Injectable({
@@ -166,6 +166,11 @@ export class TokenSelectionProcessorService {
 
       nodeState.isHighlighted = selection.highlightedGroups.has(node.id);
 
+      if(selection.selectionGroupId==node.id){
+
+        state.selectedGroup = node;
+      }
+
       if (nodeState.isLeaf) {
         state.leaves.set(node.id, node);
         if (nodeState.isSingularLeaf) {
@@ -244,5 +249,27 @@ export class TokenSelectionProcessorService {
     }
 
     return false;
+  }
+
+
+  public selectionSignature(selection: TokenSelectionModel): string {
+
+    let hash = '{' + selection.selectionGroupId + '[';
+
+    let sep = '';
+
+    for (const index of selection.selectedTokenIndexes) {
+      hash += sep + index;
+      sep = ',';
+    }
+
+    hash += '(';
+    sep = '';
+    for (const groupId of selection.highlightedGroups.keys()) {
+      hash += sep + groupId + ':' + selection.highlightedGroups.get(groupId)!;
+      sep = ',';
+    }
+    hash += ")}";
+    return hash;
   }
 }

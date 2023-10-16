@@ -4,6 +4,10 @@ import {TokenGroupModel} from "../models/token-group.model";
 import {ResultModel} from "../models/result.model";
 import {TokenGroupComponent} from "../components/token-group/token-group.component";
 import {TokenGroupMapModel} from "../models/token-group-map.model";
+import {DoubleKeySetModel} from "../models/double-key-set.model";
+import {Token} from "@angular/compiler";
+import {PariModel} from "../models/pari.model";
+import {TokenSelectionModel} from "../models/token-selection.model";
 
 
 @Injectable({
@@ -120,6 +124,7 @@ export class TokenProcessorService {
 
     node.children.sort((a, b) => a.firstTokenId - b.firstTokenId);
 
+    this.sortTokens(node);
   }
 
   public sortDescendants(node: TokenGroupModel) {
@@ -131,6 +136,11 @@ export class TokenProcessorService {
       this.sortDescendants(child);
     }
 
+  }
+
+  public sortTokens(node: TokenGroupModel) {
+
+    node.tokens.sort((a, b) => a.index - b.index);
   }
 
   public firstTokenId(node: TokenGroupModel): number {
@@ -163,6 +173,33 @@ export class TokenProcessorService {
     return false;
   }
 
+  public deleteTokens(tokens: PariModel<TokenGroupModel, TokenModel>[]): boolean {
+
+    let success = true;
+
+    for (const tokenGroupPair of tokens) {
+
+      success &&= this.deleteToken(tokenGroupPair.first, tokenGroupPair.second.index);
+    }
+
+    return success;
+  }
+
+  public deleteToken(group: TokenGroupModel, tokenIndex: number): boolean {
+
+    let index = this.findByIndex(group, tokenIndex);
+
+    if (index.success) {
+
+      group.tokens.splice(index.value!.index, 1);
+
+      this.sortTokens(group);
+
+      return true;
+    }
+
+    return false;
+  }
 
   public cloneToken(token: TokenModel): TokenModel {
 
@@ -334,34 +371,33 @@ export class TokenProcessorService {
     return false;
   }
 
-
-  public groupSignature(root:TokenGroupModel):string{
+  public groupSignature(root: TokenGroupModel): string {
 
     return this.groupSignatureRecursive(root);
   }
 
-  private groupSignatureRecursive(node:TokenGroupModel):string{
+  private groupSignatureRecursive(node: TokenGroupModel): string {
 
-    let mySignature = '{'+ node.id +'(';
+    let mySignature = '{' + node.id + '(';
 
-    let sep='';
+    let sep = '';
 
     for (const token of node.tokens) {
 
       mySignature += sep + token.index;
 
-      sep=',';
+      sep = ',';
     }
 
     mySignature += ')[';
 
-    sep='';
+    sep = '';
 
     for (const child of node.children) {
 
       mySignature += sep + this.groupSignatureRecursive(child);
 
-      sep='-';
+      sep = '-';
 
     }
     mySignature += ']}';

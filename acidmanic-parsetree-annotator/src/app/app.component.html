@@ -5,14 +5,18 @@
     <div class="col-2">
 
 
-      <button class="btn btn-primary" (click)="onSubGroupClicked()">SubGroup</button>
-      <button class="btn btn-danger" (click)="onDeleteClicked()">Delete</button>
+<!--      <button class="btn btn-primary" (click)="onCreateSubGroup()">SubGroup</button>-->
+<!--      <button class="btn btn-danger" (click)="onDeleteGroup()">Delete</button>-->
 
       <button class="btn btn-info" (click)="checkSelectionCache()">CHECK</button>
 
     </div>
     <div class="col-6">
-      <flatten-token-tree [selection]="selection"
+      <flatten-token-tree
+        (on-delete-group)="onDeleteGroup($event)"
+        (on-delete-tokens)="onDeleteTokens($event)"
+        (on-sub-group)="onCreateSubGroup($event)"
+        [selection]="selection"
                           [group]="group"
                           [disable-tag-click]="true"
                           [token-z-index]="100"

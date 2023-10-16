@@ -3,6 +3,7 @@ import {TokenGroupPlaceholderModel} from "../../../models/token-group-placeholde
 import {TokenGroupModel} from "../../../models/token-group.model";
 import {TokenSelectionModel} from "../../../models/token-selection.model";
 import {GroupElement} from "../../../models/group.element";
+import {TokenSelectionCacheModel} from "../../../models/token-selection-cache.model";
 
 @Component({
   selector: 'token-group-place-holder',
@@ -18,4 +19,8 @@ export class TokenGroupPlaceHolderComponent {
   @Output('on-circle-ready') onCircleReady:EventEmitter<GroupElement>= new EventEmitter<GroupElement>();
   @Output('on-node-destroy') onNodeDestroy:EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
   @Input('token-z-index') tokenZIndex?:number;
+
+  @Input('selection-updates') selectionUpdates:EventEmitter<TokenSelectionCacheModel> = new EventEmitter<TokenSelectionCacheModel>();
+
+
 }

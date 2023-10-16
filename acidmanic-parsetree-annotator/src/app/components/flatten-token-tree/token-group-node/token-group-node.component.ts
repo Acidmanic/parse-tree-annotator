@@ -14,43 +14,46 @@ import {TokenSelectionModel} from "../../../models/token-selection.model";
 import {GroupElement} from "../../../models/group.element";
 import {TokenModel} from "../../../models/token.model";
 import {TokenSelectionProcessorService} from "../../../services/token-selection-processor.service";
-import {TokenProcessorService} from "../../../services/token-processor.service";
-import {TokenSelectionMetadataModel} from "../../../models/token-selection-metadata.model";
+import {TokenSelectionCacheModel} from "../../../models/token-selection-cache.model";
+import {Subscription} from "rxjs";
+
 
 @Component({
   selector: 'token-group-node',
   templateUrl: './token-group-node.component.html',
   styleUrls: ['./token-group-node.component.scss']
 })
-export class TokenGroupNodeComponent implements OnChanges,AfterViewInit,OnDestroy{
+export class TokenGroupNodeComponent implements OnChanges, AfterViewInit, OnDestroy {
 
 
   @Input('group') group: TokenGroupModel = new TokenGroupModel();
   @Input('selection') selectionInput: TokenSelectionModel = new TokenSelectionModel();
   @Output('on-tag-clicked') onTagClicked: EventEmitter<TokenGroupModel> = new EventEmitter<TokenGroupModel>();
   @Input('disable-tag-click') disableTagClick: boolean = false;
-  @Output('on-circle-ready') onCircleReady:EventEmitter<GroupElement>= new EventEmitter<GroupElement>();
-  @ViewChild('nodeCircle') nodeCircle:ElementRef = new ElementRef<any>(undefined);
-  @Output('on-node-destroy') onNodeDestroy:EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
-  @Input('token-z-index') tokenZIndex?:number;
+  @Output('on-circle-ready') onCircleReady: EventEmitter<GroupElement> = new EventEmitter<GroupElement>();
+  @ViewChild('nodeCircle') nodeCircle: ElementRef = new ElementRef<any>(undefined);
+  @Output('on-node-destroy') onNodeDestroy: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  @Input('token-z-index') tokenZIndex?: number;
+
+  @Input('selection-updates') selectionUpdates: EventEmitter<TokenSelectionCacheModel> = new EventEmitter<TokenSelectionCacheModel>();
 
 
-  public selection: TokenSelectionMetadataModel = new TokenSelectionMetadataModel();
-
+  public selectionCache: TokenSelectionCacheModel = new TokenSelectionCacheModel();
+  private selectionUpdatesSubscription?: Subscription;
 
   constructor(private selectionSvc: TokenSelectionProcessorService) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
 
-    this.selection = this.selectionSvc.getMetaData(this.group.root!, this.selectionInput);
+    this.selectionUpdatesSubscription = this.selectionUpdates.subscribe(cache => this.selectionCache = cache);
 
   }
 
 
   ngAfterViewInit() {
 
-    this.onCircleReady.emit({group:this.group,element:this.nodeCircle})
+    this.onCircleReady.emit({group: this.group, element: this.nodeCircle})
 
   }
 
@@ -63,35 +66,35 @@ export class TokenGroupNodeComponent implements OnChanges,AfterViewInit,OnDestro
     }
 
   }
+  //
+  // private isSelected(token: TokenModel): boolean {
+  //
+  //   if (this.group.id == this.selectionInput.selectionGroupId) {
+  //
+  //     return this.selection.selectedSet.has(token.index);
+  //   }
+  //
+  //   return false;
+  // }
 
-  private isSelected(token: TokenModel): boolean {
-
-    if (this.group.id == this.selectionInput.selectionGroupId) {
-
-      return this.selection.selectedSet.has(token.index);
-    }
-
-    return false;
-  }
-
-  private isSelectable(token: TokenModel): boolean {
-
-
-    if (this.group.id == this.selectionInput.selectionGroupId) {
-
-      return this.selection.selectablesSet.has(token.index);
-    }
-
-    return true;
-  }
+  // private isSelectable(token: TokenModel): boolean {
+  //
+  //
+  //   if (this.group.id == this.selectionInput.selectionGroupId) {
+  //
+  //     return this.selection.selectablesSet.has(token.index);
+  //   }
+  //
+  //   return true;
+  // }
 
   public tokenSelectionClass(token: TokenModel): string {
 
     let cssClass = 'token';
 
-    let selected = this.isSelected(token);
+    let selected = this.selectionCache.selectedSet.has(this.group.id,token.index);// this.isSelected(token);
 
-    let selectable = this.isSelectable(token);
+    let selectable = this.selectionCache.selectableSet.has(this.group.id,token.index);
 
     let gray = !selected && !selectable;
 
@@ -125,9 +128,9 @@ export class TokenGroupNodeComponent implements OnChanges,AfterViewInit,OnDestro
   }
 
 
-  public selectToken(token: TokenModel): void {
+  public tokenClicked(token: TokenModel): void {
 
-    if (!this.isSelectable(token)) {
+    if (!this.selectionCache.clickableSet.has(this.group.id,token.index)) {
 
       return;
     }
@@ -155,12 +158,15 @@ export class TokenGroupNodeComponent implements OnChanges,AfterViewInit,OnDestro
       this.selectionInput.selectionGroupId = -1;
     }
 
-    this.selection = this.selectionSvc.getMetaData(this.group.root!, this.selectionInput);
   }
 
   ngOnDestroy() {
 
     this.onNodeDestroy.emit(this.nodeCircle);
+
+    if (this.selectionUpdatesSubscription) {
+      this.selectionUpdatesSubscription.unsubscribe();
+    }
   }
 
 }

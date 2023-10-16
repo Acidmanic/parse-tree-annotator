@@ -15,6 +15,10 @@ import {TokenGroupPlaceholderModel} from "../../models/token-group-placeholder.m
 import {FlatTreeLevelModel} from "../../models/flat-tree-level.model";
 import {TokenProcessorService} from "../../services/token-processor.service";
 import {GroupElement} from "../../models/group.element";
+import {PariModel} from "../../models/pari.model";
+import {TokenModel} from "../../models/token.model";
+import {TokenSelectionCacheModel} from "../../models/token-selection-cache.model";
+import {TokenSelectionProcessorService} from "../../services/token-selection-processor.service";
 
 
 declare var LeaderLine: any;
@@ -33,16 +37,24 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
   @Input('token-z-index') tokenZIndex?:number;
 
 
+  @Output('on-delete-group') onDeleteGroup:EventEmitter<TokenGroupModel> = new EventEmitter<TokenGroupModel>();
+  @Output('on-delete-tokens') onDeleteTokens:EventEmitter<PariModel<TokenGroupModel, TokenModel>[]> = new EventEmitter<PariModel<TokenGroupModel, TokenModel>[]>();
+  @Output('on-sub-group') onSubGroup:EventEmitter<PariModel<TokenGroupModel, number[]>> = new EventEmitter<PariModel<TokenGroupModel, number[]>>();
+
   public levels: FlatTreeLevelModel[] = [];
 
-  private lastSignature: string = '';
+  private lastGroupSignature: string = '';
+  private lastSelectionSignature: string = '';
 
   private linesByEndIndex: Map<number,any> = new Map<number, any>();
   private elementsByGroupIds: Map<number, ElementRef> = new Map<number, ElementRef>();
   private startPointsByEndPoints: Map<number, number> = new Map<number, number>();
 
 
-  constructor(public groupProcessor: TokenProcessorService) {
+  public selectionStateCache:TokenSelectionCacheModel=new TokenSelectionCacheModel();
+
+  constructor(public groupProcessor: TokenProcessorService,
+              private selectionProcessor:TokenSelectionProcessorService) {
   }
 
 
@@ -142,15 +154,29 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
   }
 
 
-  public cheatSignature(): string {
+  public cheatGroupSignature(): string {
 
     let currentSignature = this.groupProcessor.groupSignature(this.group);
 
-    if (this.lastSignature != currentSignature) {
+    if (this.lastGroupSignature != currentSignature) {
 
-      this.lastSignature = currentSignature;
+      this.lastGroupSignature = currentSignature;
 
       this.refresh();
+    }
+
+    return currentSignature;
+  }
+
+  public cheatSelectionSignature(): string {
+
+    let currentSignature = this.selectionProcessor.selectionSignature(this.selectionInput);
+
+    if (this.lastSelectionSignature != currentSignature) {
+
+      this.lastSelectionSignature = currentSignature;
+
+      this.reCalculateSelection();
     }
 
     return currentSignature;
@@ -261,6 +287,12 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
     }
 
 
+
+  }
+
+  private reCalculateSelection() {
+
+    this.selectionStateCache = this.selectionProcessor.processSelectionState(this.group,this.selectionInput);
 
   }
 }
