@@ -11,6 +11,9 @@ import { PopperLimitedTextComponent } from './components/popper-limited-text/pop
 import { PhraseHighlighterComponent } from './components/phrase-highlighter/phrase-highlighter.component';
 import { TokenTreeComponent } from './components/token-tree/token-tree.component';
 import { TokenTreeUplevelComponent } from './components/token-tree-uplevel/token-tree-uplevel.component';
+import { FlattenTokenTreeComponent } from './components/flatten-token-tree/flatten-token-tree.component';
+import { TokenGroupPlaceHolderComponent } from './components/flatten-token-tree/token-group-place-holder/token-group-place-holder.component';
+import { TokenGroupNodeComponent } from './components/flatten-token-tree/token-group-node/token-group-node.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { TokenTreeUplevelComponent } from './components/token-tree-uplevel/token
     PopperLimitedTextComponent,
     PhraseHighlighterComponent,
     TokenTreeComponent,
-    TokenTreeUplevelComponent
+    TokenTreeUplevelComponent,
+    FlattenTokenTreeComponent,
+    TokenGroupPlaceHolderComponent,
+    TokenGroupNodeComponent
   ],
   imports: [
     BrowserModule,

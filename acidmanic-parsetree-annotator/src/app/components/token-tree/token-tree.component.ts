@@ -14,7 +14,7 @@ import {TokenSelectionModel} from "../../models/token-selection.model";
 import {TokenSelectionMetadataModel} from "../../models/token-selection-metadata.model";
 import {TokenSelectionProcessorService} from "../../services/token-selection-processor.service";
 import {TokenModel} from "../../models/token.model";
-import {TokenGroupPlaceholder} from "../../models/token-group.placeholder";
+import {TokenGroupPlaceholderModel} from "../../models/token-group-placeholder.model";
 import {TokenProcessorService} from "../../services/token-processor.service";
 import {Subscription} from "rxjs";
 import {TokenGroupAnchorElementMapModel} from "../../models/token-group-anchor-element-map.model";
@@ -166,9 +166,9 @@ export class TokenTreeComponent implements OnInit, OnChanges, AfterViewInit {
 
   }
 
-  public processPlaceholders(): TokenGroupPlaceholder[] {
+  public processPlaceholders(): TokenGroupPlaceholderModel[] {
 
-    let placeHolders: TokenGroupPlaceholder[] = [];
+    let placeHolders: TokenGroupPlaceholderModel[] = [];
 
     for (let i = 0; i < this.group.tokens.length; i++) {
 
@@ -185,9 +185,9 @@ export class TokenTreeComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
 
-  private createPlaceHolderByToken(token: TokenModel): TokenGroupPlaceholder {
+  private createPlaceHolderByToken(token: TokenModel): TokenGroupPlaceholderModel {
 
-    let ph = new TokenGroupPlaceholder();
+    let ph = new TokenGroupPlaceholderModel();
 
     ph.text = token.text;
 

@@ -1,0 +1,16 @@
+
+
+
+
+
+<token-group-node style="width: unset"
+                  *ngIf="placeHolder.groupContained"
+                  [group]="placeHolder.group!"
+                  [selection]="selectionInput"
+                  (on-circle-ready)="this.onCircleReady.emit($event)"
+                  (on-tag-clicked)="onTagClicked.emit($event)">
+</token-group-node>
+
+<span *ngIf="!placeHolder.groupContained" class="token-placeholder">
+        {{placeHolder.text}}
+      </span>

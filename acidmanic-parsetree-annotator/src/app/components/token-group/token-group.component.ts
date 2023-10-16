@@ -5,7 +5,7 @@ import {TokenModel} from "../../models/token.model";
 import {Token} from "@angular/compiler";
 import {TokenSelectionProcessorService} from "../../services/token-selection-processor.service";
 import {TokenSelectionMetadataModel} from "../../models/token-selection-metadata.model";
-import {TokenGroupPlaceholder} from "../../models/token-group.placeholder";
+import {TokenGroupPlaceholderModel} from "../../models/token-group-placeholder.model";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -111,9 +111,9 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
 
   }
 
-  public processPlaceholders():TokenGroupPlaceholder[]{
+  public processPlaceholders():TokenGroupPlaceholderModel[]{
 
-    let placeHolders:TokenGroupPlaceholder[]=[];
+    let placeHolders:TokenGroupPlaceholderModel[]=[];
 
     for (let i = 0; i < this.group.tokens.length; i++) {
 
@@ -130,9 +130,9 @@ export class TokenGroupComponent implements OnInit, OnChanges, OnDestroy {
   }
 
 
-  private createPlaceHolderByToken(token:TokenModel):TokenGroupPlaceholder{
+  private createPlaceHolderByToken(token:TokenModel):TokenGroupPlaceholderModel{
 
-    let ph = new TokenGroupPlaceholder();
+    let ph = new TokenGroupPlaceholderModel();
 
     ph.text = token.text;
 

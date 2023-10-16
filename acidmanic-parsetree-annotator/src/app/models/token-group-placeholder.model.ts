@@ -1,7 +1,7 @@
 import {TokenGroupModel} from "./token-group.model";
 
 
-export class TokenGroupPlaceholder{
+export class TokenGroupPlaceholderModel {
 
   public groupContained:boolean=false;
   public group?:TokenGroupModel;

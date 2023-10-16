@@ -1,0 +1,21 @@
+<div class="container">
+
+
+  <div class="d-flex justify-content-center">
+
+    <div class="node-circle text-light bg-info d-flex justify-content-center" #nodeCircle
+         (click)="onTagSpanClicked()">
+      {{group.tag}}
+    </div>
+
+  </div>
+
+  <div class="row d-flex justify-content-center">
+    <span style="width: unset" *ngFor="let token of group.tokens"
+          (click)="this.selectToken(token)"
+          [class]="tokenSelectionClass(token)">
+      {{token.text}}
+    </span>
+  </div>
+
+</div>

@@ -104,11 +104,11 @@ export class TokenProcessorService {
   }
 
 
-  public updateTokenIds(root: TokenGroupModel): void {
+  public updateTokenIds(node: TokenGroupModel): void {
 
-    root.firstTokenId = this.firstTokenId(root);
+    node.firstTokenId = this.firstTokenId(node);
 
-    for (const child of root.children) {
+    for (const child of node.children) {
 
       this.updateTokenIds(child);
 

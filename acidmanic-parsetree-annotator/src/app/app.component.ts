@@ -42,15 +42,17 @@ export class AppComponent implements OnInit {
   ngOnInit() {
 
 
-    this.group = new TokenGroupModel();
-    this.group.id = this.tokenSvc.generateGroupId();
-    this.group.tag = 'TOP'
-    this.group.root = this.group;
-    this.group.tokens.push({text: 'This', index: 0});
-    this.group.tokens.push({text: 'Is', index: 1});
-    this.group.tokens.push({text: 'A', index: 2});
-    this.group.tokens.push({text: 'Book', index: 3});
+    let g = new TokenGroupModel();
+    g.id = this.tokenSvc.generateGroupId();
+    g.tag = 'TOP'
+    g.root = g;
+    g.tokens.push({text: 'This', index: 0});
+    g.tokens.push({text: 'Is', index: 1});
+    g.tokens.push({text: 'A', index: 2});
+    g.tokens.push({text: 'Book', index: 3});
+    g.firstTokenId = 0;
 
+    this.group = g;
 
     this.updateParseTree();
 

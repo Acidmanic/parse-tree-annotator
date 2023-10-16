@@ -52,7 +52,8 @@
 
 .token-placeholder{
   visibility: hidden;
-  height: 0px;
+  height: 68px;
+  min-width: 68px;
   display: block;
 }
 
@@ -92,4 +93,9 @@
   padding-top: 1px;
   padding-bottom: 0px;
   text-align: center;
+}
+
+
+token-group-place-holder{
+  display: contents;
 }

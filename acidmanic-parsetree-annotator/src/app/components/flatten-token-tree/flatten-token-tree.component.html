@@ -1,0 +1,18 @@
+
+
+{{this.cheatSignature()}}
+<br>
+{{selectionInput}}
+
+<div class="container mt-1">
+  <div class="row mb-3" *ngFor="let level of levels">
+    <token-group-place-holder
+      *ngFor="let placeHolder of level.placeHolders"
+      (on-circle-ready)="onChildCircleReady($event)"
+      (on-tag-clicked)="onTagClicked.emit($event)"
+      [disable-tag-click]="disableTagClick"
+      [selection]="selectionInput"
+      [place-holder]="placeHolder">
+    </token-group-place-holder>
+  </div>
+</div>
