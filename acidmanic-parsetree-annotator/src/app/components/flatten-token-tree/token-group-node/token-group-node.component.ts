@@ -4,7 +4,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges, OnDestroy,
+  OnChanges, OnDestroy, OnInit,
   Output,
   SimpleChanges,
   ViewChild
@@ -23,7 +23,7 @@ import {Subscription} from "rxjs";
   templateUrl: './token-group-node.component.html',
   styleUrls: ['./token-group-node.component.scss']
 })
-export class TokenGroupNodeComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   @Input('group') group: TokenGroupModel = new TokenGroupModel();
@@ -41,15 +41,17 @@ export class TokenGroupNodeComponent implements OnChanges, AfterViewInit, OnDest
   public selectionCache: TokenSelectionCacheModel = new TokenSelectionCacheModel();
   private selectionUpdatesSubscription?: Subscription;
 
-  constructor(private selectionSvc: TokenSelectionProcessorService) {
+  constructor() {
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnInit() {
 
-    this.selectionUpdatesSubscription = this.selectionUpdates.subscribe(cache => this.selectionCache = cache);
+    this.selectionUpdatesSubscription = this.selectionUpdates.subscribe(cache => {
+      this.selectionCache = cache;
 
+      console.log('selection cache updated: ', cache);
+    });
   }
-
 
   ngAfterViewInit() {
 
@@ -66,6 +68,7 @@ export class TokenGroupNodeComponent implements OnChanges, AfterViewInit, OnDest
     }
 
   }
+
   //
   // private isSelected(token: TokenModel): boolean {
   //
@@ -92,9 +95,9 @@ export class TokenGroupNodeComponent implements OnChanges, AfterViewInit, OnDest
 
     let cssClass = 'token';
 
-    let selected = this.selectionCache.selectedSet.has(this.group.id,token.index);// this.isSelected(token);
+    let selected = this.selectionCache.selectedSet.has(this.group.id, token.index);// this.isSelected(token);
 
-    let selectable = this.selectionCache.selectableSet.has(this.group.id,token.index);
+    let selectable = this.selectionCache.selectableSet.has(this.group.id, token.index);
 
     let gray = !selected && !selectable;
 
@@ -130,7 +133,7 @@ export class TokenGroupNodeComponent implements OnChanges, AfterViewInit, OnDest
 
   public tokenClicked(token: TokenModel): void {
 
-    if (!this.selectionCache.clickableSet.has(this.group.id,token.index)) {
+    if (!this.selectionCache.clickableSet.has(this.group.id, token.index)) {
 
       return;
     }
