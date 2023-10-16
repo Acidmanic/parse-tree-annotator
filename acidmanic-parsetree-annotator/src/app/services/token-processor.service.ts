@@ -88,7 +88,6 @@ export class TokenProcessorService {
     this.updateTokenIds(group.root!);
     this.sortDescendants(group.root!);
 
-
     return {success: true, value: subGroup};
   }
 
@@ -336,4 +335,37 @@ export class TokenProcessorService {
   }
 
 
+  public groupSignature(root:TokenGroupModel):string{
+
+    return this.groupSignatureRecursive(root);
+  }
+
+  private groupSignatureRecursive(node:TokenGroupModel):string{
+
+    let mySignature = '{'+ node.id +'(';
+
+    let sep='';
+
+    for (const token of node.tokens) {
+
+      mySignature += sep + token.index;
+
+      sep=',';
+    }
+
+    mySignature += ')[';
+
+    sep='';
+
+    for (const child of node.children) {
+
+      mySignature += sep + this.groupSignatureRecursive(child);
+
+      sep='-';
+
+    }
+    mySignature += ']}';
+
+    return mySignature;
+  }
 }

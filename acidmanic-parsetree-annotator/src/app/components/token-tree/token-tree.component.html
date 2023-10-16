@@ -3,7 +3,7 @@
 
   <div class="d-flex justify-content-center">
 
-    <div class="node-circle text-light bg-info d-flex justify-content-center"
+    <div class="node-circle text-light bg-info d-flex justify-content-center" #nodeCircle
          (click)="onTagSpanClicked()">
       {{group.tag}}
     </div>
@@ -25,7 +25,9 @@
 
       <token-tree style="width: unset"
                   *ngIf="placeHolder.groupContained"
-                  [group]="placeHolder.group!" [selection]="selectionInput"
+                  [group]="placeHolder.group!"
+                  [selection]="selectionInput"
+                  [element-map]="elementMap"
                   (on-tag-clicked)="onTagClicked.emit($event)">
       </token-tree>
 

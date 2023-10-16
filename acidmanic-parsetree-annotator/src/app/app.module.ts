@@ -10,6 +10,7 @@ import { SpanOrDetailsComponent } from './components/span-or-details/span-or-det
 import { PopperLimitedTextComponent } from './components/popper-limited-text/popper-limited-text.component';
 import { PhraseHighlighterComponent } from './components/phrase-highlighter/phrase-highlighter.component';
 import { TokenTreeComponent } from './components/token-tree/token-tree.component';
+import { TokenTreeUplevelComponent } from './components/token-tree-uplevel/token-tree-uplevel.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TokenTreeComponent } from './components/token-tree/token-tree.component
     SpanOrDetailsComponent,
     PopperLimitedTextComponent,
     PhraseHighlighterComponent,
-    TokenTreeComponent
+    TokenTreeComponent,
+    TokenTreeUplevelComponent
   ],
   imports: [
     BrowserModule,

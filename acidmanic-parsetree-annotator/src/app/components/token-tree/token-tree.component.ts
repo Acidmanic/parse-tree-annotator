@@ -1,30 +1,55 @@
-import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges, ViewChild
+} from '@angular/core';
 import {TokenGroupModel} from "../../models/token-group.model";
 import {TokenSelectionModel} from "../../models/token-selection.model";
 import {TokenSelectionMetadataModel} from "../../models/token-selection-metadata.model";
 import {TokenSelectionProcessorService} from "../../services/token-selection-processor.service";
 import {TokenModel} from "../../models/token.model";
 import {TokenGroupPlaceholder} from "../../models/token-group.placeholder";
+import {TokenProcessorService} from "../../services/token-processor.service";
+import {Subscription} from "rxjs";
+import {TokenGroupAnchorElementMapModel} from "../../models/token-group-anchor-element-map.model";
+
+
 
 @Component({
   selector: 'token-tree',
   templateUrl: './token-tree.component.html',
   styleUrls: ['./token-tree.component.scss']
 })
-export class TokenTreeComponent {
+export class TokenTreeComponent implements OnInit, OnChanges, AfterViewInit {
 
 
   @Input('group') group: TokenGroupModel = new TokenGroupModel();
   @Input('selection') selectionInput: TokenSelectionModel = new TokenSelectionModel();
+  @Output('on-tag-clicked') onTagClicked: EventEmitter<TokenGroupModel> = new EventEmitter<TokenGroupModel>();
+  @Input('disable-tag-click') disableTagClick: boolean = false;
 
-  @Output('on-tag-clicked') onTagClicked:EventEmitter<TokenGroupModel>=new EventEmitter<TokenGroupModel>();
-
-  @Input('disable-tag-click') disableTagClick:boolean=false;
+  @Input('element-map') elementMap: TokenGroupAnchorElementMapModel = new TokenGroupAnchorElementMapModel();
 
 
   public selection: TokenSelectionMetadataModel = new TokenSelectionMetadataModel();
 
-  constructor(private selectionSvc: TokenSelectionProcessorService) {
+
+
+
+
+  @ViewChild('nodeCircle') nodeCircleElement?: ElementRef;
+
+  private alreadySentMyCircle: boolean = false;
+
+
+  constructor(private selectionSvc: TokenSelectionProcessorService,
+              private groupProcessor: TokenProcessorService) {
   }
 
 
@@ -72,16 +97,17 @@ export class TokenTreeComponent {
   }
 
 
-  public groupSelectionClass(){
+  public groupSelectionClass() {
 
     let cssClass = 'group';
 
-    if(this.selectionInput.highlightedGroups.has(this.group.id))
-    {
+    if (this.selectionInput.highlightedGroups.has(this.group.id)) {
+
       let hl = this.selectionInput.highlightedGroups.get(this.group.id);
 
       cssClass += ' group-highlighted';
-      cssClass += ' bg-' + hl +'-subtle';
+
+      cssClass += ' bg-' + hl + '-subtle';
     }
 
     return cssClass;
@@ -89,29 +115,60 @@ export class TokenTreeComponent {
 
   ngOnInit() {
 
+    console.log('ngOnInit', this.group.id);
+
     this.refresh();
 
   }
+
+  ngAfterViewInit() {
+
+    if (!this.alreadySentMyCircle) {
+
+      this.alreadySentMyCircle = true;
+
+      console.log('ngAfterViewInit', this.group.id);
+
+      this.elementMap.register(this.group, this.nodeCircleElement!);
+
+    }
+
+  }
+
 
   ngOnChanges(changes: SimpleChanges) {
 
-    this.refresh();
+    console.log('ngOnChanges', this.group.id);
+
+
+    if (changes['group'] || changes['selectionInput']) {
+
+      this.refresh();
+    }
+
   }
 
   ngOnDestroy() {
+
+    console.log('ngOnChanges', this.group.id);
+
+    this.elementMap.unregister(this.group);
 
   }
 
   private refresh(): void {
 
+    console.log('refresh', this.group.id);
+
+    this.removeUnExistingLines();
 
     this.selection = this.selectionSvc.getMetaData(this.group.root!, this.selectionInput);
 
   }
 
-  public processPlaceholders():TokenGroupPlaceholder[]{
+  public processPlaceholders(): TokenGroupPlaceholder[] {
 
-    let placeHolders:TokenGroupPlaceholder[]=[];
+    let placeHolders: TokenGroupPlaceholder[] = [];
 
     for (let i = 0; i < this.group.tokens.length; i++) {
 
@@ -128,7 +185,7 @@ export class TokenTreeComponent {
   }
 
 
-  private createPlaceHolderByToken(token:TokenModel):TokenGroupPlaceholder{
+  private createPlaceHolderByToken(token: TokenModel): TokenGroupPlaceholder {
 
     let ph = new TokenGroupPlaceholder();
 
@@ -136,7 +193,7 @@ export class TokenTreeComponent {
 
     for (const child of this.group.children) {
 
-      if(child.firstTokenId==token.index){
+      if (child.firstTokenId == token.index) {
 
         ph.group = child;
 
@@ -183,12 +240,17 @@ export class TokenTreeComponent {
     this.selection = this.selectionSvc.getMetaData(this.group.root!, this.selectionInput);
   }
 
-  public onTagSpanClicked():void {
+  public onTagSpanClicked(): void {
 
-    if(!this.disableTagClick){
+    if (!this.disableTagClick) {
 
       this.onTagClicked.emit(this.group);
     }
 
   }
+
+  private removeUnExistingLines() {
+
+  }
+
 }
