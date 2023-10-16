@@ -1,10 +1,21 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {TokenGroupModel} from "../../models/token-group.model";
 import {TokenSelectionModel} from "../../models/token-selection.model";
 import {TokenGroupPlaceholderModel} from "../../models/token-group-placeholder.model";
 import {FlatTreeLevelModel} from "../../models/flat-tree-level.model";
 import {TokenProcessorService} from "../../services/token-processor.service";
 import {GroupElement} from "../../models/group.element";
+import {end} from "@popperjs/core";
 
 
 declare var LeaderLine: any;
@@ -14,7 +25,7 @@ declare var LeaderLine: any;
   templateUrl: './flatten-token-tree.component.html',
   styleUrls: ['./flatten-token-tree.component.scss']
 })
-export class FlattenTokenTreeComponent implements OnChanges, OnInit {
+export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterContentInit {
 
   @Input('group') group: TokenGroupModel = new TokenGroupModel();
   @Input('selection') selectionInput: TokenSelectionModel = new TokenSelectionModel();
@@ -27,6 +38,8 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit {
 
   private lines: any[] = [];
   private elementsByGroupIds: Map<number, ElementRef> = new Map<number, ElementRef>();
+  private startPointsByEndPoints: Map<number, number> = new Map<number, number>();
+
 
   constructor(public groupProcessor: TokenProcessorService) {
   }
@@ -58,6 +71,20 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit {
 
     this.elementsByGroupIds.set(gl.group.id, gl.element);
 
+    // let endId =gl.group.id;
+    //
+    // if(this.startPointsByEndPoints.has(endId)){
+    //
+    //   let startId = this.startPointsByEndPoints.get(endId)!;
+    //
+    //   this.renderLine(startId,endId);
+    //
+    // }
+
+    if (this.allNodesInitialized()) {
+
+      this.renderAllLines();
+    }
   }
 
 
@@ -67,11 +94,13 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit {
 
     this.removePreviousLines();
 
+    this.startPointsByEndPoints.clear();
+
     this.updateLevels();
 
     console.log('children element status', this.elementsByGroupIds);
 
-    this.renderNewLines();
+
   }
 
 
@@ -82,6 +111,9 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit {
     let flatLevels: FlatTreeLevelModel[] = [];
 
     this.exploreInsertFlatten(this.group, flatLevels, 0);
+
+
+    this.calculateLinesTerminals(flatLevels);
 
     this.levels = flatLevels;
 
@@ -154,45 +186,89 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit {
     this.lines = [];
   }
 
-  private renderNewLines() {
+  private calculateLinesTerminals(levels: FlatTreeLevelModel[]) {
 
-
-    for (const level of this.levels) {
+    for (const level of levels) {
 
       for (const placeHolder of level.placeHolders) {
 
-        if(placeHolder.groupContained){
+        if (placeHolder.groupContained) {
 
           let startGroup = placeHolder.group!;
 
-          let start = this.elementsByGroupIds.get(startGroup.id)?.nativeElement;
-
           for (const child of startGroup.children) {
 
-            let end = this.elementsByGroupIds.get(child.id)?.nativeElement;
-
-            console.log('drawing line from ' + placeHolder.group!.id + ' to ' + child.id, 'start:', start, 'end: ', end);
-
-            if (start && end) {
-
-              //const line = new LeaderLine(start, end);
-              const line = new LeaderLine(
-                LeaderLine.pointAnchor(start, {x: '50%', y: '100%'}),
-                LeaderLine.pointAnchor(end, {x: '50%', y: '0%'}));
-
-              line.path = 'straight';
-
-              this.lines.push(line);
-            }
+            this.startPointsByEndPoints.set(child.id, startGroup.id);
 
           }
-
-
         }
       }
     }
 
+  }
 
+  private renderLine(startId: number, endId: number): void {
+
+    let start = this.elementsByGroupIds.get(startId)?.nativeElement;
+
+    let end = this.elementsByGroupIds.get(endId)?.nativeElement;
+
+    console.log('drawing line from ' + startId + ' to ' + endId, 'start:', start, 'end: ', end);
+
+    if (start && end) {
+
+      //const line = new LeaderLine(start, end);
+      const line = new LeaderLine(
+        LeaderLine.pointAnchor(start, {x: '50%', y: '100%'}),
+        LeaderLine.pointAnchor(end, {x: '50%', y: '0%'}));
+
+      line.path = 'straight';
+
+      this.lines.push(line);
+    }
+  }
+
+
+  ngAfterContentInit() {
+
+    console.log('ngAfterContentInit', this.elementsByGroupIds);
+
+
+  }
+
+  private allNodesInitialized(): boolean {
+
+    for (const start of this.startPointsByEndPoints.values()) {
+      if (!this.elementsByGroupIds.has(start)) {
+
+        return false;
+      }
+    }
+
+    for (const end of this.startPointsByEndPoints.keys()) {
+
+      if (!this.elementsByGroupIds.has(end)) {
+
+        return false;
+      }
+    }
+
+    return true;
+
+  }
+
+  private renderAllLines() {
+
+    console.log('all nodes initialized', this.elementsByGroupIds, this.startPointsByEndPoints);
+
+    for (const endId of this.startPointsByEndPoints.keys()) {
+
+
+      let startId = this.startPointsByEndPoints.get(endId)!;
+
+      this.renderLine(startId, endId);
+
+    }
 
   }
 }
