@@ -10,7 +10,6 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PosTagModel} from "./models/pos-tag.model";
 
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,21 +20,21 @@ export class AppComponent implements OnInit {
 
   public group: TokenGroupModel = new TokenGroupModel();
   public selection: TokenSelectionModel = new TokenSelectionModel();
-  public parseTree:string='';
-  public postagBank:PosTagBankModel= new PosTagBankModel();
+  public parseTree: string = '';
+  public postagBank: PosTagBankModel = new PosTagBankModel();
 
 
-  @ViewChild('postagModal') treebankModal?:ElementRef;
+  @ViewChild('postagModal') treebankModal?: ElementRef;
 
-  public clickedTagGroup:TokenGroupModel | undefined;
-  public modalPreviewGroup?:TokenGroupModel;
-  public clickedTagSelection:TokenSelectionModel=new TokenSelectionModel();
+  public clickedTagGroup: TokenGroupModel | undefined;
+  public modalPreviewGroup?: TokenGroupModel;
+  public clickedTagSelection: TokenSelectionModel = new TokenSelectionModel();
 
   constructor(private tokenSvc: TokenProcessorService,
               private selectionSvc: TokenSelectionProcessorService,
-              private parseTreeSvc:ParseTreeExtractorService,
-              private pennSvc:TreeBankApiService,
-              private modalService:NgbModal) {
+              private parseTreeSvc: ParseTreeExtractorService,
+              private pennSvc: TreeBankApiService,
+              private modalService: NgbModal) {
   }
 
 
@@ -59,8 +58,10 @@ export class AppComponent implements OnInit {
 
     this.pennSvc.getTreeBankByModelName('farsi').subscribe({
       next: bank => this.postagBank = bank,
-      error: err=>{},
-      complete: () => {}
+      error: err => {
+      },
+      complete: () => {
+      }
     });
 
   }
@@ -127,14 +128,10 @@ export class AppComponent implements OnInit {
   private updateParseTree() {
 
     this.parseTree = this.parseTreeSvc.toParseTree(this.group);
-
-    console.log('parse-tree',this.parseTree);
   }
 
   public onTagClicked(group: TokenGroupModel) {
 
-
-    console.log('pos tag clicked for group: ' + group.id);
 
     this.clickedTagGroup = group;
 
@@ -142,16 +139,16 @@ export class AppComponent implements OnInit {
 
     this.clickedTagSelection = new TokenSelectionModel();
 
-    this.clickedTagSelection.highlightedGroups.set(this.clickedTagGroup.id,"success");
+    this.clickedTagSelection.highlightedGroups.set(this.clickedTagGroup.id, "success");
 
-    this.modalService.open(this.treebankModal,{ size: 'xl'});
+    this.modalService.open(this.treebankModal, {size: 'xl'});
   }
 
 
-  public onSetPostagClicked(tag:PosTagModel){
+  public onSetPostagClicked(tag: PosTagModel) {
 
 
-    if(this.clickedTagGroup){
+    if (this.clickedTagGroup) {
 
       this.clickedTagGroup.tag = tag.tag;
 
