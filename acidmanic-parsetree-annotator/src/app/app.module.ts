@@ -11,6 +11,7 @@ import { PhraseHighlighterComponent } from './components/phrase-highlighter/phra
 import { FlattenTokenTreeComponent } from './components/flatten-token-tree/flatten-token-tree.component';
 import { TokenGroupPlaceHolderComponent } from './components/flatten-token-tree/token-group-place-holder/token-group-place-holder.component';
 import { TokenGroupNodeComponent } from './components/flatten-token-tree/token-group-node/token-group-node.component';
+import { ParseTreePageComponent } from './pages/parse-tree-page/parse-tree-page.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TokenGroupNodeComponent } from './components/flatten-token-tree/token-g
     PhraseHighlighterComponent,
     FlattenTokenTreeComponent,
     TokenGroupPlaceHolderComponent,
-    TokenGroupNodeComponent
+    TokenGroupNodeComponent,
+    ParseTreePageComponent,
   ],
   imports: [
     BrowserModule,

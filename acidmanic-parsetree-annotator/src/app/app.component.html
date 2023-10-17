@@ -1,101 +1,13 @@
-<div class="container">
-
-  <div class="row">
-
-    <div class="col-2">
-
-    </div>
-    <div class="col-6">
-      <flatten-token-tree
-        (on-delete-group)="onDeleteGroup($event)"
-        (on-delete-tokens)="onDeleteTokens($event)"
-        (on-sub-group)="onCreateSubGroup($event)"
-        [selection]="selection"
-                          [group]="group"
-                          [disable-tag-click]="true"
-                          [token-z-index]="100"
-                          (on-tag-clicked)="onTagClicked($event)">
-      </flatten-token-tree>
-    </div>
-
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header"> Resulting Parse Tree</div>
-        <div class="card-body parse-tree-view">
-          {{parseTree}}
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-</div>
 
 
-<ng-template id="postagModal" #postagModal>
-
-  <div class="card">
-    <div class="card-header">
-      Tree Bank Pos-tags
-    </div>
-    <div class="card-body">
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-12">
-
-            <div class="d-flex justify-content-center">
-              <phrase-highlighter
-                highlight-color="warning"
-                [root]="group"
-                [selected-tokens]="clickedTagGroup?.tokens ?? []"
-              >
-              </phrase-highlighter>
-            </div>
-            <div class="d-flex justify-content-center">
-              <token-group
-                style="display: inline-block;"
-                [selection]="clickedTagSelection"
-                [group]="modalPreviewGroup!"
-                [disable-tag-click]="true">
-              </token-group>
-            </div>
-          </div>
 
 
-        </div>
-
-        <div class="row g-1">
-
-          <div class="col-xxl-1 col-xl-2 col-lg-4  col-md-6 col-sm-12"
-               *ngFor="let tag of postagBank.tags"
-               [dir]="postagBank.language.direction">
-            <ngb-alert
-              class="m-0 ml-1 mt-1 p-1 card-postag"
-              type="primary" [dismissible]="false">
-
-              <span class="badge bg-primary p-1 m-0 cursor-pointer"
-                    (click)="onSetPostagClicked(tag)">
-                {{tag.tag}}
-              </span>
-              <popper-limited-text
-                [text]="tag.description"
-                [text-max-chars]="35"
-                (text-click)="onSetPostagClicked(tag)"
-                class="details"
-              ></popper-limited-text>
-
-            </ngb-alert>
-          </div>
 
 
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-</ng-template>
 
 
+
+
+
+
+<router-outlet></router-outlet>
