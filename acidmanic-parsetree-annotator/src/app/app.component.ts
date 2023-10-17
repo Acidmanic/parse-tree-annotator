@@ -146,11 +146,11 @@ export class AppComponent implements OnInit {
 
     if (this.clickedTagGroup) {
 
+      this.modalService.dismissAll();
+
       this.clickedTagGroup.tag = tag.tag;
 
       this.clickedTagGroup = undefined;
-
-      this.modalService.dismissAll();
 
       this.updateParseTree();
     }

@@ -55,7 +55,7 @@
               <phrase-highlighter
                 highlight-color="warning"
                 [root]="group"
-                [selected-tokens]="clickedTagGroup?.tokens!"
+                [selected-tokens]="clickedTagGroup?.tokens ?? []"
               >
               </phrase-highlighter>
             </div>

@@ -59,8 +59,6 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
       this.selectionCache = cache;
       this.myState = cache.groupSelectionStateByGroupId.get(this.group.id)!;
 
-      console.log('set my state', this.myState);
-
       if (this.tokensDiv) {
 
         if (this.myState.canDoAnything) {
@@ -133,7 +131,6 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
 
     if (!this.selectionCache.clickableSet.has(this.group.id, token.index)) {
 
-      console.log(this.group.id,token.index,'found unclickable');
       return;
     }
 

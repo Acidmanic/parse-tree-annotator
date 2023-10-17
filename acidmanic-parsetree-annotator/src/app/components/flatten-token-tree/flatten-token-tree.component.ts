@@ -297,8 +297,6 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
     this.selectionStateCache = this.selectionProcessor.processSelectionState(this.group, this.selectionInput);
 
     this.selectionStateCacheBroadcast.emit(this.selectionStateCache);
-
-    console.log('selection recalculated: ', this.selectionStateCache);
   }
 
 
