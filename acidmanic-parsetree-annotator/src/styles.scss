@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 
-//@import "~bootstrap/dist/css/bootstrap.css";
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import "bootstrap-icons";
 
 .small-circle-badge{
   align-content: center;
@@ -65,8 +67,7 @@
   font-family: Monaco, "Lucida Console", monospace;
 }
 
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+
 
 
 .card-postag .badge{
@@ -98,4 +99,15 @@
 
 token-group-place-holder{
   display: contents;
+}
+
+
+.bi-node-button{
+  font-size: 2rem;
+}
+
+
+.node-buttons-panel .popover-body{
+
+  padding: 2px;
 }

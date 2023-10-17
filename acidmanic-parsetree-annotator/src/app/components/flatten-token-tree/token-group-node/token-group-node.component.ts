@@ -153,4 +153,11 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
+  onUpClick() {
+
+  }
+
+  onDownClick() {
+
+  }
 }
