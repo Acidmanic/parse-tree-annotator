@@ -2,6 +2,8 @@ import {Injectable} from "@angular/core";
 import {TokenSelectionModel} from "../models/token-selection.model";
 import {TokenGroupModel} from "../models/token-group.model";
 import {TokenProcessorService} from "./token-processor.service";
+import {TokenGroupNodeComponent} from "../components/flatten-token-tree/token-group-node/token-group-node.component";
+import {TokenModel} from "../models/token.model";
 
 
 @Injectable({
@@ -49,32 +51,66 @@ export class GroupEditingStrategyService {
     return false;
   }
 
+  private isRoot(group:TokenGroupModel):boolean{
 
-  public canTokenBeDeleted(selection: TokenSelectionModel,
-                           root: TokenGroupModel): boolean {
+    if(!group.parent || (group.root && group.root.id==group.id) ) return true;
+
+    return false;
+  }
+
+
+  public canTokensBeDeleted(group:TokenGroupModel,selection: TokenSelectionModel,
+                            root: TokenGroupModel): boolean {
+
+    // if any tokens are selected, they dont belong to this group
+    if(group.id!=selection.selectionGroupId) return false;
+
+    // root's tokens are not deletable
+    if(this.isRoot(group)) return false;
 
     let map = this.processor.mapTokenGroup(root);
 
     if (map.groupsById.has(selection.selectionGroupId)) {
 
-      if (selection.selectedTokenIndexes.length == 1) {
+      let selectedGroup = map.groupsById.get(selection.selectionGroupId)!;
+      // implies a whole group delete not just tokens
+      if (selection.selectedTokenIndexes.length == selectedGroup.tokens.length) return false;
 
-        let selectedTokenIndex = selection.selectedTokenIndexes[0];
+      for (const tokenIndex of selection.selectedTokenIndexes) {
 
-        let selectedGroup = map.groupsById.get(selection.selectionGroupId);
+        if (this.isTokenUsedInChildren(selectedGroup, tokenIndex)) {
 
-        let tokenFound = this.processor.findByIndex(selectedGroup!, selectedTokenIndex);
-
-        return tokenFound.success;
+          return false;
+        }
       }
-
+      // if non of tokens are used in lower groups, it's ok to be deleted
+      return true;
     }
 
     return false;
   }
 
-  public canSubGroupBeDeleted(selection: TokenSelectionModel,
+  private isTokenUsedInChildren(node: TokenGroupModel, tokenIndex: number): boolean {
+
+    for (const child of node.children) {
+
+      for (const childToken of child.tokens) {
+
+        if (childToken.index == tokenIndex) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public canSubGroupBeDeleted(group:TokenGroupModel, selection: TokenSelectionModel,
                               root: TokenGroupModel): boolean {
+    // unselected groups can not be deleted
+    if(group.id!=selection.selectionGroupId) return false;
+    // root can not be deleted
+    if(this.isRoot(group)) return false;
 
     let map = this.processor.mapTokenGroup(root);
 
@@ -88,8 +124,10 @@ export class GroupEditingStrategyService {
     return false;
   }
 
-  public canCreateSubGroup(selection: TokenSelectionModel,
+  public canCreateSubGroup(group:TokenGroupModel,selection: TokenSelectionModel,
                            root: TokenGroupModel): boolean {
+    // unselected groups can not create subgroups
+    if(group.id!=selection.selectionGroupId) return false;
 
     let map = this.processor.mapTokenGroup(root);
 

@@ -180,15 +180,22 @@ export class TokenSelectionProcessorService {
 
       this.indexTokensSelectionState(node, selection, state);
 
-      nodeState.isSelected = true;
+      nodeState.isWholeGroupSelected = true;
+      nodeState.hasSelectedTokens = false;
 
       for (const token of node.tokens) {
 
-        if (!state.selectedSet.has(node.id,token.index)) {
-          nodeState.isSelected = false;
-          break;
+        if (state.selectedSet.has(node.id,token.index)) {
+
+          nodeState.hasSelectedTokens = true;
+        }else{
+          nodeState.isWholeGroupSelected = false;
         }
       }
+
+      nodeState.canBeDeleted =this.strategy.canSubGroupBeDeleted(node, selection,node.root!);
+      nodeState.canTokensBeDeleted =this.strategy.canTokensBeDeleted(node,selection,node.root!);
+      nodeState.canSubGroupTokens =this.strategy.canCreateSubGroup(node,selection,node.root!);
 
       for (const child of node.children) {
 

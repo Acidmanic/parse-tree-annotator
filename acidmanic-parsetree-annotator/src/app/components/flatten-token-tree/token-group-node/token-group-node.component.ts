@@ -16,6 +16,7 @@ import {TokenModel} from "../../../models/token.model";
 import {TokenSelectionProcessorService} from "../../../services/token-selection-processor.service";
 import {TokenSelectionCacheModel} from "../../../models/token-selection-cache.model";
 import {Subscription} from "rxjs";
+import {GroupSelectionStateModel} from "../../../models/group-selection-state.model";
 
 
 @Component({
@@ -37,8 +38,10 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
 
   @Input('selection-updates') selectionUpdates: EventEmitter<TokenSelectionCacheModel> = new EventEmitter<TokenSelectionCacheModel>();
 
+  @ViewChild('tokensDiv') tokensDiv: any = new ElementRef(undefined);
 
   public selectionCache: TokenSelectionCacheModel = new TokenSelectionCacheModel();
+  public myState: GroupSelectionStateModel = new GroupSelectionStateModel();
   private selectionUpdatesSubscription?: Subscription;
 
   constructor(private selectionProcessor: TokenSelectionProcessorService) {
@@ -47,7 +50,20 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
   ngOnInit() {
 
     this.selectionUpdatesSubscription = this.selectionUpdates.subscribe(cache => {
+
       this.selectionCache = cache;
+      this.myState = cache.groupSelectionStateByGroupId.get(this.group.id)!;
+
+      console.log('set my state',this.myState);
+
+      if (this.tokensDiv) {
+
+        if (this.myState.hasSelectedTokens) {
+          this.tokensDiv.open();
+        } else {
+          this.tokensDiv.close();
+        }
+      }
     });
   }
 
@@ -121,7 +137,7 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
       selection.selectedTokenIndexes = [];
 
       selection.selectionGroupId = this.group.id;
-    }else {
+    } else {
 
       let existingIndex = selection.selectedTokenIndexes.indexOf(token.index);
 
@@ -142,6 +158,7 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
       selection.selectedTokenIndexes.sort((a, b) => a - b);
     }
     this.selectionProcessor.cloneInto(selection, this.selectionInput);
+
   }
 
   ngOnDestroy() {
@@ -153,7 +170,11 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
-  onUpClick() {
+  onGroupDeleteClick() {
+
+  }
+
+  onTokenDeleteClick() {
 
   }
 
