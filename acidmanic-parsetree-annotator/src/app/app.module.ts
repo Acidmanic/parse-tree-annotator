@@ -12,6 +12,7 @@ import { FlattenTokenTreeComponent } from './components/flatten-token-tree/flatt
 import { TokenGroupPlaceHolderComponent } from './components/flatten-token-tree/token-group-place-holder/token-group-place-holder.component';
 import { TokenGroupNodeComponent } from './components/flatten-token-tree/token-group-node/token-group-node.component';
 import { ParseTreePageComponent } from './pages/parse-tree-page/parse-tree-page.component';
+import { SideBarComponent } from './components/side-bar/side-bar.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ParseTreePageComponent } from './pages/parse-tree-page/parse-tree-page.
     TokenGroupPlaceHolderComponent,
     TokenGroupNodeComponent,
     ParseTreePageComponent,
+    SideBarComponent,
   ],
   imports: [
     BrowserModule,
