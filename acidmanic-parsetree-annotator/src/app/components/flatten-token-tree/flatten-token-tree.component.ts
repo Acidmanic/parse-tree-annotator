@@ -231,6 +231,10 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
       line.path = 'straight';
 
+      line.setOptions({
+        startPlug: 'disc'
+      });
+
       this.linesByEndIndex.set(endId, line);
     }
   }
@@ -300,7 +304,7 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
   }
 
 
-  public deselectEveryThing(){
+  public deselectEveryThing() {
 
     this.selectionInput = new TokenSelectionModel();
 
@@ -308,9 +312,9 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
   }
 
   @HostListener('document:click', ['$event'])
-  onHostClick(event:any) {
+  onHostClick(event: any) {
 
-    if(this.elementRef && this.elementRef.nativeElement && !this.elementRef.nativeElement.contains(event.target)) {
+    if (this.elementRef && this.elementRef.nativeElement && !this.elementRef.nativeElement.contains(event.target)) {
 
       this.deselectEveryThing();
     }
