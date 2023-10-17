@@ -1,11 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 @import "bootstrap-icons";
 
-.small-circle-badge{
+.small-circle-badge {
   align-content: center;
   align-items: center;
   text-align: center;
@@ -19,7 +18,7 @@
 }
 
 
-.node-circle{
+.node-circle {
   align-content: center;
   align-items: center;
   text-align: center;
@@ -36,23 +35,23 @@
 }
 
 
-.token{
+.token {
 
   cursor: pointer;
 }
 
-.token-selected{
+.token-selected {
   background-color: rgba(10, 69, 192, 0.47);
 }
 
 
-.token-disabled{
+.token-disabled {
   background-color: rgba(87, 82, 82, 0.55);
   cursor: unset;
 }
 
 
-.token-placeholder{
+.token-placeholder {
   visibility: hidden;
   height: 68px;
   min-width: 68px;
@@ -60,7 +59,7 @@
 }
 
 
-.parse-tree-view{
+.parse-tree-view {
 
   white-space: break-spaces;
   font-size: 0.8rem;
@@ -68,28 +67,26 @@
 }
 
 
-
-
-.card-postag .badge{
+.card-postag .badge {
   font-size: 0.7em;
   font-weight: bold;
 }
 
-.card-postag .details{
+.card-postag .details {
   font-size: 0.85em;
 }
 
-.card-postag{
+.card-postag {
   height: 90px;
 }
 
 
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
 
-.rounded-pill.pill-text-more{
+.rounded-pill.pill-text-more {
   font-size: 0.75rem;
   padding-top: 1px;
   padding-bottom: 0px;
@@ -97,17 +94,17 @@
 }
 
 
-token-group-place-holder{
+token-group-place-holder {
   display: contents;
 }
 
 
-.bi-node-button{
+.bi-node-button {
   font-size: 2rem;
 }
 
 
-.node-buttons-panel .popover-body{
+.node-buttons-panel .popover-body {
 
   padding: 2px;
 }
@@ -120,16 +117,13 @@ token-group-place-holder{
   background-color: rgba(0, 0, 0, .1);
   border: solid rgba(0, 0, 0, .15);
   border-width: 1px 0;
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  box-shadow: inset 0 .5em 1.5em #000000bf, inset 0 .125em .5em #000000a2;
 }
 
-
-
-
-
-
-
-
+.application-container {
+  width: 100vw;
+  background-color: #414146;
+}
 
 
 body {
@@ -167,7 +161,9 @@ main {
   fill: currentColor;
 }
 
-.dropdown-toggle { outline: 0; }
+.dropdown-toggle {
+  outline: 0;
+}
 
 .nav-flush .nav-link {
   border-radius: 0;
@@ -182,6 +178,7 @@ main {
   background-color: transparent;
   border: 0;
 }
+
 .btn-toggle:hover,
 .btn-toggle:focus {
   color: rgba(0, 0, 0, .85);
@@ -199,6 +196,7 @@ main {
 .btn-toggle[aria-expanded="true"] {
   color: rgba(0, 0, 0, .85);
 }
+
 .btn-toggle[aria-expanded="true"]::before {
   transform: rotate(90deg);
 }
@@ -210,6 +208,7 @@ main {
   margin-left: 1.25rem;
   text-decoration: none;
 }
+
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
   background-color: #d2f4ea;
@@ -219,5 +218,10 @@ main {
   overflow-y: auto;
 }
 
-.fw-semibold { font-weight: 600; }
-.lh-tight { line-height: 1.25; }
+.fw-semibold {
+  font-weight: 600;
+}
+
+.lh-tight {
+  line-height: 1.25;
+}
