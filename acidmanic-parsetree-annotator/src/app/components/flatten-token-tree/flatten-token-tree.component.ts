@@ -2,7 +2,7 @@ import {
   AfterContentInit,
   Component,
   ElementRef,
-  EventEmitter,
+  EventEmitter, HostListener,
   Input,
   OnChanges,
   OnInit,
@@ -55,7 +55,8 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
   public selectionStateCacheBroadcast: EventEmitter<TokenSelectionCacheModel> = new EventEmitter<TokenSelectionCacheModel>();
 
   constructor(public groupProcessor: TokenProcessorService,
-              private selectionProcessor: TokenSelectionProcessorService) {
+              private selectionProcessor: TokenSelectionProcessorService,
+              private elementRef: ElementRef) {
   }
 
 
@@ -299,4 +300,22 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
     console.log('selection recalculated: ', this.selectionStateCache);
   }
+
+
+  public deselectEveryThing(){
+
+    this.selectionInput = new TokenSelectionModel();
+
+    this.reCalculateSelection();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onHostClick(event:any) {
+
+    if(this.elementRef && this.elementRef.nativeElement && !this.elementRef.nativeElement.contains(event.target)) {
+
+      this.deselectEveryThing();
+    }
+  }
+
 }

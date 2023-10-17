@@ -14,6 +14,7 @@
        [ngbPopover]="buttonsPopOver"
        triggers="manual"
        [autoClose]="false"
+       (hidden)="onPopHide()"
        #tokensDiv="ngbPopover"
        popoverClass=" node-buttons-panel "
        placement="right">
@@ -29,7 +30,7 @@
 <ng-template #buttonsPopOver>
   <div>
     <a (click)="onGroupDeleteClick()" *ngIf="myState.canBeDeleted">
-      <i class="cursor-pointer bi bi-arrow-up-circle-fill bi-node-button text-warning"></i>
+      <i class="cursor-pointer bi bi-arrow-up-circle-fill bi-node-button text-danger"></i>
     </a>
   </div>
   <div>
@@ -38,7 +39,7 @@
     </a>
   </div>
   <div>
-    <a (click)="onDownClick()" *ngIf="myState.canSubGroupTokens">
+    <a (click)="onSubGroupClicked()" *ngIf="myState.canSubGroupTokens">
       <i class="cursor-pointer bi bi-arrow-down-circle-fill bi-node-button text-success"></i>
     </a>
   </div>

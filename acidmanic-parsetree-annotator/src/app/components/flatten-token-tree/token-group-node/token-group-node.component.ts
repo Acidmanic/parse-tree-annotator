@@ -17,6 +17,7 @@ import {TokenSelectionProcessorService} from "../../../services/token-selection-
 import {TokenSelectionCacheModel} from "../../../models/token-selection-cache.model";
 import {Subscription} from "rxjs";
 import {GroupSelectionStateModel} from "../../../models/group-selection-state.model";
+import {PariModel} from "../../../models/pari.model";
 
 
 @Component({
@@ -35,8 +36,12 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
   @ViewChild('nodeCircle') nodeCircle: ElementRef = new ElementRef<any>(undefined);
   @Output('on-node-destroy') onNodeDestroy: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
   @Input('token-z-index') tokenZIndex?: number;
-
   @Input('selection-updates') selectionUpdates: EventEmitter<TokenSelectionCacheModel> = new EventEmitter<TokenSelectionCacheModel>();
+
+  @Output('on-delete-group') onDeleteGroup: EventEmitter<TokenGroupModel> = new EventEmitter<TokenGroupModel>();
+  @Output('on-delete-tokens') onDeleteTokens: EventEmitter<PariModel<TokenGroupModel, TokenModel>[]> = new EventEmitter<PariModel<TokenGroupModel, TokenModel>[]>();
+  @Output('on-sub-group') onSubGroup: EventEmitter<PariModel<TokenGroupModel, number[]>> = new EventEmitter<PariModel<TokenGroupModel, number[]>>();
+
 
   @ViewChild('tokensDiv') tokensDiv: any = new ElementRef(undefined);
 
@@ -54,7 +59,7 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
       this.selectionCache = cache;
       this.myState = cache.groupSelectionStateByGroupId.get(this.group.id)!;
 
-      console.log('set my state',this.myState);
+      console.log('set my state', this.myState);
 
       if (this.tokensDiv) {
 
@@ -123,10 +128,12 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
 
+
   public tokenClicked(token: TokenModel): void {
 
     if (!this.selectionCache.clickableSet.has(this.group.id, token.index)) {
 
+      console.log(this.group.id,token.index,'found unclickable');
       return;
     }
 
@@ -134,9 +141,10 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
 
     if (selection.selectionGroupId != this.group.id) {
 
-      selection.selectedTokenIndexes = [];
+      selection.selectedTokenIndexes = [token.index];
 
       selection.selectionGroupId = this.group.id;
+
     } else {
 
       let existingIndex = selection.selectedTokenIndexes.indexOf(token.index);
@@ -157,6 +165,9 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
 
       selection.selectedTokenIndexes.sort((a, b) => a - b);
     }
+
+    console.log(this.group.id,token.index,'updating selection from',this.selectionInput,'to',selection);
+
     this.selectionProcessor.cloneInto(selection, this.selectionInput);
 
   }
@@ -172,13 +183,40 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
 
   onGroupDeleteClick() {
 
+    this.onDeleteGroup.emit(this.group);
   }
 
   onTokenDeleteClick() {
 
+    let event: PariModel<TokenGroupModel, TokenModel>[] = [];
+
+    for (const token of this.group.tokens) {
+
+      let tokenState = this.selectionCache.tokenSelectionStateByTokenIndex.get(this.group.id, token.index);
+
+      if (tokenState && tokenState.isSelected) {
+
+        let pari: PariModel<TokenGroupModel, TokenModel> = {first: this.group, second: token};
+
+        event.push(pari);
+      }
+    }
+
+    if (event.length > 0) {
+
+      this.onDeleteTokens.emit(event);
+    }
+
   }
 
-  onDownClick() {
+  onSubGroupClicked() {
 
+    let event = new PariModel<TokenGroupModel,number[]>(this.group,this.selectionInput.selectedTokenIndexes);
+
+    this.onSubGroup.emit(event);
+  }
+
+  onPopHide() {
+    console.log('pop hiden');
   }
 }

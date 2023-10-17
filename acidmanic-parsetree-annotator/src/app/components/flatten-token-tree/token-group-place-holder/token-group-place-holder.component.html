@@ -1,8 +1,3 @@
-
-
-
-
-
 <token-group-node style="width: unset"
                   *ngIf="placeHolder.groupContained"
                   [group]="placeHolder.group!"
@@ -11,7 +6,10 @@
                   (on-node-destroy)="this.onNodeDestroy.emit($event)"
                   [token-z-index]="tokenZIndex"
                   [selection-updates]="selectionUpdates"
-                  (on-tag-clicked)="onTagClicked.emit($event)">
+                  (on-tag-clicked)="onTagClicked.emit($event)"
+                  (on-sub-group)="this.onSubGroup.emit($event)"
+                  (on-delete-tokens)="this.onDeleteTokens.emit($event)"
+                  (on-delete-group)="this.onDeleteGroup.emit($event)">
 </token-group-node>
 
 <span *ngIf="!placeHolder.groupContained" class="token-placeholder">
