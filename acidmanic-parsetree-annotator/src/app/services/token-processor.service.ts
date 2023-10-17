@@ -240,8 +240,6 @@ export class TokenProcessorService {
 
     let fullClone = this.fullClone(root, groupsMap, tokensMap);
 
-    console.log(fullClone, groupsMap.get(group.id));
-
     return groupsMap.get(group.id)!;
   }
 

@@ -73,8 +73,6 @@ export class AppComponent implements OnInit {
 
     let cache = this.selectionSvc.processSelectionState(this.group, this.selection);
 
-    console.log('selection cache:', cache);
-
   }
 
   onCreateSubGroup(subGroupOrder:PariModel<TokenGroupModel, number[]>) {

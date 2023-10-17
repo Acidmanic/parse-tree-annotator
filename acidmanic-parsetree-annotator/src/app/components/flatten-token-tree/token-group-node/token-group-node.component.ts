@@ -163,8 +163,6 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
       selection.selectedTokenIndexes.sort((a, b) => a - b);
     }
 
-    console.log(this.group.id,token.index,'updating selection from',this.selectionInput,'to',selection);
-
     this.selectionProcessor.cloneInto(selection, this.selectionInput);
 
   }
@@ -213,7 +211,4 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
     this.onSubGroup.emit(event);
   }
 
-  onPopHide() {
-    console.log('pop hiden');
-  }
 }
