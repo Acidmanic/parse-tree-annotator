@@ -63,7 +63,7 @@ export class TokenGroupNodeComponent implements OnInit, AfterViewInit, OnDestroy
 
       if (this.tokensDiv) {
 
-        if (this.myState.hasSelectedTokens) {
+        if (this.myState.canDoAnything) {
           this.tokensDiv.open();
         } else {
           this.tokensDiv.close();

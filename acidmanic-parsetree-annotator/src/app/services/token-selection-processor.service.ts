@@ -197,6 +197,8 @@ export class TokenSelectionProcessorService {
       nodeState.canTokensBeDeleted =this.strategy.canTokensBeDeleted(node,selection,node.root!);
       nodeState.canSubGroupTokens =this.strategy.canCreateSubGroup(node,selection,node.root!);
 
+      nodeState.canDoAnything=nodeState.canBeDeleted || nodeState.canBeDeleted || nodeState.canSubGroupTokens;
+      
       for (const child of node.children) {
 
         this.indexSelectionStates(child, selection, state);

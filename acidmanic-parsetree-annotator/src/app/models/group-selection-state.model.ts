@@ -14,6 +14,6 @@ export class GroupSelectionStateModel{
   public canTokensBeDeleted:boolean=false;
   public canBeDeleted:boolean=false;
   public canSubGroupTokens:boolean=false;
-
+  public canDoAnything:boolean=false;
 
 }
