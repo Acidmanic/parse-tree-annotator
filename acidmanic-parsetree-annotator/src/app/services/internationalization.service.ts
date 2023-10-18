@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {UiPreferencesDataService} from "./ui-preferences-data.service";
 import {UiPreferencesModel} from "../models/application-models/ui-preferences.model";
 import {LanguageModel} from "../models/language.model";
+import {UiPreferencesActionsService} from "./ui-preferences-actions.service";
 
 
 @Injectable({
@@ -23,11 +24,12 @@ export class InternationalizationService {
 
 
   constructor(private http: HttpClient,
-              private svcUiPref: UiPreferencesDataService) {
+              private svcUiData: UiPreferencesDataService,
+              private svcUiActions:UiPreferencesActionsService) {
 
     this.checkGetData();
 
-    this.svcUiPref.getPreferences().subscribe({
+    this.svcUiData.getPreferences().subscribe({
       next: pref => {
         this.uiPref = pref;
 
@@ -70,8 +72,8 @@ export class InternationalizationService {
         return language;
 
       }
-      return undefined;
     }
+    return undefined;
   }
 
 
@@ -103,7 +105,7 @@ export class InternationalizationService {
 
       this.uiPref.languageName = languageFound.name;
 
-      this.svcUiPref.setPreferences(this.uiPref);
+      this.svcUiData.setPreferences(this.uiPref);
 
       this.updateCache();
     }

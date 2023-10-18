@@ -14,6 +14,7 @@ import { TokenGroupNodeComponent } from './components/flatten-token-tree/token-g
 import { ParseTreePageComponent } from './pages/parse-tree-page/parse-tree-page.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { ThemeSwitchComponent } from './components/theme-switch/theme-switch.component';
+import { LanguageDropdownComponent } from './components/language-dropdown/language-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ThemeSwitchComponent } from './components/theme-switch/theme-switch.com
     ParseTreePageComponent,
     SideBarComponent,
     ThemeSwitchComponent,
+    LanguageDropdownComponent,
   ],
   imports: [
     BrowserModule,

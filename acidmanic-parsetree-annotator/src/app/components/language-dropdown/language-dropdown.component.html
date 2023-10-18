@@ -1,0 +1,11 @@
+<div ngbDropdown class="d-inline-block">
+  <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+    <i class="bi bi-globe-americas"></i>
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+    <button ngbDropdownItem *ngFor="let lang of this.svcInternationalization.availableLanguages"
+    (click)="selectLanguage(lang)">
+        {{lang.name}}
+    </button>
+  </div>
+</div>
