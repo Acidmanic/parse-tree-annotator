@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {UiPreferencesService} from "./services/ui-preferences.service";
+import {UiPreferencesDataService} from "./services/ui-preferences-data.service";
+import {UiPreferencesActionsService} from "./services/ui-preferences-actions.service";
 
 @Component({
   selector: 'app-root',
@@ -9,16 +10,17 @@ import {UiPreferencesService} from "./services/ui-preferences.service";
 export class AppComponent implements OnInit {
 
 
-  constructor(private svcUiPref: UiPreferencesService) {
+  constructor(private svcUiData: UiPreferencesDataService,
+              private svcUiActions: UiPreferencesActionsService) {
   }
 
 
   ngOnInit() {
-    this.svcUiPref.getPreferences().subscribe({
+    this.svcUiData.getPreferences().subscribe({
       next: uiPref => {
         console.log('ui-pref', uiPref);
 
-        document.documentElement.setAttribute('data-bs-theme',uiPref.themeId);
+        this.svcUiActions.setTheme(uiPref.themeId);
 
       }
     });

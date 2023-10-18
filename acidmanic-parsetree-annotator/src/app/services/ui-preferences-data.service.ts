@@ -9,7 +9,7 @@ import {ResultModel} from "../models/result.model";
 @Injectable({
   providedIn:'root'
 })
-export class UiPreferencesService {
+export class UiPreferencesDataService {
 
   private static readonly UI_PREF_STG_KEY:string='UI_PREF_STG';
 
@@ -23,7 +23,7 @@ export class UiPreferencesService {
     let handler = new Subject<UiPreferencesModel>();
 
     let uiPref = this.svcStorage.getOrDefaultAndSet<UiPreferencesModel>(
-      UiPreferencesService.UI_PREF_STG_KEY,
+      UiPreferencesDataService.UI_PREF_STG_KEY,
       new UiPreferencesModel());
 
 
@@ -31,6 +31,13 @@ export class UiPreferencesService {
 
 
     return handler;
+
+  }
+
+  public setPreferences(uiPref: UiPreferencesModel) {
+
+    this.svcStorage.storeData<UiPreferencesModel>(UiPreferencesDataService.UI_PREF_STG_KEY, uiPref);
+
 
   }
 }
