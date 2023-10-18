@@ -4,7 +4,7 @@ import {
   ElementRef,
   EventEmitter, HostListener,
   Input,
-  OnChanges,
+  OnChanges, OnDestroy,
   OnInit,
   Output,
   SimpleChanges
@@ -19,6 +19,8 @@ import {PariModel} from "../../models/pari.model";
 import {TokenModel} from "../../models/token.model";
 import {TokenSelectionCacheModel} from "../../models/token-selection-cache.model";
 import {TokenSelectionProcessorService} from "../../services/token-selection-processor.service";
+import {InternationalizationService} from "../../services/internationalization.service";
+import {Subscription} from "rxjs";
 
 
 declare var LeaderLine: any;
@@ -28,7 +30,7 @@ declare var LeaderLine: any;
   templateUrl: './flatten-token-tree.component.html',
   styleUrls: ['./flatten-token-tree.component.scss']
 })
-export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterContentInit {
+export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterContentInit, OnDestroy {
 
   @Input('group') group: TokenGroupModel = new TokenGroupModel();
   @Input('selection') selectionInput: TokenSelectionModel = new TokenSelectionModel();
@@ -54,9 +56,12 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
   public selectionStateCache: TokenSelectionCacheModel = new TokenSelectionCacheModel();
   public selectionStateCacheBroadcast: EventEmitter<TokenSelectionCacheModel> = new EventEmitter<TokenSelectionCacheModel>();
 
+  private internationalizationSubscription?:Subscription;
+
   constructor(public groupProcessor: TokenProcessorService,
               private selectionProcessor: TokenSelectionProcessorService,
-              private elementRef: ElementRef) {
+              private elementRef: ElementRef,
+              private svcInternationalization:InternationalizationService) {
   }
 
 
@@ -66,8 +71,19 @@ export class FlattenTokenTreeComponent implements OnChanges, OnInit, AfterConten
 
   ngOnInit() {
 
+    this.internationalizationSubscription = this.svcInternationalization.languageChange()
+      .subscribe({
+        next:lan => this.refresh()
+      });
   }
 
+  ngOnDestroy() {
+
+    if(this.internationalizationSubscription){
+
+      this.internationalizationSubscription.unsubscribe();
+    }
+  }
 
   onChildCircleReady(gl: GroupElement) {
 

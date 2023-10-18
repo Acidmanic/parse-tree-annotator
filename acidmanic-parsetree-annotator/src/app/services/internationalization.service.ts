@@ -6,6 +6,7 @@ import {UiPreferencesDataService} from "./ui-preferences-data.service";
 import {UiPreferencesModel} from "../models/application-models/ui-preferences.model";
 import {LanguageModel} from "../models/language.model";
 import {UiPreferencesActionsService} from "./ui-preferences-actions.service";
+import {Observable, Subject} from "rxjs";
 
 
 @Injectable({
@@ -22,6 +23,7 @@ export class InternationalizationService {
   public currentLanguage: I18nLanguageModel = new I18nLanguageModel();
   public availableLanguages: LanguageModel[] = [];
 
+  private onLanguageChange:Subject<I18nLanguageModel>=new Subject<I18nLanguageModel>();
 
   constructor(private http: HttpClient,
               private svcUiData: UiPreferencesDataService,
@@ -108,8 +110,13 @@ export class InternationalizationService {
       this.svcUiData.setPreferences(this.uiPref);
 
       this.updateCache();
+
+      this.onLanguageChange.next(languageFound!);
     }
+  }
 
+  public languageChange():Observable<I18nLanguageModel>{
 
+    return this.onLanguageChange;
   }
 }
