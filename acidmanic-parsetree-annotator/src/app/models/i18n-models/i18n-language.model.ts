@@ -1,6 +1,6 @@
 
 
-declare type Dictionary = {[string:string]};
+declare type Dictionary = {[key:string]:string};
 
 
 export class I18nLanguageModel {
