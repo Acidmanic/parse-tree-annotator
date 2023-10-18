@@ -43,6 +43,13 @@ export class InternationalizationService {
 
   private checkGetData() {
 
+    this.loadAsync();
+  }
+
+  public loadAsync():Observable<boolean>{
+
+    let handler = new Subject<boolean>();
+
     if (!this.receivedData) {
 
       this.http.get<InternationalizationDataModel>
@@ -54,9 +61,15 @@ export class InternationalizationService {
           this.receivedData = true;
 
           this.updateCache();
-        }
+
+          handler.next(true);
+        },
+        error:err=>handler.error(err),
+        complete:() => handler.complete()
       });
     }
+
+    return handler;
   }
 
   public languages(): I18nLanguageModel[] {

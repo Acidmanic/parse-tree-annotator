@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   constructor(private svcUiData: UiPreferencesDataService,
               private svcUiActions: UiPreferencesActionsService,
-              private svcInternationalization:InternationalizationService) {
+              private svcInternationalization: InternationalizationService) {
   }
 
 
@@ -23,13 +23,20 @@ export class AppComponent implements OnInit {
 
         this.svcUiActions.setTheme(uiPref.themeId);
 
-        let found = this.svcInternationalization.getLanguageByName(uiPref.languageName);
+        this.svcInternationalization.loadAsync().subscribe({
+          next: loaded => {
 
-        if(found){
+            if (loaded) {
 
-          this.svcUiActions.setDirection(found.direction);
-        }
+              let found = this.svcInternationalization.getLanguageByName(uiPref.languageName);
 
+              if (found) {
+
+                this.svcUiActions.setDirection(found.direction);
+              }
+            }
+          }
+        });
       }
     });
   }
