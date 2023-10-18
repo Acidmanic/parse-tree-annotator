@@ -17,6 +17,9 @@ export class AppComponent implements OnInit {
     this.svcUiPref.getPreferences().subscribe({
       next: uiPref => {
         console.log('ui-pref', uiPref);
+
+        document.documentElement.setAttribute('data-bs-theme',uiPref.themeId);
+
       }
     });
   }
