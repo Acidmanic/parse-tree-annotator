@@ -27,17 +27,17 @@
 </div>
 
 <ng-template #buttonsPopOver>
-  <div>
+  <div class="cursor-pointer">
     <a (click)="onGroupDeleteClick()" *ngIf="myState.canBeDeleted">
       <i class="cursor-pointer bi bi-arrow-up-circle-fill bi-node-button text-danger"></i>
     </a>
   </div>
-  <div>
+  <div class="cursor-pointer">
     <a (click)="onTokenDeleteClick()" *ngIf="myState.canTokensBeDeleted">
       <i class="cursor-pointer bi bi-arrow-up-circle-fill bi-node-button text-warning"></i>
     </a>
   </div>
-  <div>
+  <div class="cursor-pointer">
     <a (click)="onSubGroupClicked()" *ngIf="myState.canSubGroupTokens">
       <i class="cursor-pointer bi bi-arrow-down-circle-fill bi-node-button text-success"></i>
     </a>
