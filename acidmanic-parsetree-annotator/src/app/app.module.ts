@@ -15,6 +15,7 @@ import { ParseTreePageComponent } from './pages/parse-tree-page/parse-tree-page.
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { ThemeSwitchComponent } from './components/theme-switch/theme-switch.component';
 import { LanguageDropdownComponent } from './components/language-dropdown/language-dropdown.component';
+import { SegmentationPageComponent } from './pages/segmentation-page/segmentation-page.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { LanguageDropdownComponent } from './components/language-dropdown/langua
     SideBarComponent,
     ThemeSwitchComponent,
     LanguageDropdownComponent,
+    SegmentationPageComponent,
   ],
   imports: [
     BrowserModule,
