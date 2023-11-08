@@ -63,6 +63,14 @@ export class InternationalizationService {
           this.updateCache();
 
           handler.next(true);
+
+          if(d.languages && d.languages.length>0){
+
+            this.currentLanguage = d.languages[0];
+
+            this.onLanguageChange.next(this.currentLanguage);
+
+          }
         },
         error:err=>handler.error(err),
         complete:() => handler.complete()

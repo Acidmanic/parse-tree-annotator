@@ -5,7 +5,10 @@
 
       <!--  lefties -->
       <div>
-        <h3>Acidmanic - Tree parser - Annotator</h3>
+
+
+        <div><h3>Acidmanic - Tree parser - Annotator</h3></div>
+
       </div>
 
       <!--righties-->
@@ -19,11 +22,22 @@
             <theme-switch></theme-switch>
           </li>
         </ul>
+
+
       </div>
 
     </nav>
 
-    <hr>
+    <nav>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="./parse-tree">{{currentLanguage.strings['parseTree']}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./segmentation">{{currentLanguage.strings['segmentation']}}</a>
+        </li>
+      </ul>
+    </nav>
 
     <router-outlet></router-outlet>
   </div>

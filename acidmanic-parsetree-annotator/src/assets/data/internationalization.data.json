@@ -6,7 +6,9 @@
       "shortName": "En",
       "direction": "ltr",
       "strings": {
-        "home": "Home"
+        "home": "Home",
+        "parseTree":"Parse Tree",
+        "segmentation":"Text Segmentation"
       }
 
     },
@@ -15,7 +17,9 @@
       "shortName:": "فا",
       "direction": "rtl",
       "strings": {
-        "home": "خانه"
+        "home": "خانه",
+        "parseTree":"درخت نحوی",
+        "segmentation":"قطعه بندی متن"
       }
     }
 
