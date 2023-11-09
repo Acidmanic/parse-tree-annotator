@@ -30,6 +30,8 @@ export class AppComponent implements OnInit, OnDestroy {
         .subscribe({
           next: lang => {
             this.currentLanguage = lang;
+
+            this.svcUiActions.setDirection(lang.direction);
           }
         });
 
@@ -43,12 +45,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
             if (loaded) {
 
-              let found = this.svcInternationalization.getLanguageByName(uiPref.languageName);
+              this.svcInternationalization.setLanguage(uiPref.languageName);
 
-              if (found) {
-
-                this.svcUiActions.setDirection(found.direction);
-              }
             }
           }
         });

@@ -23,11 +23,11 @@ export class InternationalizationService {
   public currentLanguage: I18nLanguageModel = new I18nLanguageModel();
   public availableLanguages: LanguageModel[] = [];
 
-  private onLanguageChange:Subject<I18nLanguageModel>=new Subject<I18nLanguageModel>();
+  private onLanguageChange: Subject<I18nLanguageModel> = new Subject<I18nLanguageModel>();
 
   constructor(private http: HttpClient,
               private svcUiData: UiPreferencesDataService,
-              private svcUiActions:UiPreferencesActionsService) {
+              private svcUiActions: UiPreferencesActionsService) {
 
     this.checkGetData();
 
@@ -46,7 +46,7 @@ export class InternationalizationService {
     this.loadAsync();
   }
 
-  public loadAsync():Observable<boolean>{
+  public loadAsync(): Observable<boolean> {
 
     let handler = new Subject<boolean>();
 
@@ -64,16 +64,20 @@ export class InternationalizationService {
 
           handler.next(true);
 
-          if(d.languages && d.languages.length>0){
+          if (d.languages && d.languages.length > 0) {
 
-            this.currentLanguage = d.languages[0];
 
-            this.onLanguageChange.next(this.currentLanguage);
+            if (this.currentLanguage.name.length == 0) {
+
+              this.currentLanguage = d.languages[0];
+              this.onLanguageChange.next(this.currentLanguage);
+            }
+
 
           }
         },
-        error:err=>handler.error(err),
-        complete:() => handler.complete()
+        error: err => handler.error(err),
+        complete: () => handler.complete()
       });
     }
 
@@ -120,11 +124,11 @@ export class InternationalizationService {
     }
   }
 
-  public setLanguage(name:string){
+  public setLanguage(name: string) {
 
     let languageFound = this.getLanguageByName(name);
 
-    if(languageFound){
+    if (languageFound) {
 
       this.uiPref.languageName = languageFound.name;
 
@@ -136,7 +140,7 @@ export class InternationalizationService {
     }
   }
 
-  public languageChange():Observable<I18nLanguageModel>{
+  public languageChange(): Observable<I18nLanguageModel> {
 
     return this.onLanguageChange;
   }
