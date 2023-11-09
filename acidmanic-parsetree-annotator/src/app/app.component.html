@@ -31,10 +31,14 @@
     <nav>
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link" href="./parse-tree">{{currentLanguage.strings['parseTree']}}</a>
+          <button class="nav-link" (click)="navigateTo('parse-tree')">
+            {{currentLanguage.strings['parseTree']}}
+          </button>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./segmentation">{{currentLanguage.strings['segmentation']}}</a>
+          <button class="nav-link" (click)="navigateTo('segmentation')">
+            {{currentLanguage.strings['segmentation']}}
+          </button>
         </li>
       </ul>
     </nav>

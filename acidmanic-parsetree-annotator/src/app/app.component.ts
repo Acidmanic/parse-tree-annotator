@@ -4,6 +4,7 @@ import {UiPreferencesActionsService} from "./services/ui-preferences-actions.ser
 import {InternationalizationService} from "./services/internationalization.service";
 import {I18nLanguageModel} from "./models/i18n-models/i18n-language.model";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private svcUiData: UiPreferencesDataService,
               private svcUiActions: UiPreferencesActionsService,
-              public svcInternationalization: InternationalizationService) {
+              public svcInternationalization: InternationalizationService,
+              private router:Router) {
   }
 
 
@@ -63,5 +65,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
       this.languageChangeSubscription?.unsubscribe();
     }
+  }
+
+  navigateTo(path: string) {
+
+    this.router.navigate([path]);
+
   }
 }
