@@ -1,4 +1,9 @@
+using System.Net;
+using System.Security.Claims;
 using Acidmanic.ParseTreeAnnotator.Web;
+using Acidmanic.ParseTreeAnnotator.Web.Extensions;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Logging.LightWeight;
 
 
@@ -6,12 +11,15 @@ var wholeUniverseLogger = new ConsoleLogger().Shorten();
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.ConfigureListening("Api:Endpoints","Http");
+
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 
@@ -22,7 +30,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

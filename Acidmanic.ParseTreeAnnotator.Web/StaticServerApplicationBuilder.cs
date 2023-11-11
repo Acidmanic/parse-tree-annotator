@@ -1,5 +1,6 @@
 using System.Net;
 using System.Reflection;
+using Acidmanic.ParseTreeAnnotator.Web.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging.LightWeight;
 
@@ -131,19 +132,7 @@ namespace Acidmanic.ParseTreeAnnotator.Web
                 ContentRootPath = ExecutableBinariesDirectory()
             });
 
-            var configurationIp = builder.Configuration["StaticServer:Endpoints:Http:Url"];
-
-            if (!string.IsNullOrWhiteSpace(configurationIp))
-            {
-                var url = new Uri(configurationIp);
-
-                builder.WebHost.ConfigureKestrel(serverOptions =>
-                {
-                    serverOptions.ConfigureHttpsDefaults(listenOptions => { });
-
-                    serverOptions.Listen(IPAddress.Parse(url.Host), url.Port);
-                });
-            }
+            builder.ConfigureListening("StaticServer:Endpoints");
 
             builder.Services.AddControllers();
 

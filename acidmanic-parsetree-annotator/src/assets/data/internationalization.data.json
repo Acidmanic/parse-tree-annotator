@@ -8,7 +8,9 @@
       "strings": {
         "home": "Home",
         "parseTree":"Parse Tree",
-        "segmentation":"Text Segmentation"
+        "segmentation":"Text Segmentation",
+        "SITE_DESCRIPTION":"Crowdsourcing Nlp related AI tasks",
+        "SITE_TITLE":"NLP Shareopolis!"
       }
 
     },
@@ -19,7 +21,9 @@
       "strings": {
         "home": "خانه",
         "parseTree":"درخت نحوی",
-        "segmentation":"قطعه بندی متن"
+        "segmentation":"قطعه بندی متن",
+        "SITE_DESCRIPTION":"ابزار جمعی تولید داده های پردازش زبان طبیعی",
+        "SITE_TITLE":"ان.ال.پی. شِیروپلیس!"
       }
     }
 
