@@ -16,6 +16,7 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { ThemeSwitchComponent } from './components/theme-switch/theme-switch.component';
 import { LanguageDropdownComponent } from './components/language-dropdown/language-dropdown.component';
 import { SegmentationPageComponent } from './pages/segmentation-page/segmentation-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SegmentationPageComponent } from './pages/segmentation-page/segmentatio
     ThemeSwitchComponent,
     LanguageDropdownComponent,
     SegmentationPageComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,

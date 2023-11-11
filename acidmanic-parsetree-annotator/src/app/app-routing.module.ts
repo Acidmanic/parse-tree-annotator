@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {ParseTreePageComponent} from "./pages/parse-tree-page/parse-tree-page.component";
 import {SegmentationPageComponent} from "./pages/segmentation-page/segmentation-page.component";
+import {LoginPageComponent} from "./pages/login-page/login-page.component";
 
 const routes: Routes = [
 
@@ -12,6 +13,9 @@ const routes: Routes = [
   {
     path: 'segmentation',
     component: SegmentationPageComponent,
+  },{
+    path: 'login',
+    component: LoginPageComponent,
   },
   { path: '',  component:ParseTreePageComponent  },
   { path: '**', component: ParseTreePageComponent }
