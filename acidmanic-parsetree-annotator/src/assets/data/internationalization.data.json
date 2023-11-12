@@ -10,7 +10,10 @@
         "parseTree":"Parse Tree",
         "segmentation":"Text Segmentation",
         "SITE_DESCRIPTION":"Crowdsourcing Nlp related AI tasks",
-        "SITE_TITLE":"NLP Shareopolis!"
+        "SITE_TITLE":"NLP Shareopolis!",
+        "Login": "Login",
+        "LoginUsingGithub": "Login Using Github Account",
+        "Github": "Github"
       }
 
     },
@@ -23,7 +26,10 @@
         "parseTree":"درخت نحوی",
         "segmentation":"قطعه بندی متن",
         "SITE_DESCRIPTION":"ابزار جمعی تولید داده های پردازش زبان طبیعی",
-        "SITE_TITLE":"ان.ال.پی. شِیروپلیس!"
+        "SITE_TITLE":"ان.ال.پی. شِیروپلیس!",
+        "Login": "ورود",
+        "LoginUsingGithub": "ورود با استفاده از اکانت گیتهاب",
+        "Github": "Github"
       }
     }
 
