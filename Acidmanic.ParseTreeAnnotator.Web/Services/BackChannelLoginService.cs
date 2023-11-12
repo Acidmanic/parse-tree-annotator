@@ -19,6 +19,8 @@ public class BackChannelLoginService:IGithubLoginService
                   $"?code={code}&client_id=f52235de4632fa707792&client_secret=864cc783b782ddbc2d354133e4d44bc0cacf43cd";
 
         var request = new HttpRequestMessage(HttpMethod.Post, url);
+
+        request.Headers.Add("accept","application/json");
         
         var httpClient = new HttpClient();
 
@@ -28,7 +30,7 @@ public class BackChannelLoginService:IGithubLoginService
         {
             var json = await response.Content.ReadAsStringAsync();
 
-            var token = JsonConvert.DeserializeObject<GithubAccessToken>(json);
+            var token = ConvertOrDefault<GithubAccessToken>(json);
 
             if (token != null)
             {
@@ -37,5 +39,16 @@ public class BackChannelLoginService:IGithubLoginService
         }
 
         return new Result<GithubAccessToken>().FailAndDefaultValue();
+    }
+
+    private T? ConvertOrDefault<T>(string json)
+    {
+        try
+        {
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+        catch (Exception _) { /*    ignore      */ }
+
+        return default;
     }
 }
