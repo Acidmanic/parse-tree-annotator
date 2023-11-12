@@ -1,9 +1,7 @@
-using System.Net;
-using System.Security.Claims;
 using Acidmanic.ParseTreeAnnotator.Web;
+using Acidmanic.ParseTreeAnnotator.Web.Abstractions;
 using Acidmanic.ParseTreeAnnotator.Web.Extensions;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Acidmanic.ParseTreeAnnotator.Web.Services;
 using Microsoft.Extensions.Logging.LightWeight;
 
 
@@ -19,6 +17,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddTransient<IGithubLoginService, BackChannelLoginService>();
 
 
 var app = builder.Build();
