@@ -1,7 +1,6 @@
 using Acidmanic.ParseTreeAnnotator.Web;
-using Acidmanic.ParseTreeAnnotator.Web.Abstractions;
 using Acidmanic.ParseTreeAnnotator.Web.Extensions;
-using Acidmanic.ParseTreeAnnotator.Web.Services;
+using Acidmanic.Utilities.Web.Extensions;
 using Microsoft.Extensions.Logging.LightWeight;
 
 
@@ -19,7 +18,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddTransient<IGithubLoginService, BackChannelLoginService>();
 
 
 var app = builder.Build();
