@@ -3,4 +3,4 @@
 **/obj
 **/.vscode
 target
-./secret
+**/secret

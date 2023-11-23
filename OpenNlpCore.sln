@@ -11,7 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{09FE5C50-D
 		ui = ui
 		build-front = build-front
 		copy-front = copy-front
-		secret = secret
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acidmanic.ParseTreeAnnotator.Web", "Acidmanic.ParseTreeAnnotator.Web\Acidmanic.ParseTreeAnnotator.Web.csproj", "{ED640F75-4E74-4FF0-AB7E-16691C358D12}"
