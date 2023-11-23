@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
-import {GithubAccessTokenModel} from "../../models/api/github-access-token.model";
 import {BaseUrlService} from "../base-url.service";
+import {UserInformationModel} from "../../models/user-information.model";
 
 
 @Injectable({
@@ -11,26 +11,17 @@ import {BaseUrlService} from "../base-url.service";
 export class AccountsApiService {
 
 
-  public static readonly githubExchangeUrl = 'api/accounts/github/exchange/';
+  public static readonly userInformationUri='login/user-information';
 
   constructor(public http:HttpClient) {
   }
 
 
+  public getUserInformation():Observable<UserInformationModel>{
 
+    let url = BaseUrlService.baseUrl + '/' + AccountsApiService.userInformationUri;
 
-  public exchangeGithubCode(code:string):Observable<GithubAccessTokenModel>{
-
-    let url = BaseUrlService.baseUrl + '/' +AccountsApiService.githubExchangeUrl + code;
-
-    return this.http.post<GithubAccessTokenModel>(url,{});
-
-    // let handler = new Subject<GithubAccessTokenModel>();
-    //
-    //
-    //
-    //
-    // return handler;
+    return this.http.get<UserInformationModel>(url);
 
   }
 

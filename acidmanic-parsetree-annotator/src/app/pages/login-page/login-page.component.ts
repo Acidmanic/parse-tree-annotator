@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {InternationalizationService} from "../../services/internationalization.service";
 import {MultiLingualComponentBase} from "../../components/multi-lingual-component-base";
+import {BaseUrlService} from "../../services/base-url.service";
 
 @Component({
   selector: 'app-login-page',
@@ -10,8 +11,7 @@ import {MultiLingualComponentBase} from "../../components/multi-lingual-componen
 })
 export class LoginPageComponent extends MultiLingualComponentBase{
 
-  public githubPath:string = "https://github.com/login/oauth/authorize?client_id="+"f52235de4632fa707792";
-
+  public githubPath:string = BaseUrlService.baseUrl + '/login/github';
 
 
   constructor(private i18Svc:InternationalizationService) {

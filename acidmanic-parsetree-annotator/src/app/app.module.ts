@@ -17,7 +17,6 @@ import { ThemeSwitchComponent } from './components/theme-switch/theme-switch.com
 import { LanguageDropdownComponent } from './components/language-dropdown/language-dropdown.component';
 import { SegmentationPageComponent } from './pages/segmentation-page/segmentation-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { GithubComponent } from './pages/signin/github/github.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +34,6 @@ import { GithubComponent } from './pages/signin/github/github.component';
     LanguageDropdownComponent,
     SegmentationPageComponent,
     LoginPageComponent,
-    GithubComponent,
   ],
   imports: [
     BrowserModule,
