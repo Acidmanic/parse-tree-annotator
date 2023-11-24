@@ -5,6 +5,7 @@ import {InternationalizationService} from "./services/internationalization.servi
 import {I18nLanguageModel} from "./models/i18n-models/i18n-language.model";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {LoginManagerService} from "./services/login-manager.service";
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private svcUiData: UiPreferencesDataService,
               private svcUiActions: UiPreferencesActionsService,
               public svcInternationalization: InternationalizationService,
-              private router:Router) {
+              private router:Router,
+              private loginManager:LoginManagerService) {
   }
 
 
@@ -55,6 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.loginManager.updateThroughBackChannel();
 
   }
 
