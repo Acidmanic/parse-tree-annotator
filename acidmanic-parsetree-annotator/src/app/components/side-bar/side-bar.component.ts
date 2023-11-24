@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginManagerService} from "../../services/login-manager.service";
 
 @Component({
   selector: 'app-side-bar',
@@ -10,7 +9,7 @@ export class SideBarComponent{
 
 
 
-  constructor(public loginManger:LoginManagerService) {
+  constructor() {
 
   }
 
