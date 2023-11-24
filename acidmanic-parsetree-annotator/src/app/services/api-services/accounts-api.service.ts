@@ -13,7 +13,7 @@ export class AccountsApiService {
 
   public static readonly userInformationUri='login/user-information';
 
-  constructor(public http:HttpClient) {
+  constructor(private http:HttpClient) {
   }
 
 
