@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging.LightWeight;
 var wholeUniverseLogger = new ConsoleLogger().Shorten();
 
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = StaticServerConfigurator.CreateApplicationBuilderOnBinariesSpot();
 
 var frontEndApplicationUrl = builder.Configuration["FrontEndApplicationPath"];
 
@@ -18,7 +18,7 @@ if (frontEndApplicationUrl == null)
     throw new Exception("Please set FrontEndApplicationPath in appSettings.json");
 }
 
-builder.ConfigureListening("Api:Endpoints","Http","Https");
+builder.ConfigureListening("Api:Endpoints", "Http", "Https");
 
 // Add services to the container.
 
@@ -31,7 +31,7 @@ var secrets = PropertyFile.ReadAllProperties("secret");
 
 builder.Services.AddAuthentication("cookie")
     .AddCookie("cookie")
-    .AddGithub(secrets["client_id"],secrets["client_secret"],"cookie");
+    .AddGithub(secrets["client_id"], secrets["client_secret"], "cookie");
 
 builder.Services.SetAfterLoginRedirectionUrl(frontEndApplicationUrl);
 
@@ -46,20 +46,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+var frontEndApplication = new StaticServerConfigurator().ServeForAngular().UseLogger(wholeUniverseLogger);
 
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
-app.UseAuthorization();
-
 app.UseCors(cp => cp.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+frontEndApplication.ConfigurePreRouting(app, app.Environment);
+
+app.UseRouting();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
-app.RunAsync();
+frontEndApplication.ConfigureMappings(app, app.Environment);
 
-var frontEndApplication = new StaticServerApplicationBuilder().ServeForAnguler().UseLogger(wholeUniverseLogger).Build();
-
-frontEndApplication.Run();
+app.Run();

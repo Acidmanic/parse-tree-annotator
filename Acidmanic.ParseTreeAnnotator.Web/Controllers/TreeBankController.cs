@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Acidmanic.ParseTreeAnnotator.Web.Controllers;
 
 [ApiController]
-[Route("tree-bank")]
+[Route("api/tree-bank")]
 public class TreeBankController : ControllerBase
 {
     private static readonly string PostagModelFileNamePostFix = "-tags.json";
