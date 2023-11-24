@@ -5,9 +5,7 @@ using Acidmanic.Utilities.Web;
 using Acidmanic.Utilities.Web.Extensions;
 using Microsoft.Extensions.Logging.LightWeight;
 
-
 var wholeUniverseLogger = new ConsoleLogger().Shorten();
-
 
 var builder = StaticServerConfigurator.CreateApplicationBuilderOnBinariesSpot();
 
