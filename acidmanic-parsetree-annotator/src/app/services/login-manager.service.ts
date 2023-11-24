@@ -57,9 +57,11 @@ export class LoginManagerService {
     this.accounts.getUserInformation().subscribe({
       next: user => {
         this.updateStorageRecord(user, true);
+        console.log("GOT VALID USER");
       },
       error: err => {
         this.updateStorageRecord(new UserInformationModel(), false);
+        console.log("NO USER: ",err);
       },
       complete: () => {
       }

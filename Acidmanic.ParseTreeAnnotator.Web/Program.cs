@@ -56,10 +56,13 @@ frontEndApplication.ConfigurePreRouting(app, app.Environment);
 
 app.UseRouting();
 
+
+
 app.UseAuthorization();
+
+frontEndApplication.ConfigureMappings(app, app.Environment);
 
 app.MapControllers();
 
-frontEndApplication.ConfigureMappings(app, app.Environment);
 
 app.Run();

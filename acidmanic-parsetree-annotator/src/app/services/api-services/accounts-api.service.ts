@@ -11,7 +11,7 @@ import {UserInformationModel} from "../../models/user-information.model";
 export class AccountsApiService {
 
 
-  public static readonly userInformationUri='login/user-information';
+  public static readonly userInformationUri='external-login/user-information';
 
   constructor(private http:HttpClient) {
   }
@@ -19,7 +19,7 @@ export class AccountsApiService {
 
   public getUserInformation():Observable<UserInformationModel>{
 
-    let url = BaseUrlService.baseUrl + '/' + AccountsApiService.userInformationUri;
+    let url = BaseUrlService.authBaseUrl + '/' + AccountsApiService.userInformationUri;
 
     return this.http.get<UserInformationModel>(url);
 
