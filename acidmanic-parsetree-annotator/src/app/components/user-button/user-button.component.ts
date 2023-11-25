@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {LoginManagerService} from "../../services/login-manager.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'user-button',
@@ -8,7 +9,8 @@ import {LoginManagerService} from "../../services/login-manager.service";
 })
 export class UserButtonComponent {
 
-  constructor(public loginManger:LoginManagerService) {
+  constructor(public loginManger:LoginManagerService,
+              public router:Router) {
   }
 
 
@@ -24,4 +26,19 @@ export class UserButtonComponent {
   }
 
 
+  public menuClicked() {
+
+    if(this.loginManger.isLoggedIn()){
+      this.showMenu();
+    }else{
+      this.router.navigate(['login']);
+    }
+
+  }
+
+
+  private showMenu(){
+
+
+  }
 }
