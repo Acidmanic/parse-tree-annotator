@@ -20,11 +20,13 @@ export abstract class MultiLingualComponentBase implements OnInit,OnDestroy{
 
 
   ngOnInit() {
+
+    this.currentLanguage = this.internationalizationService.currentLanguage;
+
     this.languageSubscription = this.internationalizationService.languageChange()
       .subscribe(lang => {
         this.currentLanguage = lang;
         this.onLanguageChangeHook(lang);
-        console.log('base-lang-change',lang);
       });
 
     this.onInitHook();

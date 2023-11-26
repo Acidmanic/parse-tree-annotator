@@ -142,6 +142,8 @@ export class InternationalizationService {
 
   public languageChange(): Observable<I18nLanguageModel> {
 
+    this.checkGetData();
+
     return this.onLanguageChange;
   }
 }
