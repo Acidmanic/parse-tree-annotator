@@ -12,6 +12,7 @@ import {BaseUrlService} from "../../services/base-url.service";
 export class LoginPageComponent extends MultiLingualComponentBase {
 
   public githubPath:string = BaseUrlService.authBaseUrl + '/external-login/github';
+  public linkedInPath:string = BaseUrlService.authBaseUrl + '/external-login/linked-in';
 
 
   constructor(private i18Svc:InternationalizationService) {

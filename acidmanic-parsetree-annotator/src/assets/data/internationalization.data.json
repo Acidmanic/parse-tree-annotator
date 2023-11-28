@@ -13,7 +13,8 @@
         "SITE_TITLE":"NLP Shareopolis!",
         "Login": "Login",
         "LoginUsingGithub": "Login Using Github Account",
-        "Github": "Github"
+        "Github": "Github",
+        "LoginUsingLinkedIn": "Login Using Linked-In Account"
       }
 
     },
@@ -28,8 +29,10 @@
         "SITE_DESCRIPTION":"ابزار جمعی تولید داده های پردازش زبان طبیعی",
         "SITE_TITLE":"ان.ال.پی. شِیروپلیس!",
         "Login": "ورود",
-        "LoginUsingGithub": "ورود با استفاده از اکانت گیتهاب",
-        "Github": "Github"
+        "LoginUsingGithub": "ورود با استفاده از اکانت گیت‌هاب",
+        "Github": "گیت‌هاب",
+        "LinkedIn": "لینکدین",
+        "LoginUsingLinkedIn": "ورود با استفاده از اکانت لینکدین"
       }
     }
 
