@@ -1,5 +1,6 @@
 using Acidmanic.ParseTreeAnnotator.Web;
 using Acidmanic.ParseTreeAnnotator.Web.Extensions;
+using Acidmanic.ParseTreeAnnotator.Web.Models;
 using Acidmanic.ParseTreeAnnotator.Web.Utilities;
 using Acidmanic.Utilities.Web;
 using Acidmanic.Utilities.Web.Extensions;
@@ -25,11 +26,10 @@ builder.Services.AddControllers().AddApplicationPart(WebUtilities.Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var secrets = PropertyFile.ReadAllProperties("secret");
-
 builder.Services.AddAuthentication("cookie")
-    .AddCookie("cookie")
-    .AddGithub(secrets["client_id"], secrets["client_secret"], "cookie");
+    .AddCookie(AuthenticationConstants.DefaultScheme)
+    .AddGithub()
+    .AddLinkedIn();
 
 builder.Services.SetAfterLoginRedirectionUrl(frontEndApplicationUrl);
 
