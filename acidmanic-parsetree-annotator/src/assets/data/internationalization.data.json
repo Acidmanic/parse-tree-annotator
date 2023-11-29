@@ -15,7 +15,8 @@
         "LoginUsingGithub": "Login Using Github Account",
         "Github": "Github",
         "LinkedIn": "Linked In",
-        "LoginUsingLinkedIn": "Login Using Linked-In Account"
+        "LoginUsingLinkedIn": "Login Using Linked-In Account",
+        "Profile": "Profile"
       }
 
     },
@@ -33,7 +34,8 @@
         "LoginUsingGithub": "ورود با استفاده از اکانت گیت‌هاب",
         "Github": "گیت‌هاب",
         "LinkedIn": "لینکدین",
-        "LoginUsingLinkedIn": "ورود با استفاده از اکانت لینکدین"
+        "LoginUsingLinkedIn": "ورود با استفاده از اکانت لینکدین",
+        "Profile": "پروفایل‌"
       }
     }
 

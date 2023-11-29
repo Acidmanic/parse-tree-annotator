@@ -1,8 +1,26 @@
 
+<div class="mx-0 me-4" style="display: inline-block">
 
+  <a [ngbPopover]="userPopOver" [popoverTitle]="userPopOverTitle" placement="bottom">
+    <img src="{{getImage()}}" alt="" width="38" height="38" class="rounded-circle m-1">
+  </a>
 
-<a *ngIf="loginManger.isLoggedIn" (click)="menuClicked()">
-  <img src="{{getImage()}}" alt="" width="38" height="38" class="rounded-circle m-1">
-</a>
+  <ng-template #userPopOverTitle>
+    <b>{{loginManger.getLoggedInUser().username}}</b>
+  </ng-template>
 
+  <ng-template #userPopOver>
+
+    <div>
+      <div>
+        <a href="#" routerLink="profile">{{currentLanguage.strings['Profile']}}</a>
+      </div>
+      <div>
+        <a href="#" (click)="doLogOut()">Exit</a>
+      </div>
+    </div>
+
+  </ng-template>
+
+</div>
 
