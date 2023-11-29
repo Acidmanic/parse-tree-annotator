@@ -30,23 +30,7 @@ export class UserButtonComponent extends MultiLingualComponentBase{
   }
 
 
-  public menuClicked() {
-
-    if(this.loginManger.isLoggedIn()){
-      this.showMenu();
-    }else{
-      this.router.navigate(['login']);
-    }
-
-  }
-
-
-  private showMenu(){
-
-
-  }
-
-  doLogOut() {
+  public doLogOut() {
 
   }
 }

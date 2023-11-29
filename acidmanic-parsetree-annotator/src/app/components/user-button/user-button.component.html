@@ -1,5 +1,5 @@
 
-<div class="mx-0 me-4" style="display: inline-block">
+<div class="mx-0 me-4 cursor-pointer" style="display: inline-block">
 
   <a [ngbPopover]="userPopOver" [popoverTitle]="userPopOverTitle" placement="bottom">
     <img src="{{getImage()}}" alt="" width="38" height="38" class="rounded-circle m-1">
@@ -11,9 +11,13 @@
 
   <ng-template #userPopOver>
 
-    <div>
-        <button class="btn" routerLink="profile">{{currentLanguage.strings['Profile']}}</button>
-        <button class="btn" (click)="doLogOut()">Exit</button>
+    <div *ngIf="loginManger.isLoggedIn()">
+        <button class="btn btn-sm" style="display: block" routerLink="profile">{{currentLanguage.strings['Profile']}}</button>
+        <button class="btn btn-sm" style="display: block" (click)="doLogOut()">Exit</button>
+    </div>
+
+    <div *ngIf="!loginManger.isLoggedIn()">
+      <button class="btn btn-sm" style="display: block" routerLink="login">{{currentLanguage.strings['Login']}}</button>
     </div>
 
   </ng-template>
