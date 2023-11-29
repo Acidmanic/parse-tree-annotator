@@ -12,12 +12,8 @@
   <ng-template #userPopOver>
 
     <div>
-      <div>
-        <a href="#" routerLink="profile">{{currentLanguage.strings['Profile']}}</a>
-      </div>
-      <div>
-        <a href="#" (click)="doLogOut()">Exit</a>
-      </div>
+        <button class="btn" routerLink="profile">{{currentLanguage.strings['Profile']}}</button>
+        <button class="btn" (click)="doLogOut()">Exit</button>
     </div>
 
   </ng-template>
