@@ -18,6 +18,7 @@ import { LanguageDropdownComponent } from './components/language-dropdown/langua
 import { SegmentationPageComponent } from './pages/segmentation-page/segmentation-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { UserButtonComponent } from './components/user-button/user-button.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { UserButtonComponent } from './components/user-button/user-button.compon
     SegmentationPageComponent,
     LoginPageComponent,
     UserButtonComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
