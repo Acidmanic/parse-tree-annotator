@@ -1,7 +1,7 @@
 using Acidmanic.Utilities.Reflection.Attributes;
 using Meadow.RelationalStandardMapping;
 
-namespace Acidmanic.NlpShareopolice.Domain.ValueObjects;
+namespace Acidmanic.NlpShareopolis.Domain.ValueObjects;
 
 [AlteredType(typeof(string))]
 public class LanguageShortName

@@ -1,8 +1,8 @@
-using Acidmanic.NlpShareopolice.Domain.ValueObjects;
+using Acidmanic.NlpShareopolis.Domain.ValueObjects;
 using Acidmanic.Utilities.Reflection.Attributes;
 using Meadow.DataTypeMapping.Attributes;
 
-namespace Acidmanic.NlpShareopolice.Domain.Entities;
+namespace Acidmanic.NlpShareopolis.Domain.Entities;
 
 public class SentenceData
 {

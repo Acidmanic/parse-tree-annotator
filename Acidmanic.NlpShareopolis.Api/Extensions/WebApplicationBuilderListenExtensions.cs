@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Acidmanic.NlpShareopolice.Api.Extensions;
+namespace Acidmanic.NlpShareopolis.Api.Extensions;
 
 public static class WebApplicationBuilderListenExtensions
 {

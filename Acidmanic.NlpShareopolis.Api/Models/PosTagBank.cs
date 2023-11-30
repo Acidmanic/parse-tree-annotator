@@ -1,4 +1,4 @@
-namespace Acidmanic.NlpShareopolice.Api.Models;
+namespace Acidmanic.NlpShareopolis.Api.Models;
 
 public class PosTagBank
 {

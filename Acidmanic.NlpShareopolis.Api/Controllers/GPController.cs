@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Acidmanic.NlpShareopolice.Api.Controllers;
+namespace Acidmanic.NlpShareopolis.Api.Controllers;
 
 
 

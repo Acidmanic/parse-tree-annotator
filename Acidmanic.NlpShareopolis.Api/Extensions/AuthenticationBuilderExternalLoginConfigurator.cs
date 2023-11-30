@@ -1,9 +1,9 @@
-using Acidmanic.NlpShareopolice.Api.Models;
-using Acidmanic.NlpShareopolice.Api.Utilities;
+using Acidmanic.NlpShareopolis.Api.Models;
+using Acidmanic.NlpShareopolis.Api.Utilities;
 using Acidmanic.Utilities.Web.Extensions;
 using Microsoft.AspNetCore.Authentication;
 
-namespace Acidmanic.NlpShareopolice.Api.Extensions;
+namespace Acidmanic.NlpShareopolis.Api.Extensions;
 
 public static class AuthenticationBuilderExternalLoginConfigurator
 {

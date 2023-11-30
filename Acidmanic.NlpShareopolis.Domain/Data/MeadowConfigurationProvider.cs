@@ -4,7 +4,7 @@ using Meadow.Configuration;
 using Meadow.Contracts;
 using Microsoft.Extensions.Configuration;
 
-namespace Acidmanic.NlpShareopolice.Domain.Data;
+namespace Acidmanic.NlpShareopolis.Domain.Data;
 
 public class MeadowConfigurationProvider : IMeadowConfigurationProvider
 {

@@ -1,9 +1,9 @@
-using Acidmanic.NlpShareopolice.Api.Models;
+using Acidmanic.NlpShareopolis.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 
-namespace Acidmanic.NlpShareopolice.Api.Controllers;
+namespace Acidmanic.NlpShareopolis.Api.Controllers;
 
 [ApiController]
 [Route("api/tree-bank")]

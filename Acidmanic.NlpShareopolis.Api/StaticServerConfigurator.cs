@@ -1,10 +1,10 @@
 using System.Net;
 using System.Reflection;
-using Acidmanic.NlpShareopolice.Api.Extensions;
+using Acidmanic.NlpShareopolis.Api.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging.LightWeight;
 
-namespace Acidmanic.NlpShareopolice.Api
+namespace Acidmanic.NlpShareopolis.Api
 {
     public class StaticServerConfigurator
     {

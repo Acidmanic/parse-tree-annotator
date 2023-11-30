@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Acidmanic.NlpShareopolice.Api.Utilities;
+namespace Acidmanic.NlpShareopolis.Api.Utilities;
 
 public class PropertyFile
 {

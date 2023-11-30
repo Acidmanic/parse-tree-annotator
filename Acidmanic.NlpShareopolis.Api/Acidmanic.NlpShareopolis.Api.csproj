@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Acidmanic.NlpShareopolice.Api</RootNamespace>
+    <RootNamespace>Acidmanic.NlpShareopolis.Api</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -39,7 +39,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Acidmanic.NlpShareopolice.Domain\Acidmanic.NlpShareopolice.Domain.csproj" />
+    <ProjectReference Include="..\Acidmanic.NlpShareopolis.Domain\Acidmanic.NlpShareopolis.Domain.csproj" />
   </ItemGroup>
 
 </Project>
