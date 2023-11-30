@@ -41,5 +41,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Acidmanic.NlpShareopolice.Domain\Acidmanic.NlpShareopolice.Domain.csproj" />
+  </ItemGroup>
 
 </Project>
