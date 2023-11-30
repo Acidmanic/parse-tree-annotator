@@ -10,6 +10,12 @@
     <PackageReference Include="EnTier" Version="2.7.0-b43" />
     <PackageReference Include="EnTier.DataAccess.Meadow" Version="1.1.0-b16" />
     <PackageReference Include="Mediate" Version="1.1.1" />
+    <PackageReference Include="Meadow.Framework" Version="1.2.4-b39" />
+    <PackageReference Include="Meadow.MySql" Version="1.2.1-b37" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Scripts" />
   </ItemGroup>
 
 </Project>
