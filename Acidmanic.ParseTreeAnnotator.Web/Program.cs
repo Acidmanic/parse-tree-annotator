@@ -26,12 +26,12 @@ builder.Services.AddControllers().AddApplicationPart(WebUtilities.Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAuthentication("cookie")
+builder.Services.AddAuthentication(AuthenticationConstants.DefaultScheme)
     .AddCookie(AuthenticationConstants.DefaultScheme)
     .AddGithub()
     .AddLinkedIn();
 
-builder.Services.SetAfterLoginRedirectionUrl(frontEndApplicationUrl);
+builder.Services.SetAfterLoginRedirectionUrl(frontEndApplicationUrl,frontEndApplicationUrl);
 
 builder.Services.AddWebUtilitiesServices();
 
