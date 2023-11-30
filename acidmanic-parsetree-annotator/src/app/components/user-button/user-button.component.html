@@ -13,6 +13,7 @@
 
     <div *ngIf="loginManger.isLoggedIn()">
         <button class="btn btn-sm" style="display: block" routerLink="profile">{{currentLanguage.strings['Profile']}}</button>
+      <hr>
         <button class="btn btn-sm" style="display: block" (click)="doLogOut()">Exit</button>
     </div>
 
