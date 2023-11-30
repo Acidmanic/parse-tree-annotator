@@ -8,5 +8,7 @@ public class PosTagBank
    public Language Language { get; set; }
    
    public string BankName { get; set; }
+   
+   public string Id { get; set; }
     
 }
