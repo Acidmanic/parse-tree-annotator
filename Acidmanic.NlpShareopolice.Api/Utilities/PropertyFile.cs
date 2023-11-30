@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Acidmanic.ParseTreeAnnotator.Web.Utilities;
+namespace Acidmanic.NlpShareopolice.Api.Utilities;
 
 public class PropertyFile
 {

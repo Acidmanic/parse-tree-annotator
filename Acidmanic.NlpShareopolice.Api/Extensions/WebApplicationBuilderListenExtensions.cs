@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Acidmanic.ParseTreeAnnotator.Web.Extensions;
+namespace Acidmanic.NlpShareopolice.Api.Extensions;
 
 public static class WebApplicationBuilderListenExtensions
 {

@@ -1,9 +1,9 @@
-using Acidmanic.ParseTreeAnnotator.Web.Models;
+using Acidmanic.NlpShareopolice.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 
-namespace Acidmanic.ParseTreeAnnotator.Web.Controllers;
+namespace Acidmanic.NlpShareopolice.Api.Controllers;
 
 [ApiController]
 [Route("api/tree-bank")]

@@ -1,10 +1,10 @@
 using System.Net;
 using System.Reflection;
-using Acidmanic.ParseTreeAnnotator.Web.Extensions;
+using Acidmanic.NlpShareopolice.Api.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging.LightWeight;
 
-namespace Acidmanic.ParseTreeAnnotator.Web
+namespace Acidmanic.NlpShareopolice.Api
 {
     public class StaticServerConfigurator
     {

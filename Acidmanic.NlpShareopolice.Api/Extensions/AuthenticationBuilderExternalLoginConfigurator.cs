@@ -1,9 +1,9 @@
-using Acidmanic.ParseTreeAnnotator.Web.Models;
-using Acidmanic.ParseTreeAnnotator.Web.Utilities;
+using Acidmanic.NlpShareopolice.Api.Models;
+using Acidmanic.NlpShareopolice.Api.Utilities;
 using Acidmanic.Utilities.Web.Extensions;
 using Microsoft.AspNetCore.Authentication;
 
-namespace Acidmanic.ParseTreeAnnotator.Web.Extensions;
+namespace Acidmanic.NlpShareopolice.Api.Extensions;
 
 public static class AuthenticationBuilderExternalLoginConfigurator
 {

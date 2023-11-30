@@ -1,7 +1,6 @@
-using Acidmanic.ParseTreeAnnotator.Web;
-using Acidmanic.ParseTreeAnnotator.Web.Extensions;
-using Acidmanic.ParseTreeAnnotator.Web.Models;
-using Acidmanic.ParseTreeAnnotator.Web.Utilities;
+using Acidmanic.NlpShareopolice.Api;
+using Acidmanic.NlpShareopolice.Api.Extensions;
+using Acidmanic.NlpShareopolice.Api.Models;
 using Acidmanic.Utilities.Web;
 using Acidmanic.Utilities.Web.Extensions;
 using Microsoft.Extensions.Logging.LightWeight;

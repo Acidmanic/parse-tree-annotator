@@ -1,4 +1,4 @@
-namespace Acidmanic.ParseTreeAnnotator.Web.Models;
+namespace Acidmanic.NlpShareopolice.Api.Models;
 
 public class PosTagBank
 {

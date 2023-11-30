@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{09FE5C50-D
 		copy-front = copy-front
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acidmanic.ParseTreeAnnotator.Web", "Acidmanic.ParseTreeAnnotator.Web\Acidmanic.ParseTreeAnnotator.Web.csproj", "{ED640F75-4E74-4FF0-AB7E-16691C358D12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acidmanic.NlpShareopolice.Api", "Acidmanic.NlpShareopolice.Api\Acidmanic.NlpShareopolice.Api.csproj", "{ED640F75-4E74-4FF0-AB7E-16691C358D12}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acidmanic.NlpShareopolice.Domain", "Acidmanic.NlpShareopolice.Domain\Acidmanic.NlpShareopolice.Domain.csproj", "{E7779672-7A06-4064-ADAF-9D9F9C7DBE43}"
 EndProject

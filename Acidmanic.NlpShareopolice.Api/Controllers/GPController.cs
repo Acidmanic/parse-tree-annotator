@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Acidmanic.ParseTreeAnnotator.Web.Controllers;
+namespace Acidmanic.NlpShareopolice.Api.Controllers;
 
 
 
