@@ -12,6 +12,7 @@ public class SentenceData
     [ForceColumnSize(1024)]
     public string Text { get; set; }
     
+    [TreatAsLeaf]
     public LanguageShortName LanguageShortName { get; set; }
     
 }

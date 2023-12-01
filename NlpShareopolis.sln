@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acidmanic.NlpShareopolis.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acidmanic.NlpShareopolis.Domain", "Acidmanic.NlpShareopolis.Domain\Acidmanic.NlpShareopolis.Domain.csproj", "{E7779672-7A06-4064-ADAF-9D9F9C7DBE43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acidmanic.NlpShareopolis.Domain.Data.Meadow", "Acidmanic.NlpShareopolis.Domain.Data.Meadow\Acidmanic.NlpShareopolis.Domain.Data.Meadow.csproj", "{AFDD25E8-3AAC-4AE8-8183-F3A800C9E2BB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,9 +38,5 @@ Global
 		{E7779672-7A06-4064-ADAF-9D9F9C7DBE43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7779672-7A06-4064-ADAF-9D9F9C7DBE43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7779672-7A06-4064-ADAF-9D9F9C7DBE43}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AFDD25E8-3AAC-4AE8-8183-F3A800C9E2BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFDD25E8-3AAC-4AE8-8183-F3A800C9E2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFDD25E8-3AAC-4AE8-8183-F3A800C9E2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFDD25E8-3AAC-4AE8-8183-F3A800C9E2BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

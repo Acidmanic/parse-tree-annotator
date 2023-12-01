@@ -1,7 +1,9 @@
 using System.Reflection;
 using Acidmanic.Utilities.Reflection.ObjectTree;
+using Meadow;
 using Meadow.Configuration;
 using Meadow.Contracts;
+using Meadow.MySql;
 using Microsoft.Extensions.Configuration;
 
 namespace Acidmanic.NlpShareopolis.Domain.Data;
@@ -18,16 +20,18 @@ public class MeadowConfigurationProvider : IMeadowConfigurationProvider
 
     public MeadowConfiguration GetConfigurations()
     {
+        
+        
         return new MeadowConfiguration
         {
             ConnectionString = _configuration["connectionString"],
-            MacroPolicy = MacroPolicies.InterpretAtRuntime,
+            MacroPolicy = MacroPolicies.UpdateScripts,
             BuildupScriptDirectory = "Scripts",
             MacroContainingAssemblies = new List<Assembly>
             {
-                typeof(IMeadowDataAccessCore).Assembly,
-                typeof(Meadow.Meadow.AnchorType).Assembly,
-                typeof(MeadowConfiguration).Assembly,
+                Meadow.Meadow.Anchor.GetMySqlMeadowAssembly(),
+                Meadow.Meadow.Anchor.GetMeadowAssembly(),
+                typeof(MeadowConfigurationProvider).Assembly,
                 Assembly.GetEntryAssembly()!
             },
             TableNameProvider = new PluralDataOwnerNameProvider(),

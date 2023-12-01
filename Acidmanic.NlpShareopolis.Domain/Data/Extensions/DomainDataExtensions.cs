@@ -15,7 +15,6 @@ public static class DomainDataExtensions
 
         services.AddMeadowUnitOfWork<MeadowConfigurationProvider>();
 
-
         return services;
     }
 }

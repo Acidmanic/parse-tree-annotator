@@ -48,6 +48,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.ConfigureMeadow();
+
 var frontEndApplication = new StaticServerConfigurator().ServeForAngular().UseLogger(wholeUniverseLogger);
 
 app.UseHttpsRedirection();
@@ -59,7 +61,6 @@ app.UseCors(cp => cp.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 frontEndApplication.ConfigurePreRouting(app, app.Environment);
 
 app.UseRouting();
-
 
 
 app.UseAuthorization();

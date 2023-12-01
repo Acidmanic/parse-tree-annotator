@@ -10,13 +10,20 @@
     <PackageReference Include="EnTier" Version="2.7.0-b44" />
     <PackageReference Include="EnTier.DataAccess.Meadow" Version="1.1.0-b18" />
     <PackageReference Include="Meadow.Framework" Version="1.2.4-b39" />
+    <PackageReference Include="Meadow.Microsoft.Extensions.DependencyInjection" Version="1.0.0-b02" />
     <PackageReference Include="Meadow.MySql" Version="1.2.1-b37" />
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Commands" />
-    <Folder Include="Scripts" />
+    <Folder Include="Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Scripts\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

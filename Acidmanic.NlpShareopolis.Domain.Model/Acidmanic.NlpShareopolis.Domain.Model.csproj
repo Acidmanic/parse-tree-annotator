@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Acidmanic.NlpShareopolis.Domain.Data.Meadow</RootNamespace>
+    <RootNamespace>Acidmanic.NlpShareopolis.Domain.Data.Models</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
