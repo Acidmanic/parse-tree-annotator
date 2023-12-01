@@ -13,13 +13,13 @@ public static class DomainServicesExtensions
         var thisAssembly = typeof(DomainServicesExtensions).Assembly;
         
         var essence = services.AddEnTier(thisAssembly);
-
-        services.AddTransient<EnTierEssence>(sp => essence);
-
-
-        services.AddMediateCore();
         
-        services.AddMediateClassesFromAssembly(thisAssembly);
+        services.AddTransient<EnTierEssence>(sp => essence);
+        
+        
+        services.AddMediatR(c => c.RegisterServicesFromAssemblies(thisAssembly));
+
+       
 
         return services;
     }

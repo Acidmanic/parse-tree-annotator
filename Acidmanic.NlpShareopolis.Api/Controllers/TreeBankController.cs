@@ -1,6 +1,5 @@
 using Acidmanic.NlpShareopolis.Api.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 
 namespace Acidmanic.NlpShareopolis.Api.Controllers;

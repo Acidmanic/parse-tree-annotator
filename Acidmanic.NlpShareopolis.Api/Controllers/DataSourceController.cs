@@ -1,23 +1,29 @@
-using Microsoft.AspNetCore.Http.HttpResults;
+using Acidmanic.NlpShareopolis.Domain.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Acidmanic.NlpShareopolis.Api.Controllers;
 
 [ApiController]
 [Route("api/data-source")]
-public class DataSourceController:ControllerBase
+public class DataSourceController:NlpShareopolisControllerBase
 {
-
+    
+    public DataSourceController(IMediator mediator) : base(mediator)
+    {
+    }
+    
 
     [HttpGet]
     [Route("fetch-sentence/{languageName}")]
-    public IActionResult FetchSentence(string languageName)
+    public Task<IActionResult> FetchSentence(string languageName)
     {
+        var email = UserEmail();
 
-        // find user
-        // find sentence with language unseen by user
+        var query = new FetchUnSeenSentenceQuery(languageName, email);
 
-
-        return Ok(new {sentence="this is a book"});
+        return Query(query);
     }
+
+    
 }
