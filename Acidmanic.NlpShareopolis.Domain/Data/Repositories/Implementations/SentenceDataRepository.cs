@@ -15,9 +15,9 @@ public class SentenceDataRepository : MeadowCrudRepository<SentenceData, Guid>, 
     {
     }
 
-    public Result<SentenceData> ReadFirstUnSeenSentence(Guid activityId, string userEmail, string languageShortName)
+    public Result<SentenceData> ReadFirstUnSeenSentence( string userEmail, string languageShortName)
     {
-        var request = new ReadFirstUnSeenSentenceRequest(activityId, userEmail, languageShortName);
+        var request = new ReadFirstUnSeenSentenceRequest(userEmail, languageShortName);
 
         var response = GetEngine().PerformRequest(request, false);
 

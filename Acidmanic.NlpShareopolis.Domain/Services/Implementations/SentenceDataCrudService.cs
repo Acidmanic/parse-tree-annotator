@@ -13,11 +13,11 @@ public class SentenceDataCrudService:CrudService<SentenceData>, ISentenceDataSer
     {
     }
 
-    public Result<SentenceData> ReadUnSeenSentenceData(Guid sentenceId, string userEmail,string languageShortName)
+    public Result<SentenceData> ReadUnSeenSentenceData( string userEmail,string languageShortName)
     {
         if (UnitOfWork.GetCrudRepository<SentenceData, Guid>() is ISentenceDataRepository repository)
         {
-            return repository.ReadFirstUnSeenSentence(sentenceId, userEmail,languageShortName);
+            return repository.ReadFirstUnSeenSentence(userEmail,languageShortName);
         }
 
         return new Result<SentenceData>().FailAndDefaultValue();
