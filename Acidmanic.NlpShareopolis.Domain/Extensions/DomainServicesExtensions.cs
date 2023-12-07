@@ -1,4 +1,8 @@
+using Acidmanic.NlpShareopolis.Domain.Entities;
+using Acidmanic.NlpShareopolis.Domain.Services.Abstractions;
+using Acidmanic.NlpShareopolis.Domain.Services.Implementations;
 using EnTier;
+using EnTier.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Acidmanic.NlpShareopolis.Domain.Extensions;
@@ -19,7 +23,10 @@ public static class DomainServicesExtensions
         
         services.AddMediatR(c => c.RegisterServicesFromAssemblies(thisAssembly));
 
-       
+
+
+        services.AddTransient<ISentenceDataService, SentenceDataCrudService>();
+        services.AddTransient<ICrudService<SentenceData,Guid>, SentenceDataCrudService>();
 
         return services;
     }
