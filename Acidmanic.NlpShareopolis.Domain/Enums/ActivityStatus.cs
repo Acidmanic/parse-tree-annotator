@@ -3,6 +3,7 @@ namespace Acidmanic.NlpShareopolis.Domain.Enums;
 public enum ActivityStatus
 {
     UnSeen =0,
-    Skipped=100,
-    Delivered=200
+    Seen =100,
+    Skipped=200,
+    Delivered=300
 }

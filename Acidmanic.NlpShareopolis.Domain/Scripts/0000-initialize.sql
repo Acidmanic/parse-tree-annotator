@@ -21,3 +21,20 @@ BEGIN
                                 limit 1; 
 END;
 -- ---------------------------------------------------------------------------------------------------------------------
+DROP PROCEDURE spSaveUserActivity; 
+CREATE PROCEDURE spSaveUserActivity(IN Id BINARY(16),IN UserEmail varchar(256),IN ContributionId BINARY(16),IN Status INT(10))
+BEGIN
+    IF EXISTS(SELECT 1 FROM UserActivities WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId) then
+
+        UPDATE UserActivities SET Id=Id, UserEmail=UserEmail,ContributionId=ContributionId,Status=Status
+            WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId;
+
+        SELECT * FROM UserActivities WHERE UserActivities.Id = Id ORDER BY Id ASC LIMIT 1;
+
+    ELSE
+        INSERT INTO UserActivities (Id,UserEmail,ContributionId,Status) VALUES (Id,UserEmail,ContributionId,Status);
+        SET @nid = Id;
+        SELECT * FROM UserActivities WHERE UserActivities.Id = @nid;
+    END IF;
+END;
+-- ---------------------------------------------------------------------------------------------------------------------
