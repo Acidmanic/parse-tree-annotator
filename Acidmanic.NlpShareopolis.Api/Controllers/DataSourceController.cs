@@ -17,16 +17,15 @@ public class DataSourceController:NlpShareopolisControllerBase
 
     [HttpGet]
     [Route("fetch-sentence/{languageName}")]
-    public Task<IActionResult> FetchSentence(string languageName)
+    public async Task<IActionResult> FetchSentence(string languageName)
     {
-
-        throw new LanguageShortNameCannotBeEmptyException();
-        
         var email = UserEmail();
 
         var query = new FetchUnSeenSentenceQuery(languageName, email);
 
-        return Query(query);
+        var firstSentence =  await Query(query);
+
+        return firstSentence;
     }
 
     
