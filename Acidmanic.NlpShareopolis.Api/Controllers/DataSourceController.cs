@@ -1,3 +1,4 @@
+using Acidmanic.NlpShareopolis.Domain.Exceptions;
 using Acidmanic.NlpShareopolis.Domain.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,9 @@ public class DataSourceController:NlpShareopolisControllerBase
     [Route("fetch-sentence/{languageName}")]
     public Task<IActionResult> FetchSentence(string languageName)
     {
+
+        throw new LanguageShortNameCannotBeEmptyException();
+        
         var email = UserEmail();
 
         var query = new FetchUnSeenSentenceQuery(languageName, email);

@@ -1,3 +1,6 @@
+using Acidmanic.NlpShareopolis.Domain.Entities;
+using EnTier;
+using EnTier.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,8 +9,8 @@ namespace Acidmanic.NlpShareopolis.Api.Controllers;
 
 
 [ApiController]
-[Route("api/gp")]
-public class GpController:ControllerBase
+[Route("api/sentence-data")]
+public class GpController:CrudControllerBase<SentenceData,Guid>
 {
 
 
@@ -19,5 +22,9 @@ public class GpController:ControllerBase
     public IActionResult Hello()
     {
         return Ok(new { Message = "Hello" });
+    }
+
+    public GpController(EnTierEssence essence) : base(essence)
+    {
     }
 }

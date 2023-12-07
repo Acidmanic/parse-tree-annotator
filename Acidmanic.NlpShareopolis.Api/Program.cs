@@ -1,5 +1,6 @@
 using Acidmanic.NlpShareopolis.Api;
 using Acidmanic.NlpShareopolis.Api.Extensions;
+using Acidmanic.NlpShareopolis.Api.Infrastructure;
 using Acidmanic.NlpShareopolis.Api.Models;
 using Acidmanic.NlpShareopolis.Domain.Data.Extensions;
 using Acidmanic.NlpShareopolis.Domain.Extensions;
@@ -41,6 +42,11 @@ builder.Services.AddDomainDataServices();
 
 var app = builder.Build();
 
+app.UseExceptionHandler("/api");
+
+app.UseMiddleware<NspExceptionHandlerMiddleware>();
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -48,10 +54,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.ConfigureEnTierResolver();
 app.ConfigureMeadow();
 
 var frontEndApplication = new StaticServerConfigurator().ServeForAngular().UseLogger(wholeUniverseLogger);
+
 
 app.UseHttpsRedirection();
 
@@ -70,5 +79,7 @@ frontEndApplication.ConfigureMappings(app, app.Environment);
 
 app.MapControllers();
 
+
+app.UseMiddleware<NspExceptionHandlerMiddleware>();
 
 app.Run();

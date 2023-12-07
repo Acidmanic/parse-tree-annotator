@@ -95,7 +95,6 @@ namespace Acidmanic.NlpShareopolis.Api
 
             var fileProvider = new PhysicalFileProvider(_frontDirectory);
 
-
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = fileProvider,
@@ -109,8 +108,6 @@ namespace Acidmanic.NlpShareopolis.Api
         {
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-
                 endpoints.MapGet("/", c => c.Response.WriteAsync(File.ReadAllText(_indexFile)));
             });
 

@@ -2,6 +2,7 @@ using Acidmanic.NlpShareopolis.Domain.Data.Repositories.Abstractions;
 using Acidmanic.NlpShareopolis.Domain.Entities;
 using Acidmanic.NlpShareopolis.Domain.Services.Abstractions;
 using Acidmanic.NlpShareopolis.Domain.Shared;
+using Acidmanic.NlpShareopolis.Domain.ValueObjects;
 using Acidmanic.Utilities.Results;
 using EnTier;
 
@@ -13,7 +14,7 @@ public class SentenceDataCrudService:CrudService<SentenceData>, ISentenceDataSer
     {
     }
 
-    public Result<SentenceData> FetchFirstUnSeenSentenceData( string userEmail,string languageShortName)
+    public Result<SentenceData> FetchFirstUnSeenSentenceData( string userEmail,LanguageShortName languageShortName)
     {
         if (UnitOfWork.GetCrudRepository<SentenceData, Guid>() is ISentenceDataRepository repository)
         {
