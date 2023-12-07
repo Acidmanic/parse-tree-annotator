@@ -13,9 +13,11 @@ create function fnIsPristine(Id binary(16), UserEmail nvarchar(256)) returns bit
                                         AND UserActivities.UserEmail = UserEmail
                                         AND UserActivities.Status !=0 );
 -- ---------------------------------------------------------------------------------------------------------------------
-CREATE PROCEDURE spReadFirstUnSeenSentence(IN UserEmail nvarchar(256))
+CREATE PROCEDURE spReadFirstUnSeenSentence(IN UserEmail nvarchar(256),IN LanguageShortName nvarchar(4))
 BEGIN
     
-    select * from SentenceDatas where fnIsPristine(SentenceDatas.Id,UserEmail) limit 1; 
+    select * from SentenceDatas where fnIsPristine(SentenceDatas.Id,UserEmail)
+                                and SentenceDatas.LanguageShortName = LanguageShortName
+                                limit 1; 
 END;
 -- ---------------------------------------------------------------------------------------------------------------------

@@ -9,5 +9,5 @@ namespace Acidmanic.NlpShareopolis.Domain.Data.Repositories.Abstractions;
 public interface ISentenceDataRepository:ICrudRepository<SentenceData,Guid>
 {
 
-    Result<SentenceData> ReadFirstUnSeenSentence(Guid activityId, string userEmail);
+    Result<SentenceData> ReadFirstUnSeenSentence(Guid activityId, string userEmail,string languageShortName);
 }

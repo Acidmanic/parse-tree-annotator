@@ -5,5 +5,5 @@ namespace Acidmanic.NlpShareopolis.Domain.Services.Abstractions;
 
 public interface ISentenceDataService
 {
-    public Result<SentenceData> ReadUnSeenSentenceData(Guid sentenceId,string userEmail);
+    public Result<SentenceData> ReadUnSeenSentenceData(Guid sentenceId,string userEmail,string languageShortName);
 }

@@ -5,4 +5,6 @@ public class ActivityByEmailShell
     public string UserEmail { get; set; }
     
     public Guid Id { get; set; }
+    
+    public string LanguageShortName { get; set; }
 }
