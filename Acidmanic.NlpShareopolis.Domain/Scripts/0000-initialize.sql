@@ -5,13 +5,13 @@
 -- {{ Crud Acidmanic.NlpShareopolis.Domain.Entities.UserActivity}}
 
 -- ---------------------------------------------------------------------------------------------------------------------
-create function fnIsPristine(Id binary(16), UserEmail nvarchar(256)) returns bit DETERMINISTIC
+create function fnIsPristine(Id varchar(48), UserEmail nvarchar(256)) returns bit DETERMINISTIC
 
-    return not exists(select count(*) from UserActivities 
-                                      where 
-                                        UserActivities.ContributionId = Id
-                                        AND UserActivities.UserEmail = UserEmail
-                                        AND UserActivities.Status !=0 );
+    return (select count(*) from UserActivities
+        where
+        UserActivities.ContributionId = Id
+        AND UserActivities.UserEmail = UserEmail
+        AND UserActivities.Status !=0 ) <= 0;
 -- ---------------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE spReadFirstUnSeenSentence(IN UserEmail nvarchar(256),IN LanguageShortName nvarchar(4))
 BEGIN
@@ -22,14 +22,16 @@ BEGIN
 END;
 -- ---------------------------------------------------------------------------------------------------------------------
 DROP PROCEDURE spSaveUserActivity; 
-CREATE PROCEDURE spSaveUserActivity(IN Id BINARY(16),IN UserEmail varchar(256),IN ContributionId BINARY(16),IN Status INT(10))
+CREATE PROCEDURE spSaveUserActivity(IN Id varchar(48),IN UserEmail varchar(256),IN ContributionId varchar(48),IN Status INT(10))
 BEGIN
     IF EXISTS(SELECT 1 FROM UserActivities WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId) then
 
-        UPDATE UserActivities SET Id=Id, UserEmail=UserEmail,ContributionId=ContributionId,Status=Status
+        UPDATE UserActivities SET UserEmail=UserEmail,ContributionId=ContributionId,Status=Status
             WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId;
 
-        SELECT * FROM UserActivities WHERE UserActivities.Id = Id ORDER BY Id ASC LIMIT 1;
+        SELECT * FROM UserActivities 
+                 WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId 
+                 ORDER BY Id ASC LIMIT 1;
 
     ELSE
         INSERT INTO UserActivities (Id,UserEmail,ContributionId,Status) VALUES (Id,UserEmail,ContributionId,Status);
@@ -38,4 +40,15 @@ BEGIN
     END IF;
 END;
 -- ---------------------------------------------------------------------------------------------------------------------
+
+# 
+# select * from SentenceDatas;
+# 
+# select * from UserActivities;
+# 
+# select fnIsPristine('6c8fe5b4-a682-4b73-94e3-b3089f12b9d2','anonemouse@nlpsharopolis.com');
+# select fnIsPristine('f9e22172-9f29-4be2-9953-5bff1534ec71','anonemouse@nlpsharopolis.com');
+# 
+# 
+# call spReadFirstUnSeenSentence('anonemouse@nlpsharopolis.com','en');
 

@@ -15,7 +15,8 @@ public class UserActivity
     
     public string UserEmail { get; set; }
     
-    public Guid ContributionId { get; set; }
+    [TreatAsLeaf]
+    public Id ContributionId { get; set; }
     
     public ActivityStatus Status { get; set; }
 

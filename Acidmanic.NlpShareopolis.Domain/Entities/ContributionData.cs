@@ -8,5 +8,5 @@ public abstract class ContributionData
     [TreatAsLeaf]
     [UniqueMember] public Id Id { get; set; }
 
-    public abstract Guid ContributionId();
+    public abstract Id ContributionId();
 }

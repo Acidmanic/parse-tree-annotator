@@ -24,7 +24,7 @@ public class SentenceDataSeeder:SeedBase<SentenceData>
         },
         new()
         {
-            Id = Guid.Empty,
+            Id = Guid.NewGuid(),
             Text = "This is going to be very long sentence",
             LanguageShortName = LanguageShortnames.English
         },

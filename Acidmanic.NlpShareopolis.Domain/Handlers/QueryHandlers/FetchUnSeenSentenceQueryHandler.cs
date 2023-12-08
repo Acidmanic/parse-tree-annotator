@@ -13,7 +13,7 @@ namespace Acidmanic.NlpShareopolis.Domain.Handlers.QueryHandlers;
 public class FetchUnSeenSentenceQueryHandler : IRequestHandler<FetchUnSeenSentenceQuery, Result<SentenceData>>
 {
     private readonly ISentenceDataService _sentenceDataService;
-    private readonly ICrudService<UserActivity, Guid> _userActivityService; 
+    private readonly ICrudService<UserActivity, Guid> _userActivityService;
 
     public FetchUnSeenSentenceQueryHandler(EnTierEssence essence, ISentenceDataService sentenceDataService)
     {
@@ -24,22 +24,22 @@ public class FetchUnSeenSentenceQueryHandler : IRequestHandler<FetchUnSeenSenten
 
     public Task<Result<SentenceData>> Handle(FetchUnSeenSentenceQuery query, CancellationToken cancellationToken)
     {
-        var sentenceFound = _sentenceDataService.FetchFirstUnSeenSentenceData(
-            query.Email ?? "", query.LanguageShortName);
+        var email = string.IsNullOrEmpty(query.Email) ? "anonemouse@nlpsharopolis.com" : query.Email;
 
+        var sentenceFound = _sentenceDataService.FetchFirstUnSeenSentenceData(email, query.LanguageShortName);
 
-        if (sentenceFound && query.Email is { Length: > 0 } email)
+        if (sentenceFound)
         {
             var activity = new UserActivity
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Status = ActivityStatus.Seen,
                 ContributionId = sentenceFound.Value.Id,
                 UserEmail = email
             };
             _userActivityService.UpdateOrInsert(activity, false, false);
         }
-        
+
         return Task.FromResult(sentenceFound);
     }
 }

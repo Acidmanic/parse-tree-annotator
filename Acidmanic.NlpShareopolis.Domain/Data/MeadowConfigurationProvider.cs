@@ -41,7 +41,9 @@ public class MeadowConfigurationProvider : IMeadowConfigurationProvider
             DatabaseFieldNameDelimiter = '_',
             ExternallyForcedColumnSizesByNodeAddress =
             {
-                {MemberOwnerUtilities.GetAddress<SentenceData,Id>(sd => sd.Id),48}
+                {MemberOwnerUtilities.GetAddress<SentenceData,Id>(sd => sd.Id),48},
+                {MemberOwnerUtilities.GetAddress<UserActivity,Id>(sd => sd.Id),48},
+                {MemberOwnerUtilities.GetAddress<UserActivity,Id>(sd => sd.ContributionId),48},
             }
         };
     }
