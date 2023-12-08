@@ -11,7 +11,7 @@ create function fnIsPristine(Id varchar(48), UserEmail nvarchar(256)) returns bi
         where
         UserActivities.ContributionId = Id
         AND UserActivities.UserEmail = UserEmail
-        AND UserActivities.Status !=0 ) <= 0;
+        AND (UserActivities.Status = 200 OR UserActivities.Status = 300) ) <= 0;
 -- ---------------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE spReadFirstUnSeenSentence(IN UserEmail nvarchar(256),IN LanguageShortName nvarchar(4))
 BEGIN
