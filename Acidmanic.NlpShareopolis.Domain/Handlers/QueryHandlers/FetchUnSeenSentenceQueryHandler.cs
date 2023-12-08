@@ -24,7 +24,7 @@ public class FetchUnSeenSentenceQueryHandler : IRequestHandler<FetchUnSeenSenten
 
     public Task<Result<SentenceData>> Handle(FetchUnSeenSentenceQuery query, CancellationToken cancellationToken)
     {
-        var email = string.IsNullOrEmpty(query.Email) ? "anonemouse@nlpsharopolis.com" : query.Email;
+        var email = string.IsNullOrEmpty(query.Email) ? "anonymouse@nlpsharopolis.com" : query.Email;
 
         var sentenceFound = _sentenceDataService.FetchFirstUnSeenSentenceData(email, query.LanguageShortName);
 
