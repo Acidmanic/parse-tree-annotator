@@ -1,4 +1,6 @@
+using Acidmanic.NlpShareopolis.Api.Dtos;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Acidmanic.NlpShareopolis.Api.Controllers;
@@ -18,8 +20,19 @@ public class NlpShareopolisControllerBase : ControllerBase
         return User.Claims.FirstOrDefault(c => c.Type == "email")?.Value?.ToLower();
     }
 
-    protected async Task<IActionResult> Query<T>(IRequest<T> query)
+    protected Task<IActionResult> Query<T>(IRequest<T> query)
     {
-        return Ok(await Mediator.Send(query));
+        return Query(query, r => r);
     }
+    
+    protected async Task<IActionResult> Query<TDto,TResponse>(IRequest<TResponse> query, Func<TResponse,TDto> map)
+    {
+        var response = await Mediator.Send(query);
+
+        var dto = map(response);
+        
+        return Ok(dto);
+    }
+    
+    
 }

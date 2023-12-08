@@ -1,5 +1,8 @@
+using Acidmanic.NlpShareopolis.Api.Dtos;
+using Acidmanic.NlpShareopolis.Domain.Entities;
 using Acidmanic.NlpShareopolis.Domain.Exceptions;
 using Acidmanic.NlpShareopolis.Domain.Queries;
+using Acidmanic.Utilities.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +16,17 @@ public class DataSourceController:NlpShareopolisControllerBase
     public DataSourceController(IMediator mediator) : base(mediator)
     {
     }
-    
+
+
+    private Result<SentenceDataDto> Map(Result<SentenceData> value)
+    {
+        if (value)
+        {
+            return new Result<SentenceDataDto>(true, SentenceDataDto.Map(value.Value));
+        }
+
+        return new Result<SentenceDataDto>().FailAndDefaultValue();
+    }
 
     [HttpGet]
     [Route("fetch-sentence/{languageName}")]
@@ -23,7 +36,7 @@ public class DataSourceController:NlpShareopolisControllerBase
 
         var query = new FetchUnSeenSentenceQuery(languageName, email);
 
-        return await Query(query);
+        return await Query(query,Map);
     }
 
     
