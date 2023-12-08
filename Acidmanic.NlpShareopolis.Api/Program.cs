@@ -1,8 +1,10 @@
+using System.Reflection;
 using Acidmanic.NlpShareopolis.Api;
 using Acidmanic.NlpShareopolis.Api.Extensions;
 using Acidmanic.NlpShareopolis.Api.Infrastructure;
 using Acidmanic.NlpShareopolis.Api.Models;
 using Acidmanic.NlpShareopolis.Domain.Data.Extensions;
+using Acidmanic.NlpShareopolis.Domain.Data.Seeds.DevelopmentSeeds;
 using Acidmanic.NlpShareopolis.Domain.Extensions;
 using Acidmanic.Utilities.Web;
 using Acidmanic.Utilities.Web.Extensions;
@@ -33,7 +35,7 @@ builder.Services.AddAuthentication(AuthenticationConstants.DefaultScheme)
     .AddGithub()
     .AddLinkedIn();
 
-builder.Services.SetAfterLoginRedirectionUrl(frontEndApplicationUrl,frontEndApplicationUrl);
+builder.Services.SetAfterLoginRedirectionUrl(frontEndApplicationUrl, frontEndApplicationUrl);
 
 builder.Services.AddWebUtilitiesServices();
 
@@ -58,6 +60,8 @@ if (app.Environment.IsDevelopment())
 
 app.ConfigureEnTierResolver();
 app.ConfigureMeadow();
+
+app.PerformPrepopulation(typeof(SentenceDataSeeder).Assembly);
 
 var frontEndApplication = new StaticServerConfigurator().ServeForAngular().UseLogger(wholeUniverseLogger);
 

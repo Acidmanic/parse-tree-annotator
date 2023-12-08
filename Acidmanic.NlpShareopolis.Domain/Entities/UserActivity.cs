@@ -1,5 +1,7 @@
 using Acidmanic.NlpShareopolis.Domain.Enums;
+using Acidmanic.NlpShareopolis.Domain.ValueObjects;
 using Acidmanic.Utilities.Reflection.Attributes;
+using Meadow.DataTypeMapping.Attributes;
 
 namespace Acidmanic.NlpShareopolis.Domain.Entities;
 
@@ -7,7 +9,8 @@ public class UserActivity
 {
     
     [UniqueMember]
-    public Guid Id { get; set; }
+    [TreatAsLeaf]
+    public Id Id { get; set; }
     
     
     public string UserEmail { get; set; }

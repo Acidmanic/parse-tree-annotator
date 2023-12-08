@@ -1,4 +1,7 @@
 using System.Reflection;
+using Acidmanic.NlpShareopolis.Domain.Entities;
+using Acidmanic.NlpShareopolis.Domain.ValueObjects;
+using Acidmanic.Utilities.Reflection;
 using Acidmanic.Utilities.Reflection.ObjectTree;
 using Meadow;
 using Meadow.Configuration;
@@ -35,7 +38,11 @@ public class MeadowConfigurationProvider : IMeadowConfigurationProvider
                 Assembly.GetEntryAssembly()!
             },
             TableNameProvider = new PluralDataOwnerNameProvider(),
-            DatabaseFieldNameDelimiter = '_'
+            DatabaseFieldNameDelimiter = '_',
+            ExternallyForcedColumnSizesByNodeAddress =
+            {
+                {MemberOwnerUtilities.GetAddress<SentenceData,Id>(sd => sd.Id),48}
+            }
         };
     }
 }

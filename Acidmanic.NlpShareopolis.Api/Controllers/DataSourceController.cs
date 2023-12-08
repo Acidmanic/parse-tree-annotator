@@ -23,9 +23,7 @@ public class DataSourceController:NlpShareopolisControllerBase
 
         var query = new FetchUnSeenSentenceQuery(languageName, email);
 
-        var firstSentence =  await Query(query);
-
-        return firstSentence;
+        return await Query(query);
     }
 
     

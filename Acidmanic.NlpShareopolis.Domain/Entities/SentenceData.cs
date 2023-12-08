@@ -6,8 +6,7 @@ namespace Acidmanic.NlpShareopolis.Domain.Entities;
 
 public class SentenceData:ContributionData
 {
-    
-    
+
     [ForceColumnSize(1024)]
     public string Text { get; set; }
     
