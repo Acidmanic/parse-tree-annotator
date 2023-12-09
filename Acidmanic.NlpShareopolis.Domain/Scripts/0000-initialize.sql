@@ -26,7 +26,7 @@ CREATE PROCEDURE spSaveUserActivity(IN Id varchar(48),IN UserEmail varchar(256),
 BEGIN
     IF EXISTS(SELECT 1 FROM UserActivities WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId) then
 
-        UPDATE UserActivities SET UserEmail=UserEmail,ContributionId=ContributionId,Status=Status
+        UPDATE UserActivities SET Status=Status
             WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId;
 
         SELECT * FROM UserActivities 
@@ -35,8 +35,9 @@ BEGIN
 
     ELSE
         INSERT INTO UserActivities (Id,UserEmail,ContributionId,Status) VALUES (Id,UserEmail,ContributionId,Status);
-        SET @nid = Id;
-        SELECT * FROM UserActivities WHERE UserActivities.Id = @nid;
+        SELECT * FROM UserActivities
+        WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId
+        ORDER BY Id ASC LIMIT 1;
     END IF;
 END;
 -- ---------------------------------------------------------------------------------------------------------------------

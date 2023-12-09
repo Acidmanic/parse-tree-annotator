@@ -8,5 +8,5 @@ public interface ISentenceDomainService
 {
     Result<SentenceData> FetchSentence(string? userEmail, LanguageShortName languageShortname);
 
-    Result<SentenceData> SkipSentence(Id activityId);
+    Result<SentenceData> SkipSentence(Id activityId, string? userEmail);
 }

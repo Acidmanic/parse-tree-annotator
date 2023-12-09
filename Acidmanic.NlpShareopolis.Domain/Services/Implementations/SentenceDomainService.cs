@@ -1,26 +1,29 @@
 using Acidmanic.NlpShareopolis.Domain.Entities;
 using Acidmanic.NlpShareopolis.Domain.Enums;
 using Acidmanic.NlpShareopolis.Domain.Services.Abstractions;
+using Acidmanic.NlpShareopolis.Domain.Shared;
 using Acidmanic.NlpShareopolis.Domain.ValueObjects;
 using Acidmanic.Utilities.Results;
+using EnTier;
 using EnTier.Services;
+using Org.BouncyCastle.Crypto;
 
 namespace Acidmanic.NlpShareopolis.Domain.Services.Implementations;
 
-public class SentenceDomainService:ISentenceDomainService
+public class SentenceDomainService : ISentenceDomainService
 {
     private readonly ISentenceDataService _sentenceDataService;
     private readonly ICrudService<UserActivity, Id> _userActivityService;
 
-    public SentenceDomainService(ISentenceDataService sentenceDataService, ICrudService<UserActivity, Id> userActivityService)
+    public SentenceDomainService(EnTierEssence essence, ISentenceDataService sentenceDataService)
     {
         _sentenceDataService = sentenceDataService;
-        _userActivityService = userActivityService;
+        _userActivityService = new CrudService<UserActivity>(essence);
     }
 
     public Result<SentenceData> FetchSentence(string? userEmail, LanguageShortName languageShortname)
     {
-        var email = string.IsNullOrEmpty(userEmail) ? "anonymouse@nlpsharopolis.com" : userEmail;
+        var email = EmailOrDefaultEmail(userEmail);
 
         var sentenceFound = _sentenceDataService.FetchFirstUnSeenSentenceData(email, languageShortname);
 
@@ -38,38 +41,48 @@ public class SentenceDomainService:ISentenceDomainService
 
         return sentenceFound;
     }
-    
-    private Result<UserActivity> UpdateSkipped(Id activityId)
+
+    private Result<UserActivity> UpdateSkipped(Id sentenceId, string email)
     {
-        var sentenceActivity = _userActivityService.ReadById(activityId);
-
-        if (sentenceActivity is { } activity)
+        var activityUpdate = new UserActivity
         {
-            activity.Status = ActivityStatus.Skipped;
+            Id = Guid.NewGuid(),
+            Status = ActivityStatus.Skipped,
+            ContributionId = sentenceId,
+            UserEmail = email
+        };
 
-            _userActivityService.UpdateById(activityId, activity, false, false);
+        var skippedActivity = _userActivityService.UpdateOrInsert(activityUpdate, false, false);
 
+        if (skippedActivity is { } activity)
+        {
             return new Result<UserActivity>(true, activity);
         }
 
         return new Result<UserActivity>().FailAndDefaultValue();
     }
-    
 
-    public Result<SentenceData> SkipSentence(Id activityId)
+
+    private string EmailOrDefaultEmail(string? email)
     {
-        var skippedActivity = UpdateSkipped(activityId);
+        var unWrappedEmail = string.IsNullOrEmpty(email) ? "anonymouse@nlpsharopolis.com" : email;
 
-        if (skippedActivity)
+        return unWrappedEmail;
+    }
+
+    public Result<SentenceData> SkipSentence(Id sentenceId, string? userEmail)
+    {
+        var email = EmailOrDefaultEmail(userEmail);
+
+        UpdateSkipped(sentenceId, email);
+
+        var foundSentence = _sentenceDataService.ReadById(sentenceId);
+
+        if (foundSentence is { } sentence)
         {
-            var foundSentence = _sentenceDataService.ReadById(skippedActivity.Value.Id);
-
-            if (foundSentence is { } sentence)
-            {
-                return FetchSentence(skippedActivity.Value.UserEmail, sentence.LanguageShortName);
-            }
+            return FetchSentence(email, sentence.LanguageShortName);
         }
-
+        
         return new Result<SentenceData>().FailAndDefaultValue();
     }
 }

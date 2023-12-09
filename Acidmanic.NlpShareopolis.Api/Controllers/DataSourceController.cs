@@ -40,10 +40,12 @@ public class DataSourceController:NlpShareopolisControllerBase
     }
     
     [HttpPut]
-    [Route("skip/{sentenceId}")]
+    [Route("skip-sentence/{sentenceId}")]
     public async Task<IActionResult> SkipSentence(string sentenceId)
     {
-        var query = new SkipSentenceQuery(sentenceId);
+        var email = UserEmail();
+        
+        var query = new SkipSentenceQuery(sentenceId,email);
 
         return await Query(query,Map);
     }
