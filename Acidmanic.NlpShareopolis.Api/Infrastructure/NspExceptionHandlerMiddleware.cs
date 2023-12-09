@@ -1,4 +1,5 @@
 using Acidmanic.NlpShareopolis.Domain.Exceptions;
+using Microsoft.Extensions.Logging.LightWeight;
 using Newtonsoft.Json;
 
 namespace Acidmanic.NlpShareopolis.Api.Infrastructure;
@@ -33,6 +34,10 @@ public class NspExceptionHandlerMiddleware
                     Id = domainException.UniqueId,
                     Message = domainException.Message
                 }));
+            }
+            else
+            {
+                new ConsoleLogger().Shorten().LogError(e,"UnHandled exception {Exception}", e);
             }
         }
     }
