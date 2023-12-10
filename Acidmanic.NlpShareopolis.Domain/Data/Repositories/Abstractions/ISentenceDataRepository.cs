@@ -6,8 +6,8 @@ using Org.BouncyCastle.Crypto.Engines;
 
 namespace Acidmanic.NlpShareopolis.Domain.Data.Repositories.Abstractions;
 
-public interface ISentenceDataRepository:ICrudRepository<SentenceData,Guid>
+public interface ISentenceDataRepository:ICrudRepository<SentenceTask,Guid>
 {
 
-    Result<SentenceData> ReadFirstUnSeenSentence(string userEmail,string languageShortName);
+    Result<SentenceTask> ReadFirstUnSeenSentence(string userEmail,string languageShortName);
 }

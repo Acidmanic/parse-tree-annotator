@@ -5,7 +5,7 @@ using EnTier.Services;
 
 namespace Acidmanic.NlpShareopolis.Domain.Services.Abstractions;
 
-public interface ISentenceDataService:ICrudService<SentenceData,Id>
+public interface ISentenceDataService:ICrudService<SentenceTask,Id>
 {
-    public Result<SentenceData> FetchFirstUnSeenSentenceData(string userEmail,LanguageShortName languageShortName);
+    public Result<SentenceTask> FetchFirstUnSeenSentenceData(string userEmail,LanguageShortName languageShortName);
 }

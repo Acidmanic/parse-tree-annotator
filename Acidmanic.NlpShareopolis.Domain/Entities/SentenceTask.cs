@@ -4,7 +4,7 @@ using Meadow.DataTypeMapping.Attributes;
 
 namespace Acidmanic.NlpShareopolis.Domain.Entities;
 
-public class SentenceData:ContributionData
+public class SentenceTask:ContributionData
 {
 
     [ForceColumnSize(1024)]

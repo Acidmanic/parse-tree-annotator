@@ -18,7 +18,7 @@ public static class DomainDataExtensions
 
         services.AddMeadowUnitOfWork<MeadowConfigurationProvider>();
 
-        services.AddTransient<ICrudRepository<SentenceData, Guid>, SentenceDataRepository>();
+        services.AddTransient<ICrudRepository<SentenceTask, Guid>, SentenceDataRepository>();
         
         services.AddTransient<ISentenceDataRepository, SentenceDataRepository>();
 

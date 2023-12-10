@@ -7,14 +7,14 @@ using EnTier.Prepopulation.Contracts;
 
 namespace Acidmanic.NlpShareopolis.Domain.Data.Seeds.DevelopmentSeeds;
 
-public class SentenceDataSeeder:SeedBase<SentenceData>
+public class SentenceDataSeeder:SeedBase<SentenceTask>
 {
     
 
     public override string SeedName => "Development Sentence Data";
 
 
-    public override IEnumerable<SentenceData> SeedingObjects { get; } = new List<SentenceData>()
+    public override IEnumerable<SentenceTask> SeedingObjects { get; } = new List<SentenceTask>()
     {
         new()
         {

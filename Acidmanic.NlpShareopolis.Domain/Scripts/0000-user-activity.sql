@@ -1,7 +1,4 @@
 
-
--- {{Crud Acidmanic.NlpShareopolis.Domain.Entities.SentenceData}}
-
 -- {{ Crud Acidmanic.NlpShareopolis.Domain.Entities.UserActivity}}
 
 -- ---------------------------------------------------------------------------------------------------------------------
@@ -12,14 +9,6 @@ create function fnIsPristine(Id varchar(48), UserEmail nvarchar(256)) returns bi
         UserActivities.ContributionId = Id
         AND UserActivities.UserEmail = UserEmail
         AND (UserActivities.Status = 200 OR UserActivities.Status = 300) ) <= 0;
--- ---------------------------------------------------------------------------------------------------------------------
-CREATE PROCEDURE spReadFirstUnSeenSentence(IN UserEmail nvarchar(256),IN LanguageShortName nvarchar(4))
-BEGIN
-    
-    select * from SentenceDatas where fnIsPristine(SentenceDatas.Id,UserEmail)
-                                and SentenceDatas.LanguageShortName = LanguageShortName
-                                limit 1; 
-END;
 -- ---------------------------------------------------------------------------------------------------------------------
 DROP PROCEDURE spSaveUserActivity; 
 CREATE PROCEDURE spSaveUserActivity(IN Id varchar(48),IN UserEmail varchar(256),IN ContributionId varchar(48),IN Status INT(10))
@@ -41,15 +30,3 @@ BEGIN
     END IF;
 END;
 -- ---------------------------------------------------------------------------------------------------------------------
-
-# 
-# select * from SentenceDatas;
-# 
-# select * from UserActivities;
-# 
-# select fnIsPristine('6c8fe5b4-a682-4b73-94e3-b3089f12b9d2','anonemouse@nlpsharopolis.com');
-# select fnIsPristine('f9e22172-9f29-4be2-9953-5bff1534ec71','anonemouse@nlpsharopolis.com');
-# 
-# 
-# call spReadFirstUnSeenSentence('anonemouse@nlpsharopolis.com','en');
-

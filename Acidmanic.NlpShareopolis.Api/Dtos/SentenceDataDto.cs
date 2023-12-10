@@ -11,7 +11,7 @@ public class SentenceDataDto
     public string Text { get; set; }
 
 
-    public static SentenceDataDto Map(SentenceData value)
+    public static SentenceDataDto Map(SentenceTask value)
     {
         return new SentenceDataDto
         {
@@ -21,9 +21,9 @@ public class SentenceDataDto
         };
     }
 
-    public static SentenceData Map(SentenceDataDto value)
+    public static SentenceTask Map(SentenceDataDto value)
     {
-        return new SentenceData
+        return new SentenceTask
         {
             Id = value.Id,
             LanguageShortName = value.LanguageShortName,

@@ -8,6 +8,7 @@ public abstract class ContributionWork
     [TreatAsLeaf]
     [UniqueMember] public Id Id { get; set; }
 
+    [TreatAsLeaf]
     public Id ContributionId { get; set; }
     
     public string UserEmail { get; set; }

@@ -27,7 +27,7 @@ public static class DomainServicesExtensions
 
 
         services.AddTransient<ISentenceDataService, SentenceDataCrudService>();
-        services.AddTransient<ICrudService<SentenceData,Id>, SentenceDataCrudService>();
+        services.AddTransient<ICrudService<SentenceTask,Id>, SentenceDataCrudService>();
         
         services.AddTransient<ISentenceDomainService, SentenceDomainService>();
 

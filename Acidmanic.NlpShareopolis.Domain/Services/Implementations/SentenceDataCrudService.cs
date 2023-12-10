@@ -8,19 +8,19 @@ using EnTier;
 
 namespace Acidmanic.NlpShareopolis.Domain.Services.Implementations;
 
-public class SentenceDataCrudService:CrudService<SentenceData>, ISentenceDataService
+public class SentenceDataCrudService:CrudService<SentenceTask>, ISentenceDataService
 {
     public SentenceDataCrudService(EnTierEssence essence) : base(essence)
     {
     }
 
-    public Result<SentenceData> FetchFirstUnSeenSentenceData( string userEmail,LanguageShortName languageShortName)
+    public Result<SentenceTask> FetchFirstUnSeenSentenceData( string userEmail,LanguageShortName languageShortName)
     {
-        if (UnitOfWork.GetCrudRepository<SentenceData, Guid>() is ISentenceDataRepository repository)
+        if (UnitOfWork.GetCrudRepository<SentenceTask, Guid>() is ISentenceDataRepository repository)
         {
             return repository.ReadFirstUnSeenSentence(userEmail,languageShortName);
         }
 
-        return new Result<SentenceData>().FailAndDefaultValue();
+        return new Result<SentenceTask>().FailAndDefaultValue();
     }
 }

@@ -18,7 +18,7 @@ public class DataSourceController:NlpShareopolisControllerBase
     }
 
 
-    private Result<SentenceDataDto> Map(Result<SentenceData> value)
+    private Result<SentenceDataDto> Map(Result<SentenceTask> value)
     {
         if (value)
         {

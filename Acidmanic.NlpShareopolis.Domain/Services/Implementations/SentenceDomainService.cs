@@ -21,7 +21,7 @@ public class SentenceDomainService : ISentenceDomainService
         _userActivityService = new CrudService<UserActivity>(essence);
     }
 
-    public Result<SentenceData> FetchSentence(string? userEmail, LanguageShortName languageShortname)
+    public Result<SentenceTask> FetchSentence(string? userEmail, LanguageShortName languageShortname)
     {
         var email = EmailOrDefaultEmail(userEmail);
 
@@ -70,7 +70,7 @@ public class SentenceDomainService : ISentenceDomainService
         return unWrappedEmail;
     }
 
-    public Result<SentenceData> SkipSentence(Id sentenceId, string? userEmail)
+    public Result<SentenceTask> SkipSentence(Id sentenceId, string? userEmail)
     {
         var email = EmailOrDefaultEmail(userEmail);
 
@@ -83,6 +83,6 @@ public class SentenceDomainService : ISentenceDomainService
             return FetchSentence(email, sentence.LanguageShortName);
         }
         
-        return new Result<SentenceData>().FailAndDefaultValue();
+        return new Result<SentenceTask>().FailAndDefaultValue();
     }
 }

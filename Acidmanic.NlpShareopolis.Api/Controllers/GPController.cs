@@ -10,7 +10,7 @@ namespace Acidmanic.NlpShareopolis.Api.Controllers;
 
 [ApiController]
 [Route("api/sentence-data")]
-public class GpController:CrudControllerBase<SentenceData,Guid>
+public class GpController:CrudControllerBase<SentenceTask,Guid>
 {
 
 

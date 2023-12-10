@@ -4,7 +4,7 @@ using Meadow.Requests;
 
 namespace Acidmanic.NlpShareopolis.Domain.Data.Requests;
 
-public sealed class ReadFirstUnSeenSentenceRequest:MeadowRequest<ActivityByEmailShell,SentenceData>
+public sealed class ReadFirstUnSeenSentenceRequest:MeadowRequest<ActivityByEmailShell,SentenceTask>
 {
     public ReadFirstUnSeenSentenceRequest(string userEmail,string languageShortName) : base(true)
     {

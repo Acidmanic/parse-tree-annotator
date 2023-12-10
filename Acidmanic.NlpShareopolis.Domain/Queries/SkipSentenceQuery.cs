@@ -5,4 +5,4 @@ using MediatR;
 
 namespace Acidmanic.NlpShareopolis.Domain.Queries;
 
-public sealed record SkipSentenceQuery(Id SentenceId, string? UserEmail):IRequest<Result<SentenceData>>;
+public sealed record SkipSentenceQuery(Id SentenceId, string? UserEmail):IRequest<Result<SentenceTask>>;

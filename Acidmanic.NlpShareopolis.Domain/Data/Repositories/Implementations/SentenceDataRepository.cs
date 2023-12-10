@@ -8,14 +8,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Acidmanic.NlpShareopolis.Domain.Data.Repositories.Implementations;
 
-public class SentenceDataRepository : MeadowCrudRepository<SentenceData, Guid>, ISentenceDataRepository
+public class SentenceDataRepository : MeadowCrudRepository<SentenceTask, Guid>, ISentenceDataRepository
 {
     public SentenceDataRepository(IMeadowConfigurationProvider configurationProvider)
         : base(configurationProvider.GetConfigurations())
     {
     }
 
-    public Result<SentenceData> ReadFirstUnSeenSentence( string userEmail, string languageShortName)
+    public Result<SentenceTask> ReadFirstUnSeenSentence( string userEmail, string languageShortName)
     {
         var request = new ReadFirstUnSeenSentenceRequest(userEmail, languageShortName);
 
@@ -30,9 +30,9 @@ public class SentenceDataRepository : MeadowCrudRepository<SentenceData, Guid>, 
 
         if (response.FromStorage.Count > 0)
         {
-            return new Result<SentenceData>(true, response.FromStorage.First());
+            return new Result<SentenceTask>(true, response.FromStorage.First());
         }
 
-        return new Result<SentenceData>().FailAndDefaultValue();
+        return new Result<SentenceTask>().FailAndDefaultValue();
     }
 }

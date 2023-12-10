@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Acidmanic.NlpShareopolis.Domain.Handlers.QueryHandlers;
 
-public class SkipSentenceHandler:IRequestHandler<SkipSentenceQuery,Result<SentenceData>>
+public class SkipSentenceHandler:IRequestHandler<SkipSentenceQuery,Result<SentenceTask>>
 {
     private readonly ISentenceDomainService _sentenceDomainService;
 
@@ -15,7 +15,7 @@ public class SkipSentenceHandler:IRequestHandler<SkipSentenceQuery,Result<Senten
         _sentenceDomainService = sentenceDomainService;
     }
 
-    public Task<Result<SentenceData>> Handle(SkipSentenceQuery request, CancellationToken cancellationToken)
+    public Task<Result<SentenceTask>> Handle(SkipSentenceQuery request, CancellationToken cancellationToken)
     {
         var fetched = _sentenceDomainService.SkipSentence(request.SentenceId,request.UserEmail);
         

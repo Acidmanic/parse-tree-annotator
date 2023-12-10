@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Acidmanic.NlpShareopolis.Domain.Handlers.QueryHandlers;
 
-public class FetchUnSeenSentenceHandler : IRequestHandler<FetchUnSeenSentenceQuery, Result<SentenceData>>
+public class FetchUnSeenSentenceHandler : IRequestHandler<FetchUnSeenSentenceQuery, Result<SentenceTask>>
 {
 
     private readonly ISentenceDomainService _sentenceDomainService;
@@ -16,7 +16,7 @@ public class FetchUnSeenSentenceHandler : IRequestHandler<FetchUnSeenSentenceQue
         _sentenceDomainService = sentenceDomainService;
     }
 
-    public Task<Result<SentenceData>> Handle(FetchUnSeenSentenceQuery query, CancellationToken cancellationToken)
+    public Task<Result<SentenceTask>> Handle(FetchUnSeenSentenceQuery query, CancellationToken cancellationToken)
     {
         var fetched = _sentenceDomainService.FetchSentence(query.Email, query.LanguageShortName);
 
