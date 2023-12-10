@@ -10,9 +10,8 @@ namespace Acidmanic.NlpShareopolis.Api.Controllers;
 
 [ApiController]
 [Route("api/data-source")]
-public class DataSourceController:NlpShareopolisControllerBase
+public class DataSourceController : NlpShareopolisControllerBase
 {
-    
     public DataSourceController(IMediator mediator) : base(mediator)
     {
     }
@@ -36,19 +35,29 @@ public class DataSourceController:NlpShareopolisControllerBase
 
         var query = new FetchUnSeenSentenceQuery(languageName, email);
 
-        return await Query(query,Map);
+        return await Query(query, Map);
     }
-    
+
     [HttpPut]
     [Route("skip-sentence/{sentenceId}")]
     public async Task<IActionResult> SkipSentence(string sentenceId)
     {
         var email = UserEmail();
-        
-        var query = new SkipSentenceQuery(sentenceId,email);
 
-        return await Query(query,Map);
+        var query = new SkipSentenceQuery(sentenceId, email);
+
+        return await Query(query, Map);
     }
 
-    
+    [HttpPost]
+    [Route("deliver-parsed-tree")]
+    public async Task<IActionResult> DeliverParsedTree(ParsedSentenceDto parsedSentence)
+    {
+        var email = UserEmail();
+
+        var query = new DeliverParsedTreeQuery(parsedSentence.SentenceId, 
+            parsedSentence.ParsedTree,parsedSentence.LanguageShortName, email);
+
+        return await Query(query, Map);
+    }
 }
