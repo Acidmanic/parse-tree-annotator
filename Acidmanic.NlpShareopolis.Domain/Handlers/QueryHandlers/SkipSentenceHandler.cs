@@ -17,7 +17,7 @@ public class SkipSentenceHandler:IRequestHandler<SkipSentenceQuery,Result<Senten
 
     public Task<Result<SentenceTask>> Handle(SkipSentenceQuery request, CancellationToken cancellationToken)
     {
-        var fetched = _sentenceDomainService.SkipSentence(request.SentenceId,request.UserEmail);
+        var fetched = _sentenceDomainService.SkipFetchSentence(request.SentenceId,request.UserEmail);
         
         return Task.FromResult(fetched);
     }

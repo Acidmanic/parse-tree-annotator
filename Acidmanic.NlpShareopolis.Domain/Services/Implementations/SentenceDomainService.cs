@@ -1,3 +1,4 @@
+using Acidmanic.NlpShareopolis.Domain.Data.Requests.Models;
 using Acidmanic.NlpShareopolis.Domain.Entities;
 using Acidmanic.NlpShareopolis.Domain.Enums;
 using Acidmanic.NlpShareopolis.Domain.Services.Abstractions;
@@ -42,12 +43,12 @@ public class SentenceDomainService : ISentenceDomainService
         return sentenceFound;
     }
 
-    private Result<UserActivity> UpdateSkipped(Id sentenceId, string email)
+    private Result<UserActivity> UpdateActivityStatus(Id sentenceId, string email, ActivityStatus status)
     {
         var activityUpdate = new UserActivity
         {
             Id = Guid.NewGuid(),
-            Status = ActivityStatus.Skipped,
+            Status = status,
             ContributionId = sentenceId,
             UserEmail = email
         };
@@ -70,11 +71,21 @@ public class SentenceDomainService : ISentenceDomainService
         return unWrappedEmail;
     }
 
-    public Result<SentenceTask> SkipSentence(Id sentenceId, string? userEmail)
+    public Result<SentenceTask> SkipFetchSentence(Id sentenceId, string? userEmail)
+    {
+        return UpdateFetchSentence(sentenceId, userEmail, ActivityStatus.Skipped);
+    }
+    
+    public Result<SentenceTask> DeliverFetchSentence(Id sentenceId, string? userEmail)
+    {
+        return UpdateFetchSentence(sentenceId, userEmail, ActivityStatus.Delivered);
+    }
+    
+    private Result<SentenceTask> UpdateFetchSentence(Id sentenceId, string? userEmail, ActivityStatus status)
     {
         var email = EmailOrDefaultEmail(userEmail);
 
-        UpdateSkipped(sentenceId, email);
+        UpdateActivityStatus(sentenceId, email,status);
 
         var foundSentence = _sentenceDataService.ReadById(sentenceId);
 
