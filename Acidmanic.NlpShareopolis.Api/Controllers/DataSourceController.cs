@@ -1,4 +1,5 @@
 using Acidmanic.NlpShareopolis.Api.Dtos;
+using Acidmanic.NlpShareopolis.Api.Services;
 using Acidmanic.NlpShareopolis.Domain.Entities;
 using Acidmanic.NlpShareopolis.Domain.Exceptions;
 using Acidmanic.NlpShareopolis.Domain.Queries;
@@ -12,8 +13,12 @@ namespace Acidmanic.NlpShareopolis.Api.Controllers;
 [Route("api/data-source")]
 public class DataSourceController : NlpShareopolisControllerBase
 {
-    public DataSourceController(IMediator mediator) : base(mediator)
+
+    private readonly SentenceDataMapper _sentenceDataMapper;
+    
+    public DataSourceController(IMediator mediator, SentenceDataMapper sentenceDataMapper) : base(mediator)
     {
+        _sentenceDataMapper = sentenceDataMapper;
     }
 
 
@@ -21,7 +26,7 @@ public class DataSourceController : NlpShareopolisControllerBase
     {
         if (value)
         {
-            return new Result<SentenceDataDto>(true, SentenceDataDto.Map(value.Value));
+            return new Result<SentenceDataDto>(true, _sentenceDataMapper.Map(value.Value));
         }
 
         return new Result<SentenceDataDto>().FailAndDefaultValue();

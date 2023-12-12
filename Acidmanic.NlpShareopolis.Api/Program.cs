@@ -41,6 +41,7 @@ builder.Services.AddWebUtilitiesServices();
 
 builder.Services.AddDomainServices();
 builder.Services.AddDomainDataServices();
+builder.Services.AddApiServices();
 
 var app = builder.Build();
 

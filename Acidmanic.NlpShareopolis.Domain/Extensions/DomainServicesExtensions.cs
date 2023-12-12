@@ -30,6 +30,7 @@ public static class DomainServicesExtensions
         services.AddTransient<ICrudService<SentenceTask,Id>, SentenceDataCrudService>();
         
         services.AddTransient<ISentenceDomainService, SentenceDomainService>();
+        services.AddTransient<IExpressionTokenizer,SimpleExpressionTokenizer>();
 
         return services;
     }
