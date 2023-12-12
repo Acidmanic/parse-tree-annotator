@@ -28,5 +28,17 @@ public class SentenceDataSeeder:SeedBase<SentenceTask>
             Text = "This is going to be very long sentence",
             LanguageShortName = LanguageShortnames.English
         },
+        new()
+        {
+            Id = Guid.NewGuid(),
+            Text = "من مانی هستم",
+            LanguageShortName = LanguageShortnames.Persian
+        },
+        new()
+        {
+            Id = Guid.NewGuid(),
+            Text = "کباب غذای خوشمزه‌ایه",
+            LanguageShortName = LanguageShortnames.Persian
+        },
     };
 }

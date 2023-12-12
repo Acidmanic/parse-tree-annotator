@@ -10,6 +10,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PariModel} from "../../models/pari.model";
 import {TokenModel} from "../../models/token.model";
 import {PosTagModel} from "../../models/pos-tag.model";
+import {DataSourceApiService} from "../../services/api-services/data-source-api.service";
 
 @Component({
   selector: 'parse-tree-page',
@@ -35,27 +36,12 @@ export class ParseTreePageComponent implements OnInit {
               private selectionSvc: TokenSelectionProcessorService,
               private parseTreeSvc: ParseTreeExtractorService,
               private pennSvc: TreeBankApiService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private dataSourceApiService:DataSourceApiService) {
   }
 
 
   ngOnInit() {
-
-
-    let g = new TokenGroupModel();
-    g.id = this.tokenSvc.generateGroupId();
-    g.tag = 'TOP'
-    g.root = g;
-    g.tokens.push({text: 'This', index: 0});
-    g.tokens.push({text: 'Is', index: 1});
-    g.tokens.push({text: 'A', index: 2});
-    g.tokens.push({text: 'Book', index: 3});
-    g.firstTokenId = 0;
-
-    this.group = g;
-
-    this.updateParseTree();
-
 
     this.pennSvc.getTreeBankByModelName('farsi').subscribe({
       next: bank => this.postagBank = bank,
@@ -65,6 +51,33 @@ export class ParseTreePageComponent implements OnInit {
       }
     });
 
+    this.dataSourceApiService.fetchSentence('fa').subscribe({
+      next: sentence => this.putTokensIntoGroupViewModel(sentence.value?.tokens!)
+    });
+
+  }
+
+
+  private putTokensIntoGroupViewModel(tokens:string[]){
+
+    let g = new TokenGroupModel();
+    g.id = this.tokenSvc.generateGroupId();
+    g.tag = 'TOP'
+    g.root = g;
+
+    let index =0;
+
+    for (const tokenText of tokens) {
+
+      g.tokens.push({text: tokenText, index: index});
+
+      index++;
+    }
+    g.firstTokenId = 0;
+
+    this.group = g;
+
+    this.updateParseTree();
   }
 
 
