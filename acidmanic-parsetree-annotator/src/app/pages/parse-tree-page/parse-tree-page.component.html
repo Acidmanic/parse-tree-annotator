@@ -7,6 +7,7 @@
     </div>
     <div class="col-6">
       <flatten-token-tree
+        [dir]="groupDirection"
         (on-delete-group)="onDeleteGroup($event)"
         (on-delete-tokens)="onDeleteTokens($event)"
         (on-sub-group)="onCreateSubGroup($event)"

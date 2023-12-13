@@ -1,9 +1,8 @@
-
-
+import {LanguageModel} from "../language.model";
 
 
 export class SentenceTaskModel{
   id: string='';
-  languageShortName:string='';
+  language:LanguageModel=new LanguageModel();
   tokens:string[]=[];
 }

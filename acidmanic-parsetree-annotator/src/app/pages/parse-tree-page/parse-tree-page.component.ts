@@ -11,6 +11,7 @@ import {PariModel} from "../../models/pari.model";
 import {TokenModel} from "../../models/token.model";
 import {PosTagModel} from "../../models/pos-tag.model";
 import {DataSourceApiService} from "../../services/api-services/data-source-api.service";
+import {SentenceTaskModel} from "../../models/api/sentence-task.model";
 
 @Component({
   selector: 'parse-tree-page',
@@ -24,7 +25,7 @@ export class ParseTreePageComponent implements OnInit {
   public selection: TokenSelectionModel = new TokenSelectionModel();
   public parseTree: string = '';
   public postagBank: PosTagBankModel = new PosTagBankModel();
-
+  public groupDirection:string="ltr";
 
   @ViewChild('postagModal') treebankModal?: ElementRef;
 
@@ -53,14 +54,13 @@ export class ParseTreePageComponent implements OnInit {
 
     this.dataSourceApiService.fetchSentence('fa').subscribe({
       next: sentence => {
-        this.putTokensIntoGroupViewModel(sentence.value?.tokens!);
+        this.putTokensIntoGroupViewModel(sentence.value!);
       }
     });
 
   }
 
-
-  private putTokensIntoGroupViewModel(tokens:string[]){
+  private putTokensIntoGroupViewModel(sentence:SentenceTaskModel){
 
     let g = new TokenGroupModel();
     g.id = this.tokenSvc.generateGroupId();
@@ -69,7 +69,7 @@ export class ParseTreePageComponent implements OnInit {
 
     let index =0;
 
-    for (const tokenText of tokens) {
+    for (const tokenText of sentence.tokens) {
 
       g.tokens.push({text: tokenText, index: index});
 
@@ -79,7 +79,7 @@ export class ParseTreePageComponent implements OnInit {
 
     this.group = g;
 
-    console.log('group created',g);
+    this.groupDirection = sentence.language.direction;
 
     this.updateParseTree();
   }
