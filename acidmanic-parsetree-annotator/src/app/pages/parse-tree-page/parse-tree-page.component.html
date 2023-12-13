@@ -1,13 +1,12 @@
 <div class="container">
 
-  <div class="row">
+  <div class="row"  [dir]="groupDirection">
 
     <div class="col-2">
 
     </div>
     <div class="col-6">
       <flatten-token-tree
-        [dir]="groupDirection"
         (on-delete-group)="onDeleteGroup($event)"
         (on-delete-tokens)="onDeleteTokens($event)"
         (on-sub-group)="onCreateSubGroup($event)"
