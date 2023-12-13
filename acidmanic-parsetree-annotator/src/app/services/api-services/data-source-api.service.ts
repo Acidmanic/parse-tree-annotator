@@ -14,9 +14,9 @@ import {ParsedTreeModel} from "../../models/api/parsed-tree.model";
 export class DataSourceApiService {
 
 
-  public static readonly fetchSentenceUri='data-source/fetch-sentence/';
-  public static readonly skipSentenceUri='data-source/skip-sentence/';
-  public static readonly deliverSentenceUri='data-source/deliver-parsed-tree';
+  public static readonly fetchSentenceUri='api/data-source/fetch-sentence/';
+  public static readonly skipSentenceUri='api/data-source/skip-sentence/';
+  public static readonly deliverSentenceUri='api/data-source/deliver-parsed-tree';
 
   constructor(private http:HttpClient) {
   }

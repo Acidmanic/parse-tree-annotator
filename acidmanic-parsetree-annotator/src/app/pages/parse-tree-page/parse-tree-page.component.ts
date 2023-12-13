@@ -52,7 +52,9 @@ export class ParseTreePageComponent implements OnInit {
     });
 
     this.dataSourceApiService.fetchSentence('fa').subscribe({
-      next: sentence => this.putTokensIntoGroupViewModel(sentence.value?.tokens!)
+      next: sentence => {
+        this.putTokensIntoGroupViewModel(sentence.value?.tokens!);
+      }
     });
 
   }
@@ -76,6 +78,8 @@ export class ParseTreePageComponent implements OnInit {
     g.firstTokenId = 0;
 
     this.group = g;
+
+    console.log('group created',g);
 
     this.updateParseTree();
   }
