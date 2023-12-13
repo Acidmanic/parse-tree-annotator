@@ -20,7 +20,7 @@ public class SentenceDataMapper
         return new SentenceDataDto
         {
             Id = value.Id,
-            LanguageShortName = value.LanguageShortName,
+            Language = value.Language,
             Tokens = _expressionTokenizer.Tokenize(value.Text)
         };
     }
@@ -30,7 +30,7 @@ public class SentenceDataMapper
         return new SentenceTask
         {
             Id = value.Id,
-            LanguageShortName = value.LanguageShortName,
+            Language = value.Language,
             Text = string.Join(' ',value.Tokens)
         };
     }

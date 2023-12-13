@@ -1,4 +1,4 @@
-namespace Acidmanic.NlpShareopolis.Api.Models;
+namespace Acidmanic.NlpShareopolis.Api.Dtos;
 
 public class PosTag
 {

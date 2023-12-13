@@ -22,7 +22,7 @@ public class SentenceDomainService : ISentenceDomainService
         _userActivityService = new CrudService<UserActivity>(essence);
     }
 
-    public Result<SentenceTask> FetchSentence(string? userEmail, LanguageShortName languageShortname)
+    public Result<SentenceTask> FetchSentence(string? userEmail, Language languageShortname)
     {
         var email = EmailOrDefaultEmail(userEmail);
 
@@ -91,7 +91,7 @@ public class SentenceDomainService : ISentenceDomainService
 
         if (foundSentence is { } sentence)
         {
-            return FetchSentence(email, sentence.LanguageShortName);
+            return FetchSentence(email, sentence.Language);
         }
         
         return new Result<SentenceTask>().FailAndDefaultValue();

@@ -6,7 +6,7 @@ public class SentenceDataDto
 {
     public Guid Id { get; set; }
 
-    public string LanguageShortName { get; set; }
+    public LanguageDto Language { get; set; }
 
     public string[] Tokens { get; set; }
 

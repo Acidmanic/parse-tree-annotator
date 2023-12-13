@@ -12,7 +12,7 @@ public class SentenceTask:ContributionData
     
     [TreatAsLeaf]
     [ForceColumnSize(4)]
-    public LanguageShortName LanguageShortName { get; set; }
+    public Language Language { get; set; }
 
     public override Id ContributionId()=> "f65973fe-907b-11ee-ae96-2f4d3c25cf4c";
 }

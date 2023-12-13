@@ -1,3 +1,4 @@
+using Acidmanic.NlpShareopolis.Api.Dtos;
 using Acidmanic.NlpShareopolis.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

@@ -35,7 +35,7 @@ public class DeliverParsedTreeHandler : IRequestHandler<DeliverParsedTreeQuery, 
 
         Result<SentenceTask> result = inserted
             ? _sentenceDomainService.DeliverFetchSentence(request.SentenceId, request.UserEmail)
-            : _sentenceDomainService.FetchSentence(request.UserEmail, request.LanguageShortName);
+            : _sentenceDomainService.FetchSentence(request.UserEmail, request.Language);
 
         return Task.FromResult(result);
     }

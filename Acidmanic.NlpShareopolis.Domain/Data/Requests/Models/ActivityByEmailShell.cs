@@ -4,5 +4,5 @@ public class ActivityByEmailShell
 {
     public string UserEmail { get; set; }
 
-    public string LanguageShortName { get; set; }
+    public string Language { get; set; }
 }

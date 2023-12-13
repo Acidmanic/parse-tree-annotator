@@ -11,7 +11,7 @@ public sealed class ReadFirstUnSeenSentenceRequest:MeadowRequest<ActivityByEmail
         ToStorage = new ActivityByEmailShell
         {
             UserEmail = userEmail,
-            LanguageShortName = languageShortName
+            Language = languageShortName
         };
     }
 }

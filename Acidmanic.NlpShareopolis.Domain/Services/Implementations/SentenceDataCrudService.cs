@@ -14,11 +14,11 @@ public class SentenceDataCrudService:CrudService<SentenceTask>, ISentenceDataSer
     {
     }
 
-    public Result<SentenceTask> FetchFirstUnSeenSentenceData( string userEmail,LanguageShortName languageShortName)
+    public Result<SentenceTask> FetchFirstUnSeenSentenceData( string userEmail,Language language)
     {
         if (UnitOfWork.GetCrudRepository<SentenceTask, Guid>() is ISentenceDataRepository repository)
         {
-            return repository.ReadFirstUnSeenSentence(userEmail,languageShortName);
+            return repository.ReadFirstUnSeenSentence(userEmail,language);
         }
 
         return new Result<SentenceTask>().FailAndDefaultValue();

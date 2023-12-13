@@ -6,7 +6,7 @@ namespace Acidmanic.NlpShareopolis.Domain.Services.Abstractions;
 
 public interface ISentenceDomainService
 {
-    Result<SentenceTask> FetchSentence(string? userEmail, LanguageShortName languageShortname);
+    Result<SentenceTask> FetchSentence(string? userEmail, Language languageShortname);
 
     Result<SentenceTask> SkipFetchSentence(Id activityId, string? userEmail);
     

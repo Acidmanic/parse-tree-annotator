@@ -20,25 +20,25 @@ public class SentenceDataSeeder:SeedBase<SentenceTask>
         {
             Id = Guid.NewGuid(),
             Text = "This is a book",
-            LanguageShortName = LanguageShortnames.English
+            Language = LanguageShortnames.English
         },
         new()
         {
             Id = Guid.NewGuid(),
             Text = "This is going to be very long sentence",
-            LanguageShortName = LanguageShortnames.English
+            Language = LanguageShortnames.English
         },
         new()
         {
             Id = Guid.NewGuid(),
             Text = "من مانی هستم",
-            LanguageShortName = LanguageShortnames.Persian
+            Language = LanguageShortnames.Persian
         },
         new()
         {
             Id = Guid.NewGuid(),
             Text = "کباب غذای خوشمزه‌ایه",
-            LanguageShortName = LanguageShortnames.Persian
+            Language = LanguageShortnames.Persian
         },
     };
 }

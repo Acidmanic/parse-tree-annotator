@@ -1,11 +1,13 @@
-namespace Acidmanic.NlpShareopolis.Api.Models;
+using Acidmanic.NlpShareopolis.Api.Models;
+
+namespace Acidmanic.NlpShareopolis.Api.Dtos;
 
 public class PosTagBank
 {
     public List<PosTag> Tags { get; set; }
     
     
-   public Language Language { get; set; }
+   public LanguageDto Language { get; set; }
    
    public string BankName { get; set; }
    
