@@ -14,6 +14,7 @@ import {DataSourceApiService} from "../../services/api-services/data-source-api.
 import {SentenceTaskModel} from "../../models/api/sentence-task.model";
 import {MultiLingualComponentBase} from "../../components/multi-lingual-component-base";
 import {InternationalizationService} from "../../services/internationalization.service";
+import {ResultModel} from "../../models/result.model";
 
 @Component({
   selector: 'parse-tree-page',
@@ -29,6 +30,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   public postagBank: PosTagBankModel = new PosTagBankModel();
   public groupDirection:string="ltr";
   public annotationSentence:string='';
+  private currentSentence:ResultModel<SentenceTaskModel>=new ResultModel<SentenceTaskModel>();
 
   @ViewChild('postagModal') treebankModal?: ElementRef;
 
@@ -59,12 +61,12 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
     this.dataSourceApiService.fetchSentence('fa').subscribe({
       next: sentence => {
-        this.putTokensIntoGroupViewModel(sentence.value!);
+        this.putSentenceIntoGroupViewModel(sentence.value!);
       }
     });
   }
 
-  private putTokensIntoGroupViewModel(sentence:SentenceTaskModel){
+  private putSentenceIntoGroupViewModel(sentence:SentenceTaskModel){
 
     let g = new TokenGroupModel();
     g.id = this.tokenSvc.generateGroupId();
@@ -96,6 +98,11 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
     }
     this.annotationSentence = text;
 
+    this.currentSentence = new ResultModel<SentenceTaskModel>();
+
+    this.currentSentence.value = sentence;
+
+    this.currentSentence.success = true;
   }
 
 
@@ -149,6 +156,24 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
     }
   }
 
+  onSkipSentenceClicked() {
+
+    if(this.currentSentence.success){
+
+      this.dataSourceApiService.skipSentence(this.currentSentence.value!.id).subscribe({
+        next: sentence => {
+          this.putSentenceIntoGroupViewModel(sentence.value!);
+        }
+      });
+    }else{
+      this.dataSourceApiService.fetchSentence('fa').subscribe({
+        next: sentence => {
+          this.putSentenceIntoGroupViewModel(sentence.value!);
+        }
+      });
+    }
+  }
+
   private updateParseTree() {
 
     this.parseTree = this.parseTreeSvc.toParseTree(this.group);
@@ -184,4 +209,5 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
     }
 
   }
+
 }
