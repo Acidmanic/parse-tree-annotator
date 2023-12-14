@@ -17,7 +17,8 @@
         "LinkedIn": "Linked In",
         "LoginUsingLinkedIn": "Login Using Linked-In Account",
         "Profile": "Profile",
-        "Exit": "Exit"
+        "Exit": "Exit",
+        "AnnotateParseTreeFor": "Annotate parse-tree for"
       }
 
     },
@@ -37,7 +38,8 @@
         "LinkedIn": "لینکدین",
         "LoginUsingLinkedIn": "ورود با استفاده از اکانت لینکدین",
         "Profile": "پروفایل‌",
-        "Exit": "خروج"
+        "Exit": "خروج",
+        "AnnotateParseTreeFor": "نشانه‌گذاری درخت تجزیه نحوی برای جمله‌ی"
       }
     }
 

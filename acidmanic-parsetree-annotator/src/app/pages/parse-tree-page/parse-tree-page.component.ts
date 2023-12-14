@@ -12,13 +12,15 @@ import {TokenModel} from "../../models/token.model";
 import {PosTagModel} from "../../models/pos-tag.model";
 import {DataSourceApiService} from "../../services/api-services/data-source-api.service";
 import {SentenceTaskModel} from "../../models/api/sentence-task.model";
+import {MultiLingualComponentBase} from "../../components/multi-lingual-component-base";
+import {InternationalizationService} from "../../services/internationalization.service";
 
 @Component({
   selector: 'parse-tree-page',
   templateUrl: './parse-tree-page.component.html',
   styleUrls: ['./parse-tree-page.component.scss']
 })
-export class ParseTreePageComponent implements OnInit {
+export class ParseTreePageComponent extends MultiLingualComponentBase {
 
 
   public group: TokenGroupModel = new TokenGroupModel();
@@ -26,6 +28,7 @@ export class ParseTreePageComponent implements OnInit {
   public parseTree: string = '';
   public postagBank: PosTagBankModel = new PosTagBankModel();
   public groupDirection:string="ltr";
+  public annotationSentence:string='';
 
   @ViewChild('postagModal') treebankModal?: ElementRef;
 
@@ -38,11 +41,13 @@ export class ParseTreePageComponent implements OnInit {
               private parseTreeSvc: ParseTreeExtractorService,
               private pennSvc: TreeBankApiService,
               private modalService: NgbModal,
-              private dataSourceApiService:DataSourceApiService) {
+              private dataSourceApiService:DataSourceApiService,
+              private i18Svc:InternationalizationService) {
+    super(i18Svc);
   }
 
-
-  ngOnInit() {
+  protected override onInitHook() {
+    super.onInitHook();
 
     this.pennSvc.getTreeBankByModelName('farsi').subscribe({
       next: bank => this.postagBank = bank,
@@ -57,7 +62,6 @@ export class ParseTreePageComponent implements OnInit {
         this.putTokensIntoGroupViewModel(sentence.value!);
       }
     });
-
   }
 
   private putTokensIntoGroupViewModel(sentence:SentenceTaskModel){
@@ -82,6 +86,16 @@ export class ParseTreePageComponent implements OnInit {
     this.groupDirection = sentence.language.direction;
 
     this.updateParseTree();
+
+    let text = '';
+    let sep ='';
+
+    for (const token of sentence.tokens) {
+      text += sep + token;
+      sep = ' ';
+    }
+    this.annotationSentence = text;
+
   }
 
 
