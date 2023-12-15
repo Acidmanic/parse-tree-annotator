@@ -15,6 +15,7 @@ import {SentenceTaskModel} from "../../models/api/sentence-task.model";
 import {MultiLingualComponentBase} from "../../components/multi-lingual-component-base";
 import {InternationalizationService} from "../../services/internationalization.service";
 import {ResultModel} from "../../models/result.model";
+import {LanguageModel} from "../../models/language.model";
 
 @Component({
   selector: 'parse-tree-page',
@@ -37,6 +38,8 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   public clickedTagGroup: TokenGroupModel | undefined;
   public modalPreviewGroup?: TokenGroupModel;
   public clickedTagSelection: TokenSelectionModel = new TokenSelectionModel();
+  public availableTaskLanguages:LanguageModel[]=[];
+  public selectedTaskLanguage = new LanguageModel();
 
   constructor(private tokenSvc: TokenProcessorService,
               private selectionSvc: TokenSelectionProcessorService,
@@ -59,11 +62,21 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
       }
     });
 
-    this.dataSourceApiService.fetchSentence('fa').subscribe({
-      next: sentence => {
-        this.putSentenceIntoGroupViewModel(sentence.value!);
+    this.dataSourceApiService.availableLanguages().subscribe({
+      next: langs => {
+        this.availableTaskLanguages = langs;
+        if(langs.length >0 ){
+        this.selectedTaskLanguage = langs[0];
+          this.dataSourceApiService.fetchSentence(this.selectedTaskLanguage.shortName).subscribe({
+            next: sentence => {
+              this.putSentenceIntoGroupViewModel(sentence.value!);
+            }
+          });
+        }
       }
     });
+
+
   }
 
   private putSentenceIntoGroupViewModel(sentence:SentenceTaskModel){
@@ -166,7 +179,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
         }
       });
     }else{
-      this.dataSourceApiService.fetchSentence('fa').subscribe({
+      this.dataSourceApiService.fetchSentence(this.selectedTaskLanguage.shortName).subscribe({
         next: sentence => {
           this.putSentenceIntoGroupViewModel(sentence.value!);
         }
