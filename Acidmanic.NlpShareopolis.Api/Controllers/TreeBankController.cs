@@ -1,5 +1,6 @@
 using Acidmanic.NlpShareopolis.Api.Dtos;
 using Acidmanic.NlpShareopolis.Api.Models;
+using Acidmanic.NlpShareopolis.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -9,49 +10,48 @@ namespace Acidmanic.NlpShareopolis.Api.Controllers;
 [Route("api/tree-bank")]
 public class TreeBankController : ControllerBase
 {
-    private static readonly string PostagModelFileNamePostFix = "-tags.json";
+    private readonly TreeBankService _treeBankService;
+
+    public TreeBankController(TreeBankService treeBankService)
+    {
+        _treeBankService = treeBankService;
+    }
 
     [HttpGet]
-    [Route("pos-tags/{modelName}")]
+    [Route("pos-tags-by-model/{modelName}")]
     public IActionResult GetPostagModelByName(string modelName)
     {
-        var fileName = Path.Combine("Resources", "Models", $"{modelName}{PostagModelFileNamePostFix}");
 
-        if (!System.IO.File.Exists(fileName))
+        var bankFound = _treeBankService.ReadTreeBankByModelName(modelName);
+
+        if (bankFound)
         {
-            return NotFound();
+            return Ok(bankFound.Value);
         }
 
-        var json = System.IO.File.ReadAllText(fileName);
+        return NotFound();
+    }
+    
+    [HttpGet]
+    [Route("pos-tags-by-language/{languageShortName}")]
+    public IActionResult GetPosTagsForLanguage(string languageShortName)
+    {
+        var bankFound = _treeBankService.GetBankByLanguage(languageShortName);
 
-        var bank = JsonConvert.DeserializeObject<PosTagBank>(json);
+        if (bankFound)
+        {
+            return Ok(bankFound.Value);
+        }
 
-        return Ok(bank);
+        return NotFound();
     }
 
     [HttpGet]
     [Route("pos-tags")]
     public IActionResult GetAllPostagModelNames()
     {
-        var directoryPath = Path.Combine("Resources", "Models");
 
-        var directory = new DirectoryInfo(directoryPath);
-
-        var files = directory.GetFiles();
-
-        var modelsAvailable = new List<string>();
-
-        foreach (var file in files)
-        {
-            var fileName = file.Name;
-
-            if (fileName.ToLower().EndsWith(PostagModelFileNamePostFix.ToLower()))
-            {
-                var modelName = fileName.Substring(0, fileName.Length - PostagModelFileNamePostFix.Length);
-
-                modelsAvailable.Add(modelName);
-            }
-        }
+        var modelsAvailable = _treeBankService.GetAvailableModels();
 
         return Ok(new { Items = modelsAvailable });
     }

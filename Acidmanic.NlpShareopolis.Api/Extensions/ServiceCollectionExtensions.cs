@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
     {
 
         services.AddTransient<SentenceDataMapper>();
+        services.AddTransient<TreeBankService>();
 
         return services;
     }
