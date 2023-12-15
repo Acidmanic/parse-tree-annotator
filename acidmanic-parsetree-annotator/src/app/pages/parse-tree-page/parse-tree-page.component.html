@@ -2,18 +2,37 @@
 
   <div class="d-flex justify-content-start">
 
-    <div class="m-2">
-      {{currentLanguage.strings['AnnotateParseTreeFor']}}
+    <div class="m-2 p-1">
+      {{currentLanguage.strings['AnnotateTheLanguage']}}
     </div>
-    <div class="m-2">
+    <div class="m-2 p-0">
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+          {{selectedTaskLanguage.name}}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button dir="ltr" ngbDropdownItem *ngFor="let lang of this.availableTaskLanguages"
+                  (click)="onSelectTaskLanguage(lang)">
+            {{lang.name}}
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="m-2 p-1">
+      {{currentLanguage.strings['AnnotateThePhrase']}}
+    </div>
+
+    <div class="m-2 p-1 alert alert-info">
       {{annotationSentence}}
     </div>
-    <div (click)="onSkipSentenceClicked()" class="cursor-pointer p-2">
+    <div (click)="onSkipSentenceClicked()" class="cursor-pointer p-2 mt-1">
       <a >
         <i class="cursor-pointer bi bi-arrow-counterclockwise bi-task-button text-bg-warning"></i>
       </a>
     </div>
-    <div class="cursor-pointer p-2">
+    <div class="cursor-pointer p-2 mt-1">
       <a >
         <i class="cursor-pointer bi bi-check2 bi-task-button text-bg-success"></i>
       </a>

@@ -64,15 +64,13 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
     this.dataSourceApiService.availableLanguages().subscribe({
       next: langs => {
+
         this.availableTaskLanguages = langs;
+
         if(langs.length >0 ){
-        this.selectedTaskLanguage = langs[0];
-          this.dataSourceApiService.fetchSentence(this.selectedTaskLanguage.shortName).subscribe({
-            next: sentence => {
-              this.putSentenceIntoGroupViewModel(sentence.value!);
-            }
-          });
+          this.onSelectTaskLanguage(this.availableTaskLanguages[0]);
         }
+
       }
     });
 
@@ -223,4 +221,14 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
   }
 
+  public onSelectTaskLanguage(lang: LanguageModel) {
+
+    this.selectedTaskLanguage = lang;
+
+    this.dataSourceApiService.fetchSentence(this.selectedTaskLanguage.shortName).subscribe({
+      next: sentence => {
+        this.putSentenceIntoGroupViewModel(sentence.value!);
+      }
+    });
+  }
 }

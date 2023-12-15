@@ -18,7 +18,8 @@
         "LoginUsingLinkedIn": "Login Using Linked-In Account",
         "Profile": "Profile",
         "Exit": "Exit",
-        "AnnotateParseTreeFor": "Annotate parse-tree for"
+        "AnnotateTheLanguage": "Annotate in language:",
+        "AnnotateThePhrase": "Annotate the phrase:"
       }
 
     },
@@ -39,7 +40,8 @@
         "LoginUsingLinkedIn": "ورود با استفاده از اکانت لینکدین",
         "Profile": "پروفایل‌",
         "Exit": "خروج",
-        "AnnotateParseTreeFor": "نشانه‌گذاری درخت تجزیه نحوی برای جمله‌ی"
+        "AnnotateTheLanguage": "زبان نشانه‌گذاری:",
+        "AnnotateThePhrase": "عبارت نشانه‌گذاری:"
       }
     }
 
