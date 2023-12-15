@@ -1,6 +1,8 @@
 using Acidmanic.NlpShareopolis.Domain.Data.Repositories.Abstractions;
 using Acidmanic.NlpShareopolis.Domain.Data.Requests;
+using Acidmanic.NlpShareopolis.Domain.Data.Requests.Models;
 using Acidmanic.NlpShareopolis.Domain.Entities;
+using Acidmanic.NlpShareopolis.Domain.ValueObjects;
 using Acidmanic.Utilities.Results;
 using EnTier.DataAccess.Meadow;
 using Meadow.Contracts;
@@ -34,5 +36,21 @@ public class SentenceDataRepository : MeadowCrudRepository<SentenceTask, Guid>, 
         }
 
         return new Result<SentenceTask>().FailAndDefaultValue();
+    }
+
+    public IEnumerable<Language> ReadAvailableLanguages()
+    {
+        var request = new ReadAvailableSentenceTaskLanguagesRequest();
+
+        var response = GetEngine().PerformRequest(request, false);
+
+        if (response.Failed)
+        {
+            Logger.LogError(response.FailureException,
+                "Unable to read available languages due to exception: {Exception}",
+                response.FailureException);
+        }
+
+        return request.FromStorage.Select( l => l.Language);
     }
 }

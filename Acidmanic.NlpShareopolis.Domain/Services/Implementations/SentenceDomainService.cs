@@ -13,12 +13,12 @@ namespace Acidmanic.NlpShareopolis.Domain.Services.Implementations;
 
 public class SentenceDomainService : ISentenceDomainService
 {
-    private readonly ISentenceDataService _sentenceDataService;
+    private readonly ISentenceCrudService _sentenceCrudService;
     private readonly ICrudService<UserActivity, Id> _userActivityService;
 
-    public SentenceDomainService(EnTierEssence essence, ISentenceDataService sentenceDataService)
+    public SentenceDomainService(EnTierEssence essence, ISentenceCrudService sentenceCrudService)
     {
-        _sentenceDataService = sentenceDataService;
+        _sentenceCrudService = sentenceCrudService;
         _userActivityService = new CrudService<UserActivity>(essence);
     }
 
@@ -26,7 +26,7 @@ public class SentenceDomainService : ISentenceDomainService
     {
         var email = EmailOrDefaultEmail(userEmail);
 
-        var sentenceFound = _sentenceDataService.FetchFirstUnSeenSentenceData(email, languageShortname);
+        var sentenceFound = _sentenceCrudService.FetchFirstUnSeenSentenceData(email, languageShortname);
 
         if (sentenceFound)
         {
@@ -87,7 +87,7 @@ public class SentenceDomainService : ISentenceDomainService
 
         UpdateActivityStatus(sentenceId, email,status);
 
-        var foundSentence = _sentenceDataService.ReadById(sentenceId);
+        var foundSentence = _sentenceCrudService.ReadById(sentenceId);
 
         if (foundSentence is { } sentence)
         {

@@ -11,3 +11,8 @@ BEGIN
                                 limit 1; 
 END;
 -- ---------------------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE spReadAvailableSentenceTaskLanguages() 
+BEGIN 
+    select dis.Language, UUID() 'Id' from  (select distinct Language from SentenceTasks) dis;
+END;
+-- ---------------------------------------------------------------------------------------------------------------------

@@ -65,4 +65,13 @@ public class DataSourceController : NlpShareopolisControllerBase
 
         return await Query(query, Map);
     }
+
+    [HttpGet]
+    [Route("available-languages")]
+    public async Task<IActionResult> AvailableLanguages()
+    {
+        var query = new AvailableSentenceTaskLanguagesQuery();
+
+        return await Query(query);
+    }
 }

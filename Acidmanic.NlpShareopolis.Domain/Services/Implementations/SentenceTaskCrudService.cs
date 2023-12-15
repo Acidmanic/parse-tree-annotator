@@ -8,9 +8,9 @@ using EnTier;
 
 namespace Acidmanic.NlpShareopolis.Domain.Services.Implementations;
 
-public class SentenceDataCrudService:CrudService<SentenceTask>, ISentenceDataService
+public class SentenceTaskCrudService:CrudService<SentenceTask>, ISentenceCrudService
 {
-    public SentenceDataCrudService(EnTierEssence essence) : base(essence)
+    public SentenceTaskCrudService(EnTierEssence essence) : base(essence)
     {
     }
 
@@ -22,5 +22,15 @@ public class SentenceDataCrudService:CrudService<SentenceTask>, ISentenceDataSer
         }
 
         return new Result<SentenceTask>().FailAndDefaultValue();
+    }
+
+    public IEnumerable<Language> AvailableLanguages()
+    {
+        if (UnitOfWork.GetCrudRepository<SentenceTask, Guid>() is ISentenceDataRepository repository)
+        {
+            return repository.ReadAvailableLanguages();
+        }
+
+        return new Language[]{};
     }
 }
