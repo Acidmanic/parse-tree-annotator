@@ -54,14 +54,6 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   protected override onInitHook() {
     super.onInitHook();
 
-    this.pennSvc.getTreeBankByModelName('farsi').subscribe({
-      next: bank => this.postagBank = bank,
-      error: err => {
-      },
-      complete: () => {
-      }
-    });
-
     this.dataSourceApiService.availableLanguages().subscribe({
       next: langs => {
 
@@ -230,5 +222,14 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
         this.putSentenceIntoGroupViewModel(sentence.value!);
       }
     });
+
+    this.pennSvc.getTreeBankByLanguage(lang.shortName).subscribe({
+      next: bank => this.postagBank = bank,
+      error: err => {
+      },
+      complete: () => {
+      }
+    });
+
   }
 }

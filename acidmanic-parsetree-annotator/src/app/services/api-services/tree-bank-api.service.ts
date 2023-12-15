@@ -7,27 +7,36 @@ import {CollectionDtoModel} from "../../models/collection-dto.model";
 
 
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root'
 })
 export class TreeBankApiService {
 
 
-  public static bankUrl:string='tree-bank/pos-tags/';
+  public static defaultController: string = 'tree-bank';
+  public static byLanguageUrl: string = 'tree-bank/pos-tags-by-language/';
+  public static byModelNameUrl: string = 'tree-bank/pos-tags-by-model/';
 
-  constructor(private http:HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
 
-  public getTreeBankByModelName(modelName:string):Observable<PosTagBankModel>{
+  public getTreeBankByModelName(modelName: string): Observable<PosTagBankModel> {
 
-    let url = BaseUrlService.baseUrl + '/' + TreeBankApiService.bankUrl + modelName;
+    let url = BaseUrlService.baseUrl + '/' + TreeBankApiService.byModelNameUrl + modelName;
 
     return this.http.get<PosTagBankModel>(url);
   }
 
-  public getAvailableModelNames():Observable<CollectionDtoModel<string>>{
+  public getTreeBankByLanguage(languageShortName: string): Observable<PosTagBankModel> {
 
-    let url = BaseUrlService.baseUrl + '/' + TreeBankApiService.bankUrl ;
+    let url = BaseUrlService.baseUrl + '/' + TreeBankApiService.byLanguageUrl + languageShortName;
+
+    return this.http.get<PosTagBankModel>(url);
+  }
+
+  public getAvailableModelNames(): Observable<CollectionDtoModel<string>> {
+
+    let url = BaseUrlService.baseUrl + '/' + TreeBankApiService.defaultController;
 
     return this.http.get<CollectionDtoModel<string>>(url);
 
