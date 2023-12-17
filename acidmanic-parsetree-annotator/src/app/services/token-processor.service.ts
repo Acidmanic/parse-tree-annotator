@@ -2,13 +2,11 @@ import {Injectable} from "@angular/core";
 import {TokenModel} from "../models/token.model";
 import {TokenGroupModel} from "../models/token-group.model";
 import {ResultModel} from "../models/result.model";
-import {TokenGroupComponent} from "../components/token-group/token-group.component";
 import {TokenGroupMapModel} from "../models/token-group-map.model";
-import {DoubleKeySetModel} from "../models/double-key-set.model";
-import {Token} from "@angular/compiler";
 import {PariModel} from "../models/pari.model";
-import {TokenSelectionModel} from "../models/token-selection.model";
+import {AnnotationProgressModel} from "../models/annotation-progress.model";
 
+type ProgressStatistics = {total:number,tagged:number,groupedTokens:number[],leaves:number};
 
 @Injectable({
   providedIn: 'root'
@@ -401,5 +399,79 @@ export class TokenProcessorService {
     mySignature += ']}';
 
     return mySignature;
+  }
+
+
+  public getProgress(root:TokenGroupModel):AnnotationProgressModel{
+
+    let p = new AnnotationProgressModel();
+
+    let stats = {total:0,tagged:0,groupedTokens:[],leaves:0};
+
+    if(root.tokens.length) {
+
+      this.countTaggedGroups(root, stats);
+
+      let taggedRatio = stats.tagged / stats.total;
+
+      let groupedRatio = stats.groupedTokens.length / root.tokens.length;
+
+      let leavesRatio = stats.leaves / root.tokens.length;
+
+      p.hardProgress = (taggedRatio + groupedRatio) / 2;
+
+      p.softProgress = (leavesRatio + taggedRatio + groupedRatio) / 3;
+    }
+
+    return p;
+  }
+
+  private countTaggedGroups(node:TokenGroupModel,result:ProgressStatistics){
+
+    result.total ++;
+
+    if(this.isTagged(node)){
+
+      result.tagged++;
+    }
+    if(node.children.length==0){
+
+      result.leaves++;
+    }
+    for (const token of node.tokens) {
+
+      if(!result.groupedTokens.includes(token.index)){
+
+        result.groupedTokens.push(token.index);
+      }
+    }
+    for (const child of node.children) {
+
+      this.countTaggedGroups(child,result);
+    }
+  }
+
+
+  public isTagged(node:TokenGroupModel):boolean{
+
+    if(node.tag){
+
+      if(node.tag.length>0){
+
+        let lowerTag = node.tag.toLowerCase();
+
+        for (let i = 0; i < lowerTag.length; i++) {
+
+          let char = lowerTag.charAt(i);
+
+          if(char < 'a' || char > 'z' || char < '0' || char > '9' || char != '$'){
+
+            return false;
+          }
+        }
+        return true;
+      }
+    }
+    return false;
   }
 }
