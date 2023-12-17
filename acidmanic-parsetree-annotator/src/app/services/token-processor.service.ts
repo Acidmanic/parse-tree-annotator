@@ -6,7 +6,7 @@ import {TokenGroupMapModel} from "../models/token-group-map.model";
 import {PariModel} from "../models/pari.model";
 import {AnnotationProgressModel} from "../models/annotation-progress.model";
 
-type ProgressStatistics = {total:number,tagged:number,groupedTokens:number[],leaves:number};
+type ProgressStatistics = { total: number, tagged: number, groupedTokens: number[], leaves: number };
 
 @Injectable({
   providedIn: 'root'
@@ -402,69 +402,76 @@ export class TokenProcessorService {
   }
 
 
-  public getProgress(root:TokenGroupModel):AnnotationProgressModel{
+  public getProgress(root: TokenGroupModel): AnnotationProgressModel {
 
     let p = new AnnotationProgressModel();
 
-    let stats = {total:0,tagged:0,groupedTokens:[],leaves:0};
+    let stats = {total: 0, tagged: 0, groupedTokens: [], leaves: 0};
 
-    if(root.tokens.length) {
+    if (root.tokens.length) {
 
       this.countTaggedGroups(root, stats);
 
-      let taggedRatio = stats.tagged / stats.total;
+      if( stats.total >0){
 
-      let groupedRatio = stats.groupedTokens.length / root.tokens.length;
+        let taggedRatio = stats.tagged / stats.total;
 
-      let leavesRatio = stats.leaves / root.tokens.length;
+        let groupedRatio = stats.groupedTokens.length / root.tokens.length;
 
-      p.hardProgress = (taggedRatio + groupedRatio) / 2;
+        let leavesRatio = stats.leaves / root.tokens.length;
 
-      p.softProgress = (leavesRatio + taggedRatio + groupedRatio) / 3;
+        p.hardProgress = (taggedRatio + groupedRatio) / 2;
+
+        p.softProgress = (leavesRatio + taggedRatio + groupedRatio) / 3;
+      }
+      console.log('Group stat:', stats);
     }
 
     return p;
   }
 
-  private countTaggedGroups(node:TokenGroupModel,result:ProgressStatistics){
+  private countTaggedGroups(node: TokenGroupModel, result: ProgressStatistics) {
 
-    result.total ++;
+    if (!this.isRoot(node)) {
 
-    if(this.isTagged(node)){
+      for (const token of node.tokens) {
 
-      result.tagged++;
-    }
-    if(node.children.length==0){
+        if (!result.groupedTokens.includes(token.index)) {
 
-      result.leaves++;
-    }
-    for (const token of node.tokens) {
+          result.groupedTokens.push(token.index);
+        }
+      }
+      if (this.isTagged(node)) {
 
-      if(!result.groupedTokens.includes(token.index)){
+        result.tagged++;
+      }
+      result.total++;
 
-        result.groupedTokens.push(token.index);
+      if (node.children.length == 0) {
+
+        result.leaves++;
       }
     }
     for (const child of node.children) {
 
-      this.countTaggedGroups(child,result);
+      this.countTaggedGroups(child, result);
     }
   }
 
 
-  public isTagged(node:TokenGroupModel):boolean{
+  public isTagged(node: TokenGroupModel): boolean {
 
-    if(node.tag){
+    if (node.tag) {
 
-      if(node.tag.length>0){
+      if (node.tag.length > 0) {
 
         let lowerTag = node.tag.toLowerCase();
 
         for (let i = 0; i < lowerTag.length; i++) {
 
-          let char = lowerTag.charAt(i);
+          let char = lowerTag.charCodeAt(i);
 
-          if(char < 'a' || char > 'z' || char < '0' || char > '9' || char != '$'){
+          if (!this.isAcceptableTagChar(char)) {
 
             return false;
           }
@@ -473,5 +480,15 @@ export class TokenProcessorService {
       }
     }
     return false;
+  }
+
+  private isRoot(node: TokenGroupModel) {
+    return !node.root || node.root == node || !node.parent || node.parent == node;
+  }
+
+  private isAcceptableTagChar(char: number) {
+
+    return (char >= 'a'.charCodeAt(0) && char <= 'z'.charCodeAt(0))
+      || (char >= '0'.charCodeAt(0) && char <= '9'.charCodeAt(0)) || char == '$'.charCodeAt(0);
   }
 }

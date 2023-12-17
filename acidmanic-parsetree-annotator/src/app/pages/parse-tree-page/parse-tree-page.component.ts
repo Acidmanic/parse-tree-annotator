@@ -180,6 +180,10 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   private updateParseTree() {
 
     this.parseTree = this.parseTreeSvc.toParseTree(this.group);
+
+    let p = this.tokenSvc.getProgress(this.group);
+
+    console.log('Hard Progress: ' + p.hardProgress + ' Soft Progress: ' + p.softProgress);
   }
 
   public onTagClicked(group: TokenGroupModel) {
