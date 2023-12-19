@@ -39,15 +39,25 @@ export class ProgressableConfirmButtonComponent implements AfterViewInit,OnChang
 
       if (this.circle.nativeElement) {
 
-        const ctx = this.circle.nativeElement.getContext("2d");
+        const context = this.circle.nativeElement.getContext("2d");
+        const offset = Math.PI*3/2;
 
-        if (ctx) {
+        if (context) {
 
-          ctx.beginPath();
-          ctx.arc(50, 50, 40, 0, (this.progressValue/50) * Math.PI);
-          ctx.lineWidth = 20;
-          ctx.strokeStyle="#55c022";
-          ctx.stroke();
+          context.beginPath();
+          context.arc(50, 50, 40, offset, offset+ (this.progressValue/50) * Math.PI);
+          context.lineWidth = 20;
+          context.strokeStyle="#55c022";
+          context.stroke();
+          context.closePath();
+
+          context.beginPath();
+          context.arc(50, 50, 40, offset+ (this.progressValue/50) * Math.PI,offset );
+          context.lineWidth = 20;
+          context.strokeStyle="#697368";
+          context.stroke();
+          context.closePath();
+
         }
       }
     }
