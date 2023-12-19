@@ -31,6 +31,8 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   public postagBank: PosTagBankModel = new PosTagBankModel();
   public groupDirection:string="ltr";
   public annotationSentence:string='';
+  public progress:number=0;
+
   private currentSentence:ResultModel<SentenceTaskModel>=new ResultModel<SentenceTaskModel>();
 
   @ViewChild('postagModal') treebankModal?: ElementRef;
@@ -182,6 +184,8 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
     this.parseTree = this.parseTreeSvc.toParseTree(this.group);
 
     let p = this.tokenSvc.getProgress(this.group);
+
+    this.progress= p.softProgress;
 
     console.log('Hard Progress: ' + p.hardProgress + ' Soft Progress: ' + p.softProgress);
   }

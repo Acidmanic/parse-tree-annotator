@@ -19,6 +19,7 @@ import { SegmentationPageComponent } from './pages/segmentation-page/segmentatio
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { UserButtonComponent } from './components/user-button/user-button.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ProgressableConfirmButtonComponent } from './components/progressable-confirm-button/progressable-confirm-button.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     LoginPageComponent,
     UserButtonComponent,
     ProfileComponent,
+    ProgressableConfirmButtonComponent,
   ],
   imports: [
     BrowserModule,
