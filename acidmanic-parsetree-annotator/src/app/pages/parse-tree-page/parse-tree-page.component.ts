@@ -185,7 +185,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
     let p = this.tokenSvc.getProgress(this.group);
 
-    this.progress= p.softProgress;
+    this.progress= p.hardProgress;
 
     console.log('Hard Progress: ' + p.hardProgress + ' Soft Progress: ' + p.softProgress);
   }

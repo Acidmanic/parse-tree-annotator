@@ -13,10 +13,14 @@ import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleCh
 export class ProgressableConfirmButtonComponent implements AfterViewInit,OnChanges {
 
 
+  public textBg:string='text-bg-secondary';
+
   ngOnChanges(changes: SimpleChanges): void {
 
     if(changes){
-      if(changes['progressValue']){
+
+      if(changes['progressValue'] ){
+
         this.refresh();
       }
     }
@@ -34,15 +38,26 @@ export class ProgressableConfirmButtonComponent implements AfterViewInit,OnChang
 
   private refresh() {
 
+    this.textBg = this.progressValue <100? 'text-bg-secondary':'text-bg-success';
 
     if (this.circle) {
 
       if (this.circle.nativeElement) {
 
         const context = this.circle.nativeElement.getContext("2d");
+
         const offset = Math.PI*3/2;
 
         if (context) {
+
+          context.clearRect(0, 0, this.circle.nativeElement.width, this.circle.nativeElement.height);
+
+          context.beginPath();
+          context.arc(50, 50, 40, 0, Math.PI*2 );
+          context.lineWidth = 20;
+          context.strokeStyle="#697368";
+          context.stroke();
+          context.closePath();
 
           context.beginPath();
           context.arc(50, 50, 40, offset, offset+ (this.progressValue/50) * Math.PI);
@@ -51,12 +66,6 @@ export class ProgressableConfirmButtonComponent implements AfterViewInit,OnChang
           context.stroke();
           context.closePath();
 
-          context.beginPath();
-          context.arc(50, 50, 40, offset+ (this.progressValue/50) * Math.PI,offset );
-          context.lineWidth = 20;
-          context.strokeStyle="#697368";
-          context.stroke();
-          context.closePath();
 
         }
       }
