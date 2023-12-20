@@ -1,10 +1,11 @@
-<div class="container" *ngIf="anySentenceToProcess">
+<div class="container">
 
   <div class="d-flex justify-content-start">
 
     <div class="m-2 p-1">
       {{currentLanguage.strings['AnnotateTheLanguage']}}
     </div>
+
     <div class="m-2 p-0">
       <div ngbDropdown class="d-inline-block">
         <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
@@ -17,25 +18,36 @@
           </button>
         </div>
       </div>
-
     </div>
 
-    <div class="m-2 p-1">
+
+    <div class="m-2 p-1" *ngIf="anySentenceToProcess">
       {{currentLanguage.strings['AnnotateThePhrase']}}
     </div>
 
-    <div class="m-2 p-1 alert alert-info">
+    <div class="m-2 p-1 alert alert-info" *ngIf="anySentenceToProcess">
       {{annotationSentence}}
     </div>
-    <div (click)="onSkipSentenceClicked()" class="cursor-pointer task-button " style="position: relative">
+    <div *ngIf="anySentenceToProcess" (click)="onSkipSentenceClicked()" class="cursor-pointer task-button " style="position: relative">
       <a class="task-fill-relative-parent">
         <i class="cursor-pointer task-fill-relative-parent bi bi-arrow-counterclockwise bi-task-button text-bg-warning"></i>
       </a>
     </div>
-    <progressable-confirm-button (click)="onSubmitClicked()" [progress-value]="progress*100" class="task-button"></progressable-confirm-button>
+    <progressable-confirm-button *ngIf="anySentenceToProcess" (click)="onSubmitClicked()" [progress-value]="progress*100" class="task-button"></progressable-confirm-button>
+
+
+    <div class="m-2 p-1 alert alert-info" *ngIf="!anySentenceToProcess">
+      There is no more sentences in this language to be annotated! Please try again back later
+    </div>
+    <div (click)="onFetchSentenceClicked()" *ngIf="!anySentenceToProcess" class="cursor-pointer task-button " style="position: relative">
+      <a class="task-fill-relative-parent">
+        <i class="cursor-pointer task-fill-relative-parent bi bi-arrow-counterclockwise bi-task-button text-bg-success"></i>
+      </a>
+    </div>
+
   </div>
 
-  <div class="row"  [dir]="groupDirection">
+  <div class="row"  [dir]="groupDirection" *ngIf="anySentenceToProcess">
 
     <div class="col-2">
 
@@ -64,15 +76,6 @@
 
   </div>
 
-</div>
-
-<div class="container" *ngIf="!anySentenceToProcess">
-  <div>There is no more English sentences, to be annotated! Please come back later.</div>
-  <div (click)="onFetchSentenceClicked()" class="cursor-pointer task-button " style="position: relative">
-    <a class="task-fill-relative-parent">
-      <i class="cursor-pointer task-fill-relative-parent bi bi-arrow-counterclockwise bi-task-button text-bg-success"></i>
-    </a>
-  </div>
 </div>
 
 
