@@ -240,4 +240,8 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
     });
 
   }
+
+  public onSubmitClicked() {
+    console.log('deliver',this.parseTree,this.progress);
+  }
 }

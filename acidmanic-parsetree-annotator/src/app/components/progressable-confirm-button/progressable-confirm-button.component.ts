@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef, EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 
 @Component({
   selector: 'progressable-confirm-button',
@@ -14,6 +24,10 @@ export class ProgressableConfirmButtonComponent implements AfterViewInit,OnChang
 
 
   public textBg:string='text-bg-secondary';
+  public cursorClass:string='';
+  private clickable :boolean=false;
+
+  @Output('click') clickEmitter:EventEmitter<any> = new EventEmitter();
 
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -38,7 +52,9 @@ export class ProgressableConfirmButtonComponent implements AfterViewInit,OnChang
 
   private refresh() {
 
-    this.textBg = this.progressValue <100? 'text-bg-secondary':'text-bg-success';
+    this.clickable = this.progressValue <100;
+    this.textBg = this.clickable? 'text-bg-secondary':'text-bg-success';
+    this.cursorClass = this.clickable? '':'cursor-pointer';
 
     if (this.circle) {
 
@@ -66,10 +82,15 @@ export class ProgressableConfirmButtonComponent implements AfterViewInit,OnChang
           context.stroke();
           context.closePath();
 
-
         }
       }
     }
+  }
 
+  public onClick(){
+
+    if(this.clickable){
+      this.clickEmitter.emit({});
+    }
   }
 }
