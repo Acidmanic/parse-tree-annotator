@@ -33,6 +33,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   public groupDirection: string = "ltr";
   public annotationSentence: string = '';
   public progress: number = 0;
+  public anySentenceToProcess:boolean = false;
 
   private currentSentence: ResultModel<SentenceTaskModel> = new ResultModel<SentenceTaskModel>();
 
@@ -68,9 +69,18 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
       }
     });
-
-
   }
+
+  private onSentenceResponse(response:ResultModel<SentenceTaskModel>){
+
+    if(response.success && response.value){
+      this.anySentenceToProcess = true;
+      this.putSentenceIntoGroupViewModel(response.value!);
+    }else{
+      this.anySentenceToProcess = false;
+    }
+  }
+
 
   private putSentenceIntoGroupViewModel(sentence: SentenceTaskModel) {
 
@@ -168,13 +178,14 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
       this.dataSourceApiService.skipSentence(this.currentSentence.value!.id).subscribe({
         next: sentence => {
-          this.putSentenceIntoGroupViewModel(sentence.value!);
+
+         this.onSentenceResponse(sentence);
         }
       });
     } else {
       this.dataSourceApiService.fetchSentence(this.selectedTaskLanguage.shortName).subscribe({
         next: sentence => {
-          this.putSentenceIntoGroupViewModel(sentence.value!);
+          this.onSentenceResponse(sentence);
         }
       });
     }
@@ -224,11 +235,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
     this.selectedTaskLanguage = lang;
 
-    this.dataSourceApiService.fetchSentence(this.selectedTaskLanguage.shortName).subscribe({
-      next: sentence => {
-        this.putSentenceIntoGroupViewModel(sentence.value!);
-      }
-    });
+    this.fetchPristineSentenceForUser();
 
     this.pennSvc.getTreeBankByLanguage(lang.shortName).subscribe({
       next: bank => this.postagBank = bank,
@@ -241,9 +248,6 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   }
 
   public onSubmitClicked() {
-
-    console.log('deliver', this.parseTree, this.progress);
-
 
     if (this.currentSentence.success && this.currentSentence.value) {
 
@@ -261,17 +265,12 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
       this.dataSourceApiService.deliverSentenceByModel(parsedTreeModel).subscribe({
         next: value => {
-
-          if (value.success && value.value) {
-
-            this.putSentenceIntoGroupViewModel(value.value);
-          }else{
-            this.clearViewToNoTaskState();
-          }
+            this.onSentenceResponse(value);
         },
         error: err => {
           //TODO: Toast error
-          this.clearViewToNoTaskState();
+          this.onSentenceResponse(new ResultModel<SentenceTaskModel>())
+          console.log(err);
         },
         complete: () => {}
       });
@@ -280,8 +279,21 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
   }
 
-  public clearViewToNoTaskState(): void {
+  public onFetchSentenceClicked() {
 
+    this.fetchPristineSentenceForUser();
   }
 
+  private fetchPristineSentenceForUser() {
+
+    if(this.selectedTaskLanguage){
+
+      this.dataSourceApiService.fetchSentence(this.selectedTaskLanguage.shortName).subscribe({
+        next: sentence => {
+          this.onSentenceResponse(sentence);
+        }
+      });
+    }
+
+  }
 }

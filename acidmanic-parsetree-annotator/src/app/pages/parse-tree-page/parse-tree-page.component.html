@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="anySentenceToProcess">
 
   <div class="d-flex justify-content-start">
 
@@ -34,6 +34,7 @@
     </div>
     <progressable-confirm-button (click)="onSubmitClicked()" [progress-value]="progress*100" class="task-button"></progressable-confirm-button>
   </div>
+
   <div class="row"  [dir]="groupDirection">
 
     <div class="col-2">
@@ -63,6 +64,15 @@
 
   </div>
 
+</div>
+
+<div class="container" *ngIf="!anySentenceToProcess">
+  <div>There is no more English sentences, to be annotated! Please come back later.</div>
+  <div (click)="onFetchSentenceClicked()" class="cursor-pointer task-button " style="position: relative">
+    <a class="task-fill-relative-parent">
+      <i class="cursor-pointer task-fill-relative-parent bi bi-arrow-counterclockwise bi-task-button text-bg-success"></i>
+    </a>
+  </div>
 </div>
 
 

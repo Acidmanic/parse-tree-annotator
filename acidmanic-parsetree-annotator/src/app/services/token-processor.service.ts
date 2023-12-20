@@ -424,7 +424,6 @@ export class TokenProcessorService {
 
         p.softProgress = (leavesRatio + taggedRatio + groupedRatio) / 3;
       }
-      console.log('Group stat:', stats);
     }
 
     return p;
