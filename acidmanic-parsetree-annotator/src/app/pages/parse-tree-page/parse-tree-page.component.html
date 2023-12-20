@@ -37,7 +37,7 @@
 
 
     <div class="m-2 p-1 alert alert-info" *ngIf="!anySentenceToProcess">
-      There is no more sentences in this language to be annotated! Please try again back later
+      {{currentLanguage.strings['ThereIsNoMoreSentences']}}
     </div>
     <div (click)="onFetchSentenceClicked()" *ngIf="!anySentenceToProcess" class="cursor-pointer task-button " style="position: relative">
       <a class="task-fill-relative-parent">

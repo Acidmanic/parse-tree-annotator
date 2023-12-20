@@ -19,7 +19,8 @@
         "Profile": "Profile",
         "Exit": "Exit",
         "AnnotateTheLanguage": "Annotate in language:",
-        "AnnotateThePhrase": "Annotate the phrase:"
+        "AnnotateThePhrase": "Annotate the phrase:",
+        "ThereIsNoMoreSentences": "There is no more sentences in this language to be annotated! Please try again later."
       }
 
     },
@@ -41,7 +42,8 @@
         "Profile": "پروفایل‌",
         "Exit": "خروج",
         "AnnotateTheLanguage": "زبان نشانه‌گذاری:",
-        "AnnotateThePhrase": "عبارت نشانه‌گذاری:"
+        "AnnotateThePhrase": "عبارت نشانه‌گذاری:",
+        "ThereIsNoMoreSentences": "برای این زبان، جمله‌ی آماده‌ی علامت‌گذاری دیگری در دسترس نیست. لطفا در زمان دیگری مجددا امتحان کنید."
       }
     }
 
