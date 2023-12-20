@@ -12,4 +12,8 @@ public abstract class ContributionWork
     public Id ContributionId { get; set; }
     
     public string UserEmail { get; set; }
+    
+    public double HardProgress { get; set; }
+    
+    public double SoftProgress { get; set; }
 }

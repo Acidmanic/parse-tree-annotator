@@ -1,5 +1,3 @@
-using Acidmanic.NlpShareopolis.Domain.Entities;
-
 namespace Acidmanic.NlpShareopolis.Api.Dtos;
 
 public class SentenceDataDto 
@@ -9,7 +7,5 @@ public class SentenceDataDto
     public LanguageDto Language { get; set; }
 
     public string[] Tokens { get; set; }
-
-
     
 }

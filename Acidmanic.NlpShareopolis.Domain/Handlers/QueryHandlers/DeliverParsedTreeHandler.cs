@@ -28,7 +28,9 @@ public class DeliverParsedTreeHandler : IRequestHandler<DeliverParsedTreeQuery, 
             Id = Guid.NewGuid(),
             ContributionId = request.SentenceId,
             UserEmail = request.UserEmail??"",
-            ParsedTree = request.ParsedTree
+            ParsedTree = request.ParsedTree,
+            HardProgress = request.HardProgress,
+            SoftProgress = request.SoftProgress
         };
 
         var inserted = _parsedTreeCrudService.Add(parsedSentence, false, false) != null;

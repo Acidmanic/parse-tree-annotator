@@ -16,6 +16,7 @@ import {MultiLingualComponentBase} from "../../components/multi-lingual-componen
 import {InternationalizationService} from "../../services/internationalization.service";
 import {ResultModel} from "../../models/result.model";
 import {LanguageModel} from "../../models/language.model";
+import {ParsedTreeModel} from "../../models/api/parsed-tree.model";
 
 @Component({
   selector: 'parse-tree-page',
@@ -29,18 +30,18 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   public selection: TokenSelectionModel = new TokenSelectionModel();
   public parseTree: string = '';
   public postagBank: PosTagBankModel = new PosTagBankModel();
-  public groupDirection:string="ltr";
-  public annotationSentence:string='';
-  public progress:number=0;
+  public groupDirection: string = "ltr";
+  public annotationSentence: string = '';
+  public progress: number = 0;
 
-  private currentSentence:ResultModel<SentenceTaskModel>=new ResultModel<SentenceTaskModel>();
+  private currentSentence: ResultModel<SentenceTaskModel> = new ResultModel<SentenceTaskModel>();
 
   @ViewChild('postagModal') treebankModal?: ElementRef;
 
   public clickedTagGroup: TokenGroupModel | undefined;
   public modalPreviewGroup?: TokenGroupModel;
   public clickedTagSelection: TokenSelectionModel = new TokenSelectionModel();
-  public availableTaskLanguages:LanguageModel[]=[];
+  public availableTaskLanguages: LanguageModel[] = [];
   public selectedTaskLanguage = new LanguageModel();
 
   constructor(private tokenSvc: TokenProcessorService,
@@ -48,8 +49,8 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
               private parseTreeSvc: ParseTreeExtractorService,
               private pennSvc: TreeBankApiService,
               private modalService: NgbModal,
-              private dataSourceApiService:DataSourceApiService,
-              private i18Svc:InternationalizationService) {
+              private dataSourceApiService: DataSourceApiService,
+              private i18Svc: InternationalizationService) {
     super(i18Svc);
   }
 
@@ -61,7 +62,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
         this.availableTaskLanguages = langs;
 
-        if(langs.length >0 ){
+        if (langs.length > 0) {
           this.onSelectTaskLanguage(this.availableTaskLanguages[0]);
         }
 
@@ -71,14 +72,14 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
   }
 
-  private putSentenceIntoGroupViewModel(sentence:SentenceTaskModel){
+  private putSentenceIntoGroupViewModel(sentence: SentenceTaskModel) {
 
     let g = new TokenGroupModel();
     g.id = this.tokenSvc.generateGroupId();
     g.tag = 'TOP'
     g.root = g;
 
-    let index =0;
+    let index = 0;
 
     for (const tokenText of sentence.tokens) {
 
@@ -95,7 +96,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
     this.updateParseTree();
 
     let text = '';
-    let sep ='';
+    let sep = '';
 
     for (const token of sentence.tokens) {
       text += sep + token;
@@ -163,14 +164,14 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
   onSkipSentenceClicked() {
 
-    if(this.currentSentence.success){
+    if (this.currentSentence.success) {
 
       this.dataSourceApiService.skipSentence(this.currentSentence.value!.id).subscribe({
         next: sentence => {
           this.putSentenceIntoGroupViewModel(sentence.value!);
         }
       });
-    }else{
+    } else {
       this.dataSourceApiService.fetchSentence(this.selectedTaskLanguage.shortName).subscribe({
         next: sentence => {
           this.putSentenceIntoGroupViewModel(sentence.value!);
@@ -185,9 +186,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
     let p = this.tokenSvc.getProgress(this.group);
 
-    this.progress= p.hardProgress;
-
-    console.log('Hard Progress: ' + p.hardProgress + ' Soft Progress: ' + p.softProgress);
+    this.progress = p.hardProgress;
   }
 
   public onTagClicked(group: TokenGroupModel) {
@@ -242,6 +241,47 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   }
 
   public onSubmitClicked() {
-    console.log('deliver',this.parseTree,this.progress);
+
+    console.log('deliver', this.parseTree, this.progress);
+
+
+    if (this.currentSentence.success && this.currentSentence.value) {
+
+      let parsedTreeData = this.parseTreeSvc.toParseTree(this.group);
+
+      let progress = this.tokenSvc.getProgress(this.group);
+
+      let parsedTreeModel = new ParsedTreeModel();
+
+      parsedTreeModel.parsedTree = parsedTreeData;
+      parsedTreeModel.hardProgress = progress.hardProgress;
+      parsedTreeModel.softProgress = progress.softProgress;
+      parsedTreeModel.languageShortName = this.currentSentence.value!.language.shortName;
+      parsedTreeModel.sentenceId = this.currentSentence.value!.id;
+
+      this.dataSourceApiService.deliverSentenceByModel(parsedTreeModel).subscribe({
+        next: value => {
+
+          if (value.success && value.value) {
+
+            this.putSentenceIntoGroupViewModel(value.value);
+          }else{
+            this.clearViewToNoTaskState();
+          }
+        },
+        error: err => {
+          //TODO: Toast error
+          this.clearViewToNoTaskState();
+        },
+        complete: () => {}
+      });
+    }
+
+
   }
+
+  public clearViewToNoTaskState(): void {
+
+  }
+
 }

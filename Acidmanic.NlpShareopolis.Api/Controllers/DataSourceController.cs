@@ -61,7 +61,8 @@ public class DataSourceController : NlpShareopolisControllerBase
         var email = UserEmail();
 
         var query = new DeliverParsedTreeQuery(parsedSentence.SentenceId, 
-            parsedSentence.ParsedTree,parsedSentence.LanguageShortName, email);
+            parsedSentence.ParsedTree,parsedSentence.LanguageShortName, email,
+            parsedSentence.HardProgress,parsedSentence.SoftProgress);
 
         return await Query(query, Map);
     }

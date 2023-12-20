@@ -5,4 +5,4 @@ using MediatR;
 
 namespace Acidmanic.NlpShareopolis.Domain.Queries;
 
-public sealed record DeliverParsedTreeQuery(Id SentenceId,string ParsedTree,Language Language, string? UserEmail) :IRequest<Result<SentenceTask>>;
+public sealed record DeliverParsedTreeQuery(Id SentenceId,string ParsedTree,Language Language, string? UserEmail,double HardProgress,double SoftProgress) :IRequest<Result<SentenceTask>>;

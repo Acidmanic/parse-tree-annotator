@@ -39,7 +39,7 @@ export class DataSourceApiService {
     return this.http.put<ResultModel<SentenceTaskModel>>(url,{});
   }
 
-  public deliverSentence(sentenceId:string,parsedTree:string,languageShortName:string):Observable<ResultModel<SentenceTaskModel>>{
+  public deliverSentenceByValue(sentenceId:string,parsedTree:string,languageShortName:string):Observable<ResultModel<SentenceTaskModel>>{
 
     let url = BaseUrlService.authBaseUrl + '/' + DataSourceApiService.deliverSentenceUri;
 
@@ -47,6 +47,15 @@ export class DataSourceApiService {
     model.sentenceId=sentenceId;
     model.parsedTree=parsedTree;
     model.languageShortName=languageShortName;
+    model.hardProgress =1;
+    model.softProgress =1;
+
+    return this.deliverSentenceByModel(model);
+  }
+
+  public deliverSentenceByModel(model:ParsedTreeModel):Observable<ResultModel<SentenceTaskModel>>{
+
+    let url = BaseUrlService.authBaseUrl + '/' + DataSourceApiService.deliverSentenceUri;
 
     return this.http.post<ResultModel<SentenceTaskModel>>(url,model);
   }
