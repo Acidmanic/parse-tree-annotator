@@ -8,7 +8,7 @@ public class SimpleExpressionTokenizer:IExpressionTokenizer
     {
 
         var tokens = expression.Split(new string[] 
-                    { " ", "\t", "\r","\n",",",".","!","","(",")","،" }, 
+                    { " ", "\t", "\r","\n",",",".","!","","(",")","،","‌" }, 
                 StringSplitOptions.RemoveEmptyEntries)
             .Select(t => t.ToLower())
             .ToArray();

@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TokenGroupComponent } from './components/token-group/token-group.component';
 import {HttpClientModule} from "@angular/common/http";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule, NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import { SpanOrDetailsComponent } from './components/span-or-details/span-or-details.component';
 import { PopperLimitedTextComponent } from './components/popper-limited-text/popper-limited-text.component';
 import { PhraseHighlighterComponent } from './components/phrase-highlighter/phrase-highlighter.component';
@@ -47,7 +47,7 @@ import {HotToastModule} from "@ngneat/hot-toast";
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    HotToastModule.forRoot(),
+    HotToastModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

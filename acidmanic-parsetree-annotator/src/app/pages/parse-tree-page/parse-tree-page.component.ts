@@ -6,7 +6,7 @@ import {TokenProcessorService} from "../../services/token-processor.service";
 import {TokenSelectionProcessorService} from "../../services/token-selection-processor.service";
 import {ParseTreeExtractorService} from "../../services/parse-tree-extractor.service";
 import {TreeBankApiService} from "../../services/api-services/tree-bank-api.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbToast} from "@ng-bootstrap/ng-bootstrap";
 import {PariModel} from "../../models/pari.model";
 import {TokenModel} from "../../models/token.model";
 import {PosTagModel} from "../../models/pos-tag.model";
@@ -18,6 +18,7 @@ import {ResultModel} from "../../models/result.model";
 import {LanguageModel} from "../../models/language.model";
 import {ParsedTreeModel} from "../../models/api/parsed-tree.model";
 import {HotToastService} from "@ngneat/hot-toast";
+
 
 @Component({
   selector: 'parse-tree-page',
@@ -34,7 +35,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   public groupDirection: string = "ltr";
   public annotationSentence: string = '';
   public progress: number = 0;
-  public anySentenceToProcess:boolean = false;
+  public anySentenceToProcess: boolean = false;
 
   private currentSentence: ResultModel<SentenceTaskModel> = new ResultModel<SentenceTaskModel>();
 
@@ -73,12 +74,12 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
     });
   }
 
-  private onSentenceResponse(response:ResultModel<SentenceTaskModel>){
+  private onSentenceResponse(response: ResultModel<SentenceTaskModel>) {
 
-    if(response.success && response.value){
+    if (response.success && response.value) {
       this.anySentenceToProcess = true;
       this.putSentenceIntoGroupViewModel(response.value!);
-    }else{
+    } else {
       this.anySentenceToProcess = false;
     }
   }
@@ -176,7 +177,13 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
   onSkipSentenceClicked() {
 
-   this.toast.success('🙏 Thanks! +200Xp');
+    this.toast.success('🙏 Thanks! +200Xp', {
+      position: "top-center",
+      theme: "snackbar",
+      autoClose: true,
+      dismissible: true,
+      duration: 2000
+    });
 
 
     return;
@@ -185,7 +192,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
       this.dataSourceApiService.skipSentence(this.currentSentence.value!.id).subscribe({
         next: sentence => {
 
-         this.onSentenceResponse(sentence);
+          this.onSentenceResponse(sentence);
         }
       });
     } else {
@@ -272,14 +279,15 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
       this.dataSourceApiService.deliverSentenceByModel(parsedTreeModel).subscribe({
         next: value => {
-            this.onSentenceResponse(value);
+          this.onSentenceResponse(value);
         },
         error: err => {
           //TODO: Toast error
           this.onSentenceResponse(new ResultModel<SentenceTaskModel>())
           console.log(err);
         },
-        complete: () => {}
+        complete: () => {
+        }
       });
     }
 
@@ -293,7 +301,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
   private fetchPristineSentenceForUser() {
 
-    if(this.selectedTaskLanguage){
+    if (this.selectedTaskLanguage) {
 
       this.dataSourceApiService.fetchSentence(this.selectedTaskLanguage.shortName).subscribe({
         next: sentence => {

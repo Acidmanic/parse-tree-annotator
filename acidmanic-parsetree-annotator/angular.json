@@ -31,7 +31,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/bootstrap/dist/css/bootstrap.css"
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/@ngneat/hot-toast/src/styles/styles.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.js",
