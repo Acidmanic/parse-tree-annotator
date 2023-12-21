@@ -178,9 +178,6 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
   onSkipSentenceClicked() {
 
-    this.toast.creditWon(200);
-
-    return;
     if (this.currentSentence.success) {
 
       this.dataSourceApiService.skipSentence(this.currentSentence.value!.id).subscribe({
@@ -273,6 +270,9 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
       this.dataSourceApiService.deliverSentenceByModel(parsedTreeModel).subscribe({
         next: value => {
+
+          this.toast.creditWon(200);
+
           this.onSentenceResponse(value);
         },
         error: err => {
