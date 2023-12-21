@@ -20,7 +20,8 @@
         "Exit": "Exit",
         "AnnotateTheLanguage": "Annotate in language:",
         "AnnotateThePhrase": "Annotate the phrase:",
-        "ThereIsNoMoreSentences": "There is no more sentences in this language to be annotated! Please try again later."
+        "ThereIsNoMoreSentences": "There is no more sentences in this language to be annotated! Please try again later.",
+        "CREDIT_WON_MESSAGE": "Thanks! Your Collected Credits: "
       }
 
     },
@@ -43,7 +44,8 @@
         "Exit": "خروج",
         "AnnotateTheLanguage": "زبان نشانه‌گذاری:",
         "AnnotateThePhrase": "عبارت نشانه‌گذاری:",
-        "ThereIsNoMoreSentences": "برای این زبان، جمله‌ی آماده‌ی علامت‌گذاری دیگری در دسترس نیست. لطفا در زمان دیگری مجددا امتحان کنید."
+        "ThereIsNoMoreSentences": "برای این زبان، جمله‌ی آماده‌ی علامت‌گذاری دیگری در دسترس نیست. لطفا در زمان دیگری مجددا امتحان کنید.",
+        "CREDIT_WON_MESSAGE": "سپاس! اعتبار کسب شده‌ی شما: "
       }
     }
 

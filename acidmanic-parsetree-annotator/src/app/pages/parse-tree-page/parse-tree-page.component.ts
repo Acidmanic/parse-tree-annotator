@@ -18,6 +18,7 @@ import {ResultModel} from "../../models/result.model";
 import {LanguageModel} from "../../models/language.model";
 import {ParsedTreeModel} from "../../models/api/parsed-tree.model";
 import {HotToastService} from "@ngneat/hot-toast";
+import {ShareopolisToasterService} from "../../services/shareopolis-toaster.service";
 
 
 @Component({
@@ -54,7 +55,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
               private modalService: NgbModal,
               private dataSourceApiService: DataSourceApiService,
               private i18Svc: InternationalizationService,
-              private toast: HotToastService) {
+              private toast: ShareopolisToasterService) {
     super(i18Svc);
   }
 
@@ -177,14 +178,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
   onSkipSentenceClicked() {
 
-    this.toast.success('🙏 Thanks! +200Xp', {
-      position: "top-center",
-      theme: "snackbar",
-      autoClose: true,
-      dismissible: true,
-      duration: 2000
-    });
-
+    this.toast.creditWon(200);
 
     return;
     if (this.currentSentence.success) {
