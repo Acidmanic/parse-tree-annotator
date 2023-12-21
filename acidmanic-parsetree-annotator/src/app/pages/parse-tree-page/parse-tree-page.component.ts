@@ -17,6 +17,7 @@ import {InternationalizationService} from "../../services/internationalization.s
 import {ResultModel} from "../../models/result.model";
 import {LanguageModel} from "../../models/language.model";
 import {ParsedTreeModel} from "../../models/api/parsed-tree.model";
+import {HotToastService} from "@ngneat/hot-toast";
 
 @Component({
   selector: 'parse-tree-page',
@@ -51,7 +52,8 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
               private pennSvc: TreeBankApiService,
               private modalService: NgbModal,
               private dataSourceApiService: DataSourceApiService,
-              private i18Svc: InternationalizationService) {
+              private i18Svc: InternationalizationService,
+              private toast: HotToastService) {
     super(i18Svc);
   }
 
@@ -174,6 +176,10 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
 
   onSkipSentenceClicked() {
 
+   this.toast.success('🙏 Thanks! +200Xp');
+
+
+    return;
     if (this.currentSentence.success) {
 
       this.dataSourceApiService.skipSentence(this.currentSentence.value!.id).subscribe({
@@ -248,6 +254,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
   }
 
   public onSubmitClicked() {
+
 
     if (this.currentSentence.success && this.currentSentence.value) {
 

@@ -20,6 +20,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { UserButtonComponent } from './components/user-button/user-button.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProgressableConfirmButtonComponent } from './components/progressable-confirm-button/progressable-confirm-button.component';
+import {HotToastModule} from "@ngneat/hot-toast";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ProgressableConfirmButtonComponent } from './components/progressable-co
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    HotToastModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
