@@ -21,7 +21,8 @@ public class SentenceDataMapper
         {
             Id = value.Id,
             Language = value.Language,
-            Tokens = _expressionTokenizer.Tokenize(value.Text)
+            Tokens = _expressionTokenizer.Tokenize(value.Text),
+            Credit = value.Credit
         };
     }
 
@@ -31,7 +32,7 @@ public class SentenceDataMapper
         {
             Id = value.Id,
             Language = value.Language,
-            Text = string.Join(' ',value.Tokens)
+            Text = string.Join(' ',value.Tokens),
         };
     }
 }

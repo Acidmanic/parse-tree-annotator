@@ -271,7 +271,7 @@ export class ParseTreePageComponent extends MultiLingualComponentBase {
       this.dataSourceApiService.deliverSentenceByModel(parsedTreeModel).subscribe({
         next: value => {
 
-          this.toast.creditWon(200);
+          this.toast.creditWon(Math.floor(value.credit));
 
           this.onSentenceResponse(value);
         },

@@ -8,4 +8,6 @@ public class SentenceDataDto
 
     public string[] Tokens { get; set; }
     
+    public double Credit { get; set; }
+    
 }

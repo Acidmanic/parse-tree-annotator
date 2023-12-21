@@ -11,11 +11,11 @@ create function fnIsPristine(Id varchar(48), UserEmail nvarchar(256)) returns bi
         AND (UserActivities.Status = 200 OR UserActivities.Status = 300) ) <= 0;
 -- ---------------------------------------------------------------------------------------------------------------------
 DROP PROCEDURE spSaveUserActivity; 
-CREATE PROCEDURE spSaveUserActivity(IN Id varchar(48),IN UserEmail varchar(256),IN ContributionId varchar(48),IN Status INT(10))
+CREATE PROCEDURE spSaveUserActivity(IN Id varchar(48),IN UserEmail varchar(256),IN ContributionId varchar(48),IN Status INT(10), IN Credit float)
 BEGIN
     IF EXISTS(SELECT 1 FROM UserActivities WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId) then
 
-        UPDATE UserActivities SET Status=Status
+        UPDATE UserActivities SET Status=Status,Credit=Credit
             WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId;
 
         SELECT * FROM UserActivities 
@@ -23,7 +23,7 @@ BEGIN
                  ORDER BY Id ASC LIMIT 1;
 
     ELSE
-        INSERT INTO UserActivities (Id,UserEmail,ContributionId,Status) VALUES (Id,UserEmail,ContributionId,Status);
+        INSERT INTO UserActivities (Id,UserEmail,ContributionId,Status,Credit) VALUES (Id,UserEmail,ContributionId,Status,Credit);
         SELECT * FROM UserActivities
         WHERE UserActivities.UserEmail = UserEmail AND  UserActivities.ContributionId = ContributionId
         ORDER BY Id ASC LIMIT 1;

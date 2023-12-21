@@ -1,4 +1,3 @@
-using Acidmanic.NlpShareopolis.Domain.Data.Requests.Models;
 using Acidmanic.NlpShareopolis.Domain.Entities;
 using Acidmanic.NlpShareopolis.Domain.Enums;
 using Acidmanic.NlpShareopolis.Domain.Services.Abstractions;
@@ -7,7 +6,6 @@ using Acidmanic.NlpShareopolis.Domain.ValueObjects;
 using Acidmanic.Utilities.Results;
 using EnTier;
 using EnTier.Services;
-using Org.BouncyCastle.Crypto;
 
 namespace Acidmanic.NlpShareopolis.Domain.Services.Implementations;
 
@@ -53,9 +51,28 @@ public class SentenceDomainService : ISentenceDomainService
             UserEmail = email
         };
 
-        var skippedActivity = _userActivityService.UpdateOrInsert(activityUpdate, false, false);
+        return UpdateActivityStatus(activityUpdate);
+    }
 
-        if (skippedActivity is { } activity)
+    private Result<UserActivity> UpdateActivityDelivered(Id sentenceId, string email, double wonCredit)
+    {
+        var activityUpdate = new UserActivity
+        {
+            Id = Guid.NewGuid(),
+            Status = ActivityStatus.Delivered,
+            ContributionId = sentenceId,
+            UserEmail = email,
+            Credit = wonCredit
+        };
+
+        return UpdateActivityStatus(activityUpdate);
+    }
+
+    private Result<UserActivity> UpdateActivityStatus(UserActivity activityUpdate)
+    {
+        var persistedActivity = _userActivityService.UpdateOrInsert(activityUpdate, false, false);
+
+        if (persistedActivity is { } activity)
         {
             return new Result<UserActivity>(true, activity);
         }
@@ -73,27 +90,38 @@ public class SentenceDomainService : ISentenceDomainService
 
     public Result<SentenceTask> SkipFetchSentence(Id sentenceId, string? userEmail)
     {
-        return UpdateFetchSentence(sentenceId, userEmail, ActivityStatus.Skipped);
-    }
-    
-    public Result<SentenceTask> DeliverFetchSentence(Id sentenceId, string? userEmail)
-    {
-        return UpdateFetchSentence(sentenceId, userEmail, ActivityStatus.Delivered);
-    }
-    
-    private Result<SentenceTask> UpdateFetchSentence(Id sentenceId, string? userEmail, ActivityStatus status)
-    {
         var email = EmailOrDefaultEmail(userEmail);
-
-        UpdateActivityStatus(sentenceId, email,status);
 
         var foundSentence = _sentenceCrudService.ReadById(sentenceId);
 
         if (foundSentence is { } sentence)
         {
+            UpdateActivityStatus(sentenceId, email, ActivityStatus.Skipped);
+                
             return FetchSentence(email, sentence.Language);
         }
-        
+
         return new Result<SentenceTask>().FailAndDefaultValue();
     }
+
+    public CreditResult<SentenceTask> DeliverFetchSentence(Id sentenceId, string? userEmail, double progress = 0)
+    {
+        var email = EmailOrDefaultEmail(userEmail);
+
+        var foundSentence = _sentenceCrudService.ReadById(sentenceId);
+
+        if (foundSentence is { } sentence)
+        {
+           
+                var wonCredit = sentence.Credit * progress;
+
+                UpdateActivityDelivered(sentenceId, email, wonCredit);
+            
+
+            return FetchSentence(email, sentence.Language).ToCreditResult(wonCredit);
+        }
+
+        return new CreditResult<SentenceTask>().Failure();
+    }
+
 }

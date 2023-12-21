@@ -15,4 +15,6 @@ public class SentenceTask:ContributionData
     public Language Language { get; set; }
 
     public override Id ContributionId()=> "f65973fe-907b-11ee-ae96-2f4d3c25cf4c";
+
+    protected override double GetCredit() => 100 + (string.IsNullOrEmpty(Text) ? 0 : Text.Length / 100);
 }

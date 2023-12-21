@@ -9,4 +9,13 @@ public abstract class ContributionData
     [UniqueMember] public Id Id { get; set; }
 
     public abstract Id ContributionId();
+
+    public double Credit
+    {
+        get => GetCredit();
+        set { }
+    }
+
+    protected abstract double GetCredit();
+
 }

@@ -31,6 +31,16 @@ public class DataSourceController : NlpShareopolisControllerBase
 
         return new Result<SentenceDataDto>().FailAndDefaultValue();
     }
+    
+    private CreditResult<SentenceDataDto> Map(CreditResult<SentenceTask> value)
+    {
+        if (value)
+        {
+            return new CreditResult<SentenceDataDto>(true, _sentenceDataMapper.Map(value.Value),value.Credit);
+        }
+
+        return new CreditResult<SentenceDataDto>().Failure(value.Credit);
+    }
 
     [HttpGet]
     [Route("fetch-sentence/{languageName}")]

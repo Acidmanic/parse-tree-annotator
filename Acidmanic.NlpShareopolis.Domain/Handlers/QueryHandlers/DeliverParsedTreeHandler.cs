@@ -10,7 +10,7 @@ using MediatR;
 
 namespace Acidmanic.NlpShareopolis.Domain.Handlers.QueryHandlers;
 
-public class DeliverParsedTreeHandler : IRequestHandler<DeliverParsedTreeQuery, Result<SentenceTask>>
+public class DeliverParsedTreeHandler : IRequestHandler<DeliverParsedTreeQuery, CreditResult<SentenceTask>>
 {
     private readonly ICrudService<ParsedSentence, Id> _parsedTreeCrudService;
     private readonly ISentenceDomainService _sentenceDomainService;
@@ -21,7 +21,7 @@ public class DeliverParsedTreeHandler : IRequestHandler<DeliverParsedTreeQuery, 
         _parsedTreeCrudService = new CrudService<ParsedSentence>(essence);
     }
 
-    public Task<Result<SentenceTask>> Handle(DeliverParsedTreeQuery request, CancellationToken cancellationToken)
+    public Task<CreditResult<SentenceTask>> Handle(DeliverParsedTreeQuery request, CancellationToken cancellationToken)
     {
         var parsedSentence = new ParsedSentence
         {
@@ -35,9 +35,9 @@ public class DeliverParsedTreeHandler : IRequestHandler<DeliverParsedTreeQuery, 
 
         var inserted = _parsedTreeCrudService.Add(parsedSentence, false, false) != null;
 
-        Result<SentenceTask> result = inserted
-            ? _sentenceDomainService.DeliverFetchSentence(request.SentenceId, request.UserEmail)
-            : _sentenceDomainService.FetchSentence(request.UserEmail, request.Language);
+        CreditResult<SentenceTask> result = inserted
+            ? _sentenceDomainService.DeliverFetchSentence(request.SentenceId, request.UserEmail,request.SoftProgress)
+            : _sentenceDomainService.FetchSentence(request.UserEmail, request.Language).ToCreditResult();
 
         return Task.FromResult(result);
     }

@@ -7,6 +7,7 @@ import {ResultModel} from "../../models/result.model";
 import {SentenceTaskModel} from "../../models/api/sentence-task.model";
 import {ParsedTreeModel} from "../../models/api/parsed-tree.model";
 import {LanguageModel} from "../../models/language.model";
+import {CreditResultModel} from "../../models/credit-result.model";
 
 
 @Injectable({
@@ -53,11 +54,11 @@ export class DataSourceApiService {
     return this.deliverSentenceByModel(model);
   }
 
-  public deliverSentenceByModel(model:ParsedTreeModel):Observable<ResultModel<SentenceTaskModel>>{
+  public deliverSentenceByModel(model:ParsedTreeModel):Observable<CreditResultModel<SentenceTaskModel>>{
 
     let url = BaseUrlService.authBaseUrl + '/' + DataSourceApiService.deliverSentenceUri;
 
-    return this.http.post<ResultModel<SentenceTaskModel>>(url,model);
+    return this.http.post<CreditResultModel<SentenceTaskModel>>(url,model);
   }
 
   public availableLanguages():Observable<LanguageModel[]>{

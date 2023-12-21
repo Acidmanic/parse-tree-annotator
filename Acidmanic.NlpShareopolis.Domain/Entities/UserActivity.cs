@@ -20,6 +20,8 @@ public class UserActivity
     
     public ActivityStatus Status { get; set; }
 
+    public double Credit { get; set; }
+    
     public bool IsSeen()
     {
         return Status != ActivityStatus.UnSeen;

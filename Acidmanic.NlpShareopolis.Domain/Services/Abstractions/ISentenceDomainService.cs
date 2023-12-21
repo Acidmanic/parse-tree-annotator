@@ -10,5 +10,5 @@ public interface ISentenceDomainService
 
     Result<SentenceTask> SkipFetchSentence(Id activityId, string? userEmail);
     
-    Result<SentenceTask> DeliverFetchSentence(Id activityId, string? userEmail);
+    CreditResult<SentenceTask> DeliverFetchSentence(Id activityId, string? userEmail, double progress = 0);
 }
