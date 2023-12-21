@@ -27,7 +27,7 @@ export class ProgressableConfirmButtonComponent implements AfterViewInit,OnChang
   public cursorClass:string='';
   private clickable :boolean=false;
 
-  @Output('click') clickEmitter:EventEmitter<any> = new EventEmitter();
+  @Output('on-click') clickEmitter:EventEmitter<any> = new EventEmitter();
 
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -52,9 +52,9 @@ export class ProgressableConfirmButtonComponent implements AfterViewInit,OnChang
 
   private refresh() {
 
-    this.clickable = this.progressValue <100;
-    this.textBg = this.clickable? 'text-bg-secondary':'text-bg-success';
-    this.cursorClass = this.clickable? '':'cursor-pointer';
+    this.clickable = this.progressValue >= 100;
+    this.textBg = this.clickable? 'text-bg-success':'text-bg-secondary';
+    this.cursorClass = this.clickable? 'cursor-pointer':'';
 
     if (this.circle) {
 

@@ -33,7 +33,7 @@
         <i class="cursor-pointer task-fill-relative-parent bi bi-arrow-counterclockwise bi-task-button text-bg-warning"></i>
       </a>
     </div>
-    <progressable-confirm-button *ngIf="anySentenceToProcess" (click)="onSubmitClicked()" [progress-value]="progress*100" class="task-button"></progressable-confirm-button>
+    <progressable-confirm-button *ngIf="anySentenceToProcess" (on-click)="onSubmitClicked()" [progress-value]="progress*100" class="task-button"></progressable-confirm-button>
 
 
     <div class="m-2 p-1 alert alert-info" *ngIf="!anySentenceToProcess">
